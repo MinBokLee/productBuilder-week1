@@ -88,37 +88,30 @@
             overflow: hidden; text-align: left;
         }
         
-        /* 이미지 스타일링 */
         .food-image {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            background-color: #eee;
+            background-color: #f1f5f9; /* 로딩 전 배경색 */
             display: block;
         }
 
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
 
-        .menu-info { 
-            padding: 20px 20px 0 20px;
-        }
+        .menu-info { padding: 20px 20px 0 20px; }
         .food-name { font-weight: 900; font-size: 1.5rem; display: block; margin-bottom: 8px; color: var(--text-main); }
         .kcal-badge { background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 100px; font-size: 0.9rem; font-weight: bold; }
 
         .nutri-bar-container { 
-            display: flex; 
-            gap: 8px; 
-            font-size: 0.75rem; 
-            color: var(--text-sub); 
-            margin-top: 15px;
-            padding: 0 20px 20px 20px;
+            display: flex; gap: 8px; font-size: 0.75rem; color: var(--text-sub); 
+            margin-top: 15px; padding: 0 20px 20px 20px;
         }
         .nutri-item { flex: 1; background: var(--stat-bg); padding: 8px; border-radius: 10px; text-align: center; }
         .nutri-val { display: block; color: var(--nutri-tag); font-weight: 800; font-size: 1rem; margin-top: 2px; }
 
         .btn-group { display: flex; gap: 8px; width: 100%; }
         button.primary-btn { flex: 1; padding: 18px; font-size: 1.1rem; background-color: var(--accent-color); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        button.primary-btn:hover { filter: brightness(1.1); }
+        button.primary-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
 
         .warning-box {
             margin-top: 30px; padding: 15px; border-radius: 15px;
@@ -209,7 +202,7 @@
 
         const menuData = {
             ko: [
-                { name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "https://images.unsplash.com/photo-1627961917711-b0e6e7d6b3c4?auto=format&fit=crop&w=800&q=80" },
+                { name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "https://images.unsplash.com/photo-1583219483746-746f771661b3?auto=format&fit=crop&w=800&q=80" },
                 { name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
                 { name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
                 { name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "https://images.unsplash.com/photo-1596450514735-2d0220ab4174?auto=format&fit=crop&w=800&q=80" },
@@ -217,7 +210,7 @@
                 { name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
                 { name: "짜장면", kcal: 800, c: 120, p: 20, f: 28, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80" },
                 { name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4, img: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=800&q=80" },
-                { name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18, img: "https://images.unsplash.com/photo-1605374463051-50e4171d184a?auto=format&fit=crop&w=800&q=80" },
+                { name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18, img: "https://images.unsplash.com/photo-1513135065346-a098a63a73ee?auto=format&fit=crop&w=800&q=80" },
                 { name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12, img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80" }
             ],
             en: [
@@ -280,7 +273,7 @@
             card.className = 'menu-card';
 
             let html = `
-                <img src="${food.img}" alt="${food.name}" class="food-image">
+                <img src="${food.img}" alt="${food.name}" class="food-image" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80'">
                 <div class="menu-info">
                     <span class="food-name">${food.name}</span>
                     <span class="kcal-badge">${totalKcal} kcal</span>
