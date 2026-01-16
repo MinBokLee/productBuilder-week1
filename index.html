@@ -127,13 +127,21 @@
         }
         .placeholder { color: var(--text-sub); font-style: italic; margin: 30px 0; font-size: 1.1rem; text-align: center; }
 
-        /* 제휴 문의 및 댓글 섹션 스타일 */
+        /* 하단 섹션 (댓글 및 문의) */
         .bottom-section {
             width: 100%; max-width: 450px; margin-top: 20px; margin-bottom: 50px;
         }
+
+        /* Disqus 컨테이너 */
+        #disqus_thread {
+            background: var(--card-bg); padding: 20px; border-radius: 20px;
+            border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
         .form-toggle-btn {
             background: none; border: none; color: var(--text-sub); font-size: 0.85rem; 
-            text-decoration: underline; cursor: pointer; width: 100%; margin-bottom: 10px;
+            text-decoration: underline; cursor: pointer; width: 100%; margin-bottom: 10px; margin-top: 10px;
         }
         #contact-form-wrapper {
             background: var(--card-bg); border-radius: 20px; padding: 20px;
@@ -153,12 +161,6 @@
             border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
         .submit-btn:hover { background: #e67e22; }
-
-        /* Disqus 컨테이너 */
-        #disqus_thread {
-            background: var(--card-bg); padding: 20px; border-radius: 20px;
-            border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
     </style>
 </head>
 <body data-theme="light">
@@ -211,8 +213,9 @@
     </div>
 
     <div class="bottom-section">
+        <div id="disqus_thread"></div>
+
         <button class="form-toggle-btn" onclick="toggleContactForm()" id="toggle-form-text">제휴 및 맛집 등록 문의</button>
-        
         <div id="contact-form-wrapper">
             <span class="form-title">Business Partnership</span>
             <form id="partnership-form" action="https://formspree.io/f/xojjjadw" method="POST" onsubmit="return validateForm()">
@@ -232,8 +235,6 @@
                 <button type="submit" class="submit-btn">문의 보내기</button>
             </form>
         </div>
-
-        <div id="disqus_thread"></div>
     </div>
 
     <script>
@@ -254,7 +255,6 @@
         let currentLang = 'ko';
         let currentFilter = 'all';
 
-        // 폼 유효성 검사 (항목명 포함)
         function validateForm() {
             const nameField = document.getElementById('user-name');
             const emailField = document.getElementById('user-email');
