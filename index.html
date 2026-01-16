@@ -211,15 +211,15 @@
             <form id="partnership-form" action="https://formspree.io/f/xojjjadw" method="POST" onsubmit="return validateForm()">
                 <div class="form-group">
                     <label>성함 / 업체명</label>
-                    <input type="text" name="name" id="user-name" placeholder="홍길동 / 맛집식당" required>
+                    <input type="text" name="name" id="user-name" placeholder="홍길동 / 맛집식당">
                 </div>
                 <div class="form-group">
                     <label>회신받을 이메일</label>
-                    <input type="email" name="_replyto" id="user-email" placeholder="example@email.com" required>
+                    <input type="email" name="_replyto" id="user-email" placeholder="example@email.com">
                 </div>
                 <div class="form-group">
                     <label>문의 내용</label>
-                    <textarea name="message" id="user-message" rows="4" placeholder="제휴 제안 또는 메뉴 등록 문의 내용을 적어주세요." required></textarea>
+                    <textarea name="message" id="user-message" rows="4" placeholder="제휴 제안 또는 메뉴 등록 문의 내용을 적어주세요."></textarea>
                 </div>
                 <input type="hidden" name="_subject" value="오늘점심뭐먹지? 새로운 제휴 문의">
                 <button type="submit" class="submit-btn">문의 보내기</button>
@@ -231,17 +231,28 @@
         let currentLang = 'ko';
         let currentFilter = 'all';
 
-        // 폼 유효성 검사 및 알림 기능
+        // 폼 유효성 검사 및 알림 기능 (메뉴명 적용)
         function validateForm() {
-            const name = document.getElementById('user-name').value.trim();
-            const email = document.getElementById('user-email').value.trim();
-            const message = document.getElementById('user-message').value.trim();
+            const nameField = document.getElementById('user-name');
+            const emailField = document.getElementById('user-email');
+            const messageField = document.getElementById('user-message');
 
-            if (!name || !email || !message) {
-                alert("모든 입력 정보를 기입해 주세요."); // 미입력 시 알림 창
-                return false; // 제출 방지
+            if (!nameField.value.trim()) {
+                alert("성함 / 업체명을 입력해 주세요.");
+                nameField.focus();
+                return false;
             }
-            return true; // 제출 진행
+            if (!emailField.value.trim()) {
+                alert("회신받을 이메일을 입력해 주세요.");
+                emailField.focus();
+                return false;
+            }
+            if (!messageField.value.trim()) {
+                alert("문의 내용을 입력해 주세요.");
+                messageField.focus();
+                return false;
+            }
+            return true;
         }
 
         // 폼 열기/닫기 및 초기화 기능
@@ -251,12 +262,10 @@
             const form = document.getElementById('partnership-form');
 
             if (wrapper.style.display === 'block') {
-                // 창을 닫을 때
                 wrapper.style.display = 'none';
                 btnText.innerText = "제휴 및 맛집 등록 문의";
                 form.reset(); // 데이터 초기화
             } else {
-                // 창을 열 때
                 wrapper.style.display = 'block';
                 btnText.innerText = "문의창 닫기";
                 wrapper.scrollIntoView({ behavior: 'smooth' });
@@ -297,7 +306,7 @@
                 { category: 'kr', name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "img/kimchi.jpg" },
                 { category: 'kr', name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
                 { category: 'as', name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
-                { category: 'as', name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "img/donkas.jpg" },
+                { category: 'as', name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "img/donkas.png" },
                 { category: 'ws', name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18, img: "img/pasta.jpg" },
                 { category: 'ws', name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
                 { category: 'as', name: "짜장면", kcal: 800, c: 120, p: 20, f: 28, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80" },
