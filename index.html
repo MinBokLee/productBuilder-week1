@@ -56,8 +56,14 @@
         .filter-btn { padding: 8px 14px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-sub); cursor: pointer; font-size: 0.8rem; }
         .filter-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
         
-        .menu-card { background: var(--card-bg); border: 2px solid var(--primary-color); border-radius: 20px; overflow: hidden; text-align: left; }
+        /* 상세 음식 카드 스타일 */
+        .menu-card { background: var(--card-bg); border: 2px solid var(--primary-color); border-radius: 20px; overflow: hidden; text-align: left; margin-bottom: 20px; }
         .food-image { width: 100%; height: 200px; object-fit: cover; }
+        .nutri-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; background: var(--stat-bg); padding: 10px; border-radius: 12px; }
+        .nutri-item { text-align: center; }
+        .nutri-label { font-size: 0.7rem; color: var(--text-sub); display: block; }
+        .nutri-value { font-weight: bold; font-size: 0.9rem; color: var(--text-main); }
+        .food-info-text { font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); border-top: 1px solid var(--border-color); padding-top: 10px; }
 
         #image-preview { width: 100%; max-width: 280px; border-radius: 20px; margin: 20px 0; display: none; }
         .result-box { margin-top: 20px; text-align: left; display: none; }
@@ -153,16 +159,9 @@
                 feature: "특징", personality: "성격", love: "연애 스타일",
                 confirmTitle: "당신은 확실한 {animal}상입니다!",
                 dog: "강아지", cat: "고양이",
-                dogDesc: {
-                    f: "부드럽고 둥글둥글한 인상으로 보는 사람을 기분 좋게 만드는 매력이 있습니다.",
-                    p: "다정다감하고 사교적이며, 어디서나 적응력이 뛰어난 '분위기 메이커'입니다.",
-                    l: "상대방에게 헌신적이며 애정 표현이 솔직하고 풍부한 스타일입니다."
-                },
-                catDesc: {
-                    f: "눈매가 날카롭고 세련되어 도시적이고 도도한 분위기를 풍깁니다.",
-                    p: "자기주관이 뚜렷하고 관찰력이 좋으며, 겉으로는 차가워 보이지만 내면은 따뜻한 '츤데레' 스타일입니다.",
-                    l: "밀당에 능하며 상대방의 호기심을 자극하는 매혹적인 스타일입니다."
-                }
+                carb: "탄수화물", protein: "단백질", fat: "지방",
+                dogDesc: { f: "부드럽고 둥글둥글한 인상입니다.", p: "다정다감한 분위기 메이커입니다.", l: "애정 표현이 솔직합니다." },
+                catDesc: { f: "세련되고 도도한 분위기입니다.", p: "관찰력이 좋은 츤데레 스타일입니다.", l: "밀당에 능한 매혹적인 스타일입니다." }
             },
             en: {
                 mainTitle: "What's for Lunch?",
@@ -182,28 +181,48 @@
                 feature: "Feature", personality: "Personality", love: "Love Style",
                 confirmTitle: "You are definitely a {animal} face!",
                 dog: "Dog", cat: "Cat",
-                dogDesc: {
-                    f: "A soft and round impression that makes people feel comfortable and happy.",
-                    p: "Affectionate, sociable, and an excellent 'mood maker' who adapts well anywhere.",
-                    l: "Devoted to their partner and honest with a wealth of romantic expression."
-                },
-                catDesc: {
-                    f: "Sharp and sophisticated eyes that exude a chic and urban vibe.",
-                    p: "Strong-willed and observant, with a 'Tsundere' style that is warm inside despite a cool exterior.",
-                    l: "Good at the 'push and pull' of romance and attracting interest with mystery."
-                }
+                carb: "Carbs", protein: "Protein", fat: "Fat",
+                dogDesc: { f: "A soft and round impression.", p: "Affectionate mood maker.", l: "Honest in expressing love." },
+                catDesc: { f: "Sophisticated and chic vibe.", p: "Observant Tsundere style.", l: "Charming and good at push-pull." }
             }
         };
 
+        // 보강된 음식 데이터베이스
         const menuData = [
-            { category: 'kr', ko: "제육덮밥", en: "Spicy Pork Rice", kcal: 780, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
-            { category: 'as', ko: "연어 초밥", en: "Salmon Sushi", kcal: 550, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
-            { category: 'ws', ko: "해산물 파스타", en: "Seafood Pasta", kcal: 620, img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" }
+            { 
+                category: 'kr', 
+                ko: { name: "제육볶음", info: "한국의 대표적인 기사식당 메뉴로, 매콤한 고추장 양념에 돼지고기를 볶아내 에너지를 보충하기에 제격입니다." },
+                en: { name: "Jeyuk Bokkeum", info: "A classic Korean dish of spicy marinated pork stir-fried with gochujang, perfect for a quick energy boost." },
+                kcal: 780, nutri: { c: "45g", p: "38g", f: "22g" }, 
+                img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" 
+            },
+            { 
+                category: 'as', 
+                ko: { name: "연어 초밥", info: "신선한 연어와 고소한 식초 밥의 조화! 오메가-3가 풍부하여 두뇌 회전과 건강에 도움을 주는 깔끔한 한 끼입니다." },
+                en: { name: "Salmon Sushi", info: "A harmonious mix of fresh salmon and vinegared rice! Rich in Omega-3, it's a clean meal great for brain health." },
+                kcal: 550, nutri: { c: "60g", p: "25g", f: "12g" }, 
+                img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" 
+            },
+            { 
+                category: 'ws', 
+                ko: { name: "봉골레 파스타", info: "조개의 감칠맛과 마늘향이 일품인 파스타입니다. 저칼로리 해산물을 사용하여 다이어트 중에도 부담 없이 즐길 수 있습니다." },
+                en: { name: "Vongole Pasta", info: "A delightful pasta featuring the savory taste of clams and garlic aroma. Low in calories, perfect for a light meal." },
+                kcal: 480, nutri: { c: "55g", p: "18g", f: "14g" }, 
+                img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" 
+            },
+            { 
+                category: 'kr', 
+                ko: { name: "비빔밥", info: "다양한 채소와 나물을 한 그릇에 담아 영양 밸런스가 완벽한 한국의 전통 건강식입니다." },
+                en: { name: "Bibimbap", info: "A traditional healthy Korean meal with an ideal balance of various vegetables and seasoned greens." },
+                kcal: 560, nutri: { c: "85g", p: "15g", f: "10g" }, 
+                img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80" 
+            }
         ];
 
         function toggleLang() {
             currentLang = currentLang === 'ko' ? 'en' : 'ko';
             updateTexts();
+            if(document.querySelector('.menu-card')) generateLunchMenu(); // 이미 추천된 메뉴가 있다면 언어 갱신
         }
 
         function updateTexts() {
@@ -240,16 +259,33 @@
             btn.classList.add('active');
         }
 
+        let lastRecommendedFood = null;
+
         function generateLunchMenu() {
             const container = document.getElementById('menu-container');
             const foods = menuData.filter(i => currentFilter === 'all' || i.category === currentFilter);
-            const food = foods[Math.floor(Math.random() * foods.length)];
+            
+            // 언어 전환 시 기존 음식을 유지하거나 새로 랜덤하게 선택
+            const food = lastRecommendedFood && foods.includes(lastRecommendedFood) ? lastRecommendedFood : foods[Math.floor(Math.random() * foods.length)];
+            lastRecommendedFood = food;
+
+            const t = i18n[currentLang];
+            const data = food[currentLang];
+
             container.innerHTML = `
                 <div class="menu-card">
                     <img src="${food.img}" class="food-image">
-                    <div style="padding:15px;">
-                        <span style="background:var(--accent-color); color:white; padding:3px 8px; border-radius:5px; font-size:0.75rem;">${food.kcal} kcal</span>
-                        <div style="font-weight:900; font-size:1.2rem; margin-top:5px;">${currentLang === 'ko' ? food.ko : food.en}</div>
+                    <div style="padding:20px;">
+                        <span style="background:var(--accent-color); color:white; padding:4px 10px; border-radius:8px; font-size:0.8rem; font-weight:bold;">${food.kcal} kcal</span>
+                        <h2 style="margin:10px 0 5px 0; font-size:1.4rem;">${data.name}</h2>
+                        
+                        <div class="nutri-grid">
+                            <div class="nutri-item"><span class="nutri-label">${t.carb}</span><span class="nutri-value">${food.nutri.c}</span></div>
+                            <div class="nutri-item"><span class="nutri-label">${t.protein}</span><span class="nutri-value">${food.nutri.p}</span></div>
+                            <div class="nutri-item"><span class="nutri-label">${t.fat}</span><span class="nutri-value">${food.nutri.f}</span></div>
+                        </div>
+
+                        <p class="food-info-text">${data.info}</p>
                     </div>
                 </div>`;
         }
@@ -273,11 +309,9 @@
                 const img = document.getElementById('image-preview');
                 img.src = e.target.result;
                 img.style.display = 'inline-block';
-                
                 const prediction = await animalModel.predict(img);
                 prediction.sort((a, b) => b.probability - a.probability);
-                
-                showAnimalResult(prediction[0]); // 가장 높은 확률 결과만 전달
+                showAnimalResult(prediction[0]);
                 document.getElementById('upload-btn').innerText = i18n[currentLang].uploadBtn;
             };
             reader.readAsDataURL(file);
@@ -291,24 +325,16 @@
             const title = document.getElementById('result-title');
             
             resultArea.style.display = 'block';
-            
             let animalName = (topAnimal === "강아지상") ? t.dog : t.cat;
             title.innerText = t.confirmTitle.replace("{animal}", animalName);
 
             let content = "";
-            if(topAnimal === "강아지상") {
-                content = `
-                    <div class="result-section"><span class="result-label">[${t.feature}]</span> ${t.dogDesc.f}</div>
-                    <div class="result-section"><span class="result-label">[${t.personality}]</span> ${t.dogDesc.p}</div>
-                    <div class="result-section"><span class="result-label">[${t.love}]</span> ${t.dogDesc.l}</div>
-                `;
-            } else {
-                content = `
-                    <div class="result-section"><span class="result-label">[${t.feature}]</span> ${t.catDesc.f}</div>
-                    <div class="result-section"><span class="result-label">[${t.personality}]</span> ${t.catDesc.p}</div>
-                    <div class="result-section"><span class="result-label">[${t.love}]</span> ${t.catDesc.l}</div>
-                `;
-            }
+            const d = (topAnimal === "강아지상") ? t.dogDesc : t.catDesc;
+            content = `
+                <div class="result-section"><span class="result-label">[${t.feature}]</span> ${d.f}</div>
+                <div class="result-section"><span class="result-label">[${t.personality}]</span> ${d.p}</div>
+                <div class="result-section"><span class="result-label">[${t.love}]</span> ${d.l}</div>
+            `;
             desc.innerHTML = content;
         }
 
