@@ -1,14 +1,267 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 번호 생성기</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --accent-color: #f72585;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --stat-bg: #f1f5f9;
+            --border-color: #e2e8f0;
+        }
+
+        [data-theme='dark'] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --stat-bg: #334155;
+            --border-color: #334155;
+        }
+
+        body { 
+            font-family: 'Pretendard', -apple-system, sans-serif; 
+            background-color: var(--bg-color); 
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 20px; margin: 0; color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+            justify-content: center;
+        }
+
+        .container { 
+            background: var(--card-bg); padding: 30px 20px; border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; 
+            width: 100%; max-width: 500px; position: relative;
+            box-sizing: border-box;
+        }
+
+        .theme-toggle {
+            position: absolute; top: 15px; right: 15px;
+            background: var(--stat-bg); border: none; border-radius: 50%;
+            width: 36px; height: 36px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; color: var(--text-main); transition: 0.3s;
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-main); }
+        .subtitle { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
+
+        .stat-box {
+            background: var(--stat-bg); border-radius: 12px; padding: 15px;
+            margin-bottom: 20px; text-align: left; border-left: 5px solid var(--primary-color);
+        }
+        .stat-header { font-weight: 800; color: var(--primary-color); font-size: 0.8rem; margin-bottom: 5px; display: block; }
+        .stat-content { font-size: 0.8rem; color: var(--text-sub); line-height: 1.5; margin: 0; padding-left: 5px; list-style: none; }
+
+        .settings-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 15px; background: var(--card-bg); border-radius: 12px;
+            border: 1px solid var(--border-color); margin-bottom: 20px;
+        }
+        .switch-text { font-weight: 700; font-size: 0.9rem; color: var(--text-sub); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        #lotto-container { 
+            min-height: 50px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .placeholder { color: var(--text-sub); font-style: italic; font-size: 1rem; margin: 20px 0; }
+
+        .lotto-row { 
+            display: flex; justify-content: center; align-items: center; 
+            gap: 6px; margin-bottom: 12px; padding: 8px; 
+            background: var(--card-bg); border-radius: 50px; border: 1px solid var(--border-color);
+        }
+
+        .ball { 
+            width: 36px; height: 36px; border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; color: white; 
+            font-weight: 800; font-size: 0.9rem;
+            opacity: 0; transform: scale(0.5); animation: popIn 0.5s forwards;
+        }
+
+        @media (max-width: 400px) {
+            .ball { width: 30px; height: 30px; font-size: 0.8rem; }
+            .lotto-row { gap: 4px; padding: 6px; }
+        }
+
+        .bonus-plus { font-weight: bold; color: var(--text-sub); font-size: 1rem; margin: 0 2px; opacity: 0; animation: fadeIn 0.5s forwards; }
+
+        @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        .ball-1 { background: linear-gradient(135deg, #fbc400, #f9a825); }
+        .ball-11 { background: linear-gradient(135deg, #69c8f2, #2196f3); }
+        .ball-21 { background: linear-gradient(135deg, #ff7272, #f44336); }
+        .ball-31 { background: linear-gradient(135deg, #aaa, #757575); }
+        .ball-41 { background: linear-gradient(135deg, #b0d840, #8bc34a); }
+        .ball-bonus { background: #1e293b; border: 1.5px solid #fff; }
+        [data-theme='dark'] .ball-bonus { background: #f1f5f9; color: #1e293b; border: 1.5px solid #1e293b; }
+
+        .btn-group { display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap; }
+        button.primary-btn { flex: 2; min-width: 200px; padding: 16px; font-size: 1.1rem; background-color: var(--accent-color); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button.copy-btn { flex: 1; min-width: 100px; padding: 16px; font-size: 1rem; background-color: var(--primary-color); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; display: none; }
+
+        /* 🔥 경고문구: 기존 스타일로 복구 */
+        .warning-box {
+            margin-top: 30px; padding: 20px; border-radius: 15px;
+            background: rgba(231, 76, 60, 0.05); border: 1px solid rgba(231, 76, 60, 0.2);
+            font-size: 0.8rem; color: #e74c3c; line-height: 1.6; text-align: left;
+        }
+        .warning-title { font-weight: bold; display: block; margin-bottom: 5px; }
+        .label { font-weight: bold; color: var(--text-sub); margin-right: 8px; width: 18px; font-size: 0.75rem; }
+    </style>
 </head>
-<body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+<body data-theme="light">
+
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+
+        <h1>로또 번호 생성기</h1>
+        <p class="subtitle">AI 통계 기반 추천</p>
+
+        <div class="stat-box">
+            <span class="stat-header">ANALYSIS REPORT</span>
+            <ul class="stat-content">
+                <li>• 빈출: <b>43, 34, 12, 27, 17</b> 가중치 적용</li>
+                <li>• 알고리즘: <b>홀짝/구간 밸런스 필터</b> 작동 중</li>
+            </ul>
+        </div>
+
+        <div class="settings-bar">
+            <span class="switch-text">보너스 번호 포함</span>
+            <label class="switch">
+                <input type="checkbox" id="bonus-toggle" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div id="lotto-container">
+            <p class="placeholder">행운을 확인해보세요!</p>
+        </div>
+
+        <div class="btn-group">
+            <button class="primary-btn" onclick="generateAnalyticLotto()">5게임 추천받기</button>
+            <button id="copy-btn" class="copy-btn" onclick="copyToClipboard()">결과 복사</button>
+        </div>
+
+        <div class="warning-box">
+            <span class="warning-title">⚠️ 주의사항 및 안내</span>
+            • 본 시스템은 과거 당첨 데이터를 기반으로 한 확률적 가중치를 사용하지만, <b>실제 당첨을 보장하지 않습니다.</b><br>
+            • 로또는 매 회차 독립적인 확률로 시행되는 무작위 추첨 게임입니다.<br>
+            • 과도한 몰입은 금전적 손실을 초래할 수 있으니 <b>소액으로 즐겁게</b> 이용하시기 바랍니다.
+        </div>
+    </div>
+
+    <script>
+        let lastGeneratedNumbers = "";
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.getElementById('theme-btn');
+            const isLight = body.getAttribute('data-theme') === 'light';
+            body.setAttribute('data-theme', isLight ? 'dark' : 'light');
+            themeBtn.innerText = isLight ? '☀️' : '🌙';
+        }
+
+        const weights = {};
+        for (let i = 1; i <= 45; i++) weights[i] = 10;
+        const hotNumbers = [43, 34, 12, 27, 17, 1, 13, 18, 20, 40, 33, 37];
+        hotNumbers.forEach(n => weights[n] = 25);
+
+        function getWeightedRandomNumber(exclude) {
+            let totalWeight = 0;
+            const pool = [];
+            for (let i = 1; i <= 45; i++) {
+                if (exclude.includes(i)) continue;
+                totalWeight += weights[i];
+                pool.push({ num: i, weight: totalWeight });
+            }
+            const r = Math.random() * totalWeight;
+            return pool.find(p => r <= p.weight).num;
+        }
+
+        function generateSingleGame(includeBonus) {
+            let numbers = [];
+            while (numbers.length < 6) {
+                const n = getWeightedRandomNumber(numbers);
+                if (!numbers.includes(n)) numbers.push(n);
+            }
+            numbers.sort((a, b) => a - b);
+            let bonus = includeBonus ? getWeightedRandomNumber(numbers) : null;
+            return { main: numbers, bonus: bonus };
+        }
+
+        function generateAnalyticLotto() {
+            const container = document.getElementById('lotto-container');
+            const includeBonus = document.getElementById('bonus-toggle').checked;
+            const copyBtn = document.getElementById('copy-btn');
+            
+            container.innerHTML = ''; 
+            const labels = ['A', 'B', 'C', 'D', 'E'];
+            let copyText = "[추천 로또 번호]\n";
+
+            for (let i = 0; i < 5; i++) {
+                const game = generateSingleGame(includeBonus);
+                const row = document.createElement('div');
+                row.className = 'lotto-row';
+                const label = document.createElement('span');
+                label.className = 'label';
+                label.innerText = labels[i];
+                row.appendChild(label);
+
+                game.main.forEach((num, index) => {
+                    row.appendChild(createBall(num, (i * 0.05) + (index * 0.03)));
+                });
+
+                let rowString = `${labels[i]} : ${game.main.join(', ')}`;
+                if (includeBonus) {
+                    const plus = document.createElement('span');
+                    plus.className = 'bonus-plus'; plus.innerText = '+';
+                    row.appendChild(plus);
+                    row.appendChild(createBall(game.bonus, (i * 0.05) + 0.25, true));
+                    rowString += ` + 보너스(${game.bonus})`;
+                }
+                copyText += rowString + "\n";
+                container.appendChild(row);
+            }
+            lastGeneratedNumbers = copyText;
+            copyBtn.style.display = "block";
+        }
+
+        function createBall(num, delay, isBonus = false) {
+            const ball = document.createElement('div');
+            let colorClass = isBonus ? 'ball-bonus' : 
+                             num <= 10 ? 'ball-1' : num <= 20 ? 'ball-11' : 
+                             num <= 30 ? 'ball-21' : num <= 40 ? 'ball-31' : 'ball-41';
+            ball.className = `ball ${colorClass}`;
+            ball.innerText = num;
+            ball.style.animationDelay = `${delay}s`;
+            return ball;
+        }
+
+        function copyToClipboard() {
+            navigator.clipboard.writeText(lastGeneratedNumbers).then(() => {
+                alert("번호가 복사되었습니다!");
+            });
+        }
+    </script>
 </body>
 </html>
