@@ -82,18 +82,34 @@
         #menu-container { min-height: 60px; margin-bottom: 20px; }
         .menu-card {
             background: var(--card-bg); border: 2px solid var(--primary-color);
-            border-radius: 20px; padding: 25px 20px;
+            border-radius: 20px;
             opacity: 0; transform: scale(0.95); animation: popIn 0.5s forwards;
             box-shadow: 0 8px 20px rgba(255, 159, 67, 0.15);
+            overflow: hidden;
+        }
+        .food-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
 
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
 
-        .menu-info { margin-bottom: 15px; }
+        .menu-info { 
+            margin-bottom: 15px;
+            padding: 20px 20px 0 20px;
+        }
         .food-name { font-weight: 900; font-size: 1.5rem; display: block; margin-bottom: 8px; color: var(--text-main); }
         .kcal-badge { background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 100px; font-size: 0.9rem; font-weight: bold; }
 
-        .nutri-bar-container { display: flex; gap: 8px; font-size: 0.75rem; color: var(--text-sub); margin-top: 20px; }
+        .nutri-bar-container { 
+            display: flex; 
+            gap: 8px; 
+            font-size: 0.75rem; 
+            color: var(--text-sub); 
+            margin-top: 20px;
+            padding: 0 20px 20px 20px;
+        }
         .nutri-item { flex: 1; background: var(--stat-bg); padding: 8px; border-radius: 10px; }
         .nutri-val { display: block; color: var(--nutri-tag); font-weight: 800; font-size: 1rem; margin-top: 2px; }
 
@@ -196,26 +212,26 @@
 
         const menuData = {
             ko: [
-                { name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12 },
-                { name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22 },
-                { name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15 },
-                { name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45 },
-                { name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18 },
-                { name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15 },
-                { name: "짜장면", kcal: 800, c: 120, p: 20, f: 28 },
-                { name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4 },
-                { name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18 },
-                { name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12 }
+                { name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "https://source.unsplash.com/random/800x600/?kimchi-stew" },
+                { name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://source.unsplash.com/random/800x600/?jeyuk-deopbap" },
+                { name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15, img: "https://source.unsplash.com/random/800x600/?sushi" },
+                { name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "https://source.unsplash.com/random/800x600/?tonkatsu" },
+                { name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18, img: "https://source.unsplash.com/random/800x600/?seafood-pasta" },
+                { name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15, img: "https://source.unsplash.com/random/800x600/?chicken-salad" },
+                { name: "짜장면", kcal: 800, c: 120, p: 20, f: 28, img: "https://source.unsplash.com/random/800x600/?jjajangmyeon" },
+                { name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4, img: "https://source.unsplash.com/random/800x600/?pho" },
+                { name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18, img: "https://source.unsplash.com/random/800x600/?steak-donburi" },
+                { name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12, img: "https://source.unsplash.com/random/800x600/?bibimbap" }
             ],
             en: [
-                { name: "Grilled Chicken Salad", kcal: 350, c: 15, p: 40, f: 12 },
-                { name: "Pepperoni Pizza Slice", kcal: 450, c: 40, p: 18, f: 22 },
-                { name: "Sushi Platter (8pcs)", kcal: 420, c: 65, p: 20, f: 8 },
-                { name: "Classic Cheeseburger", kcal: 650, c: 45, p: 35, f: 38 },
-                { name: "Beef Burrito Bowl", kcal: 720, c: 80, p: 40, f: 28 },
-                { name: "Pasta Carbonara", kcal: 780, c: 85, p: 25, f: 40 },
-                { name: "Chicken Teriyaki Bento", kcal: 680, c: 90, p: 35, f: 15 },
-                { name: "Falafel Wrap", kcal: 580, c: 70, p: 15, f: 25 }
+                { name: "Grilled Chicken Salad", kcal: 350, c: 15, p: 40, f: 12, img: "https://source.unsplash.com/random/800x600/?grilled-chicken-salad" },
+                { name: "Pepperoni Pizza Slice", kcal: 450, c: 40, p: 18, f: 22, img: "https://source.unsplash.com/random/800x600/?pizza" },
+                { name: "Sushi Platter (8pcs)", kcal: 420, c: 65, p: 20, f: 8, img: "https://source.unsplash.com/random/800x600/?sushi-platter" },
+                { name: "Classic Cheeseburger", kcal: 650, c: 45, p: 35, f: 38, img: "https://source.unsplash.com/random/800x600/?cheeseburger" },
+                { name: "Beef Burrito Bowl", kcal: 720, c: 80, p: 40, f: 28, img: "https://source.unsplash.com/random/800x600/?burrito-bowl" },
+                { name: "Pasta Carbonara", kcal: 780, c: 85, p: 25, f: 40, img: "https://source.unsplash.com/random/800x600/?carbonara" },
+                { name: "Chicken Teriyaki Bento", kcal: 680, c: 90, p: 35, f: 15, img: "https://source.unsplash.com/random/800x600/?teriyaki-bento" },
+                { name: "Falafel Wrap", kcal: 580, c: 70, p: 15, f: 25, img: "https://source.unsplash.com/random/800x600/?falafel-wrap" }
             ]
         };
 
@@ -269,6 +285,7 @@
             card.className = 'menu-card';
 
             let html = `
+                <img src="${food.img}" alt="${food.name}" class="food-image">
                 <div class="menu-info">
                     <span class="food-name">${food.name}</span>
                     <span class="kcal-badge">${totalKcal} kcal</span>
@@ -282,7 +299,7 @@
 
             if (includeDessert) {
                 html += `
-                    <div style="margin-top:20px; padding-top:15px; border-top:1px dashed var(--border-color); font-size:0.9rem;">
+                    <div style="padding: 15px 20px; border-top:1px dashed var(--border-color); font-size:0.9rem;">
                         ${lang.sideLabel}: <span style="color:var(--accent-color); font-weight:bold;">${dessert.name}</span> (+${dessert.kcal}kcal)
                     </div>
                 `;
@@ -290,11 +307,6 @@
 
             card.innerHTML = html;
             container.appendChild(card);
-
-            lastGeneratedText = `[${lang.title}]\nMenu: ${food.name}\nTotal: ${totalKcal} kcal\nNutrients: ${lang.nutri[0]}(${food.c}g), ${lang.nutri[1]}(${food.p}g), ${lang.nutri[2]}(${food.f}g)`;
-            if(includeDessert) lastGeneratedText += `\n${lang.sideLabel}: ${dessert.name}`;
-            
-            
         }
 
         
