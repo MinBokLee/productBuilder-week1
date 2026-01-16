@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘 점심 뭐 먹지? & 동물상 테스트</title>
+    <title>Lunch Picker & Animal Face Test</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <style>
@@ -34,7 +34,6 @@
             transition: 0.3s; min-height: 100vh;
         }
 
-        /* 페이지 전환용 컨테이너 */
         .page { display: none; width: 100%; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; }
         .page.active { display: flex; animation: fadeIn 0.4s ease-out; }
 
@@ -46,32 +45,32 @@
             width: 100%; max-width: 450px; position: relative;
         }
 
-        /* 공통 버튼 */
-        .primary-btn { width: 100%; padding: 18px; font-size: 1.1rem; background-color: var(--accent-color); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .primary-btn:hover { filter: brightness(1.1); }
+        .top-controls { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; }
+        .control-btn { background: var(--stat-bg); border: none; border-radius: 10px; padding: 6px 10px; cursor: pointer; font-size: 0.8rem; font-weight: bold; color: var(--text-main); }
+
+        .primary-btn { width: 100%; padding: 18px; font-size: 1.1rem; background-color: var(--accent-color); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; }
         .secondary-btn { width: 100%; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; margin-top: 10px; }
         .link-btn { background: none; border: 1px solid var(--primary-color); color: var(--primary-color); padding: 12px; border-radius: 15px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 20px; }
 
-        /* 점심 추천 전용 */
         .filter-group { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
-        .filter-btn { padding: 8px 14px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-sub); cursor: pointer; font-size: 0.85rem; }
+        .filter-btn { padding: 8px 14px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-sub); cursor: pointer; font-size: 0.8rem; }
         .filter-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
-        .menu-card { background: var(--card-bg); border: 2px solid var(--primary-color); border-radius: 20px; overflow: hidden; text-align: left; margin-bottom: 20px; }
+        
+        .menu-card { background: var(--card-bg); border: 2px solid var(--primary-color); border-radius: 20px; overflow: hidden; text-align: left; }
         .food-image { width: 100%; height: 200px; object-fit: cover; }
 
-        /* 동물상 테스트 전용 */
-        #image-preview { width: 100%; max-width: 280px; border-radius: 20px; margin: 20px 0; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        #image-preview { width: 100%; max-width: 280px; border-radius: 20px; margin: 20px 0; display: none; }
         .result-box { margin-top: 20px; text-align: left; display: none; }
-        .result-title { font-size: 1.5rem; font-weight: 900; color: var(--primary-color); text-align: center; margin-bottom: 10px; }
-        .result-desc { background: var(--stat-bg); padding: 15px; border-radius: 15px; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; }
-        .label-bar-container { margin-bottom: 8px; }
-        .label-text { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px; }
-        .bar-bg { background: var(--border-color); height: 8px; border-radius: 4px; overflow: hidden; }
-        .bar-fill { background: var(--primary-color); height: 100%; transition: 1s; }
+        .result-title { font-size: 1.6rem; font-weight: 900; color: var(--primary-color); text-align: center; margin-bottom: 15px; }
+        .result-desc { background: var(--stat-bg); padding: 20px; border-radius: 15px; font-size: 0.95rem; line-height: 1.8; color: var(--text-main); }
+        .result-section { margin-bottom: 10px; }
+        .result-label { font-weight: bold; color: var(--accent-color); margin-right: 5px; }
+        
+        .bar-bg { background: var(--border-color); height: 8px; border-radius: 4px; overflow: hidden; margin-top: 5px; margin-bottom: 12px; }
+        .bar-fill { background: var(--primary-color); height: 100%; width: 0; transition: 1s; }
 
-        /* 하단 및 댓글 */
-        .bottom-section { width: 100%; max-width: 450px; margin-top: 20px; }
-        .form-toggle-btn { background: none; border: none; color: var(--text-sub); text-decoration: underline; cursor: pointer; width: 100%; margin-bottom: 15px; font-size: 0.85rem; }
+        .bottom-section { width: 100%; max-width: 450px; margin-top: 20px; margin-bottom: 50px; }
+        .form-toggle-btn { background: none; border: none; color: var(--text-sub); text-decoration: underline; cursor: pointer; width: 100%; margin-bottom: 15px; }
         #contact-form-wrapper { background: var(--card-bg); border-radius: 20px; padding: 20px; display: none; margin-bottom: 20px; border: 1px solid var(--border-color); }
         #disqus_thread { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--border-color); }
     </style>
@@ -80,30 +79,33 @@
 
     <div id="main-page" class="page active">
         <div class="container">
-            <button class="control-btn" style="position:absolute; right:15px; top:15px; border:none; background:none; font-size:1.2rem; cursor:pointer;" onclick="toggleTheme()">🌙</button>
-            <h1>오늘 점심 뭐 먹지?</h1>
-            <p style="color:var(--text-sub); margin-bottom:25px;">결정 장애 해결사! AI 메뉴 추천</p>
+            <div class="top-controls">
+                <button class="control-btn" onclick="toggleLang()">KO / EN</button>
+                <button class="control-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+            </div>
+            <h1 id="main-title">오늘 점심 뭐 먹지?</h1>
+            <p id="main-sub" style="color:var(--text-sub); margin-bottom:25px;">결정 장애 해결사! AI 메뉴 추천</p>
 
-            <button class="link-btn" onclick="navigateTo('animal-page')">✨ 보너스: 사진으로 동물상 테스트 하기</button>
+            <button class="link-btn" id="go-animal-btn" onclick="navigateTo('animal-page')">✨ 보너스: 동물상 테스트 하기</button>
 
             <div class="filter-group">
-                <button class="filter-btn active" onclick="setFilter('all', this)">전체</button>
-                <button class="filter-btn" onclick="setFilter('kr', this)">한식</button>
-                <button class="filter-btn" onclick="setFilter('as', this)">일/중식</button>
-                <button class="filter-btn" onclick="setFilter('ws', this)">양식</button>
+                <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)" id="filter-all">전체</button>
+                <button class="filter-btn" data-filter="kr" onclick="setFilter('kr', this)" id="filter-kr">한식</button>
+                <button class="filter-btn" data-filter="as" onclick="setFilter('as', this)" id="filter-as">일/중식</button>
+                <button class="filter-btn" data-filter="ws" onclick="setFilter('ws', this)" id="filter-ws">양식</button>
             </div>
 
-            <div id="menu-container"><p style="margin:40px 0; color:var(--text-sub);">어떤 음식을 먹게 될까요?</p></div>
-            <button class="primary-btn" onclick="generateLunchMenu()">메뉴 추천받기</button>
+            <div id="menu-container"><p id="main-placeholder" style="margin:40px 0; color:var(--text-sub);">메뉴를 추천해 드릴까요?</p></div>
+            <button class="primary-btn" id="recommend-btn" onclick="generateLunchMenu()">메뉴 추천받기</button>
         </div>
 
         <div class="bottom-section">
-            <button class="form-toggle-btn" onclick="toggleContactForm()">제휴 및 맛집 등록 문의</button>
+            <button class="form-toggle-btn" id="contact-toggle" onclick="toggleContactForm()">제휴 및 맛집 등록 문의</button>
             <div id="contact-form-wrapper">
                 <form action="https://formspree.io/f/xojjjadw" method="POST">
-                    <input type="text" name="name" placeholder="성함/업체명" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid var(--border-color);">
-                    <textarea name="message" placeholder="문의 내용" rows="3" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid var(--border-color);"></textarea>
-                    <button type="submit" class="secondary-btn">문의 보내기</button>
+                    <input type="text" name="name" id="form-name" placeholder="성함/업체명" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid var(--border-color);">
+                    <textarea name="message" id="form-msg" placeholder="문의 내용" rows="3" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid var(--border-color);"></textarea>
+                    <button type="submit" class="secondary-btn" id="form-submit">문의 보내기</button>
                 </form>
             </div>
             <div id="disqus_thread"></div>
@@ -112,44 +114,129 @@
 
     <div id="animal-page" class="page">
         <div class="container">
-            <button style="position:absolute; left:15px; top:15px; border:none; background:none; cursor:pointer; font-weight:bold; color:var(--text-sub);" onclick="navigateTo('main-page')">← 돌아가기</button>
-            <h1 style="margin-top:20px;">AI 동물상 테스트</h1>
-            <p style="color:var(--text-sub);">당신은 강아지상일까요, 고양이상일까요?</p>
+            <button id="back-btn" style="position:absolute; left:15px; top:15px; border:none; background:none; cursor:pointer; font-weight:bold; color:var(--text-sub);" onclick="navigateTo('main-page')">← 돌아가기</button>
+            <h1 id="animal-title" style="margin-top:20px;">AI 동물상 테스트</h1>
+            <p id="animal-sub" style="color:var(--text-sub);">AI가 분석하는 나의 이미지</p>
 
-            <div id="upload-area" style="margin:30px 0;">
+            <div style="margin:30px 0;">
                 <input type="file" id="image-upload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-                <button class="primary-btn" style="background:var(--primary-color)" onclick="document.getElementById('image-upload').click()">사진 업로드하기</button>
-                <p style="font-size:0.75rem; color:var(--text-sub); margin-top:10px;">* 사진은 분석 후에 어디에도 저장되지 않습니다.</p>
+                <button class="primary-btn" id="upload-btn" style="background:var(--primary-color)" onclick="document.getElementById('image-upload').click()">사진 업로드하기</button>
             </div>
 
             <center><img id="image-preview" src="#"></center>
 
             <div id="result-area" class="result-box">
-                <div id="result-title" class="result-title">분석 결과</div>
-                <div id="result-desc" class="result-desc"></div>
+                <div id="result-title" class="result-title"></div>
                 <div id="label-bars"></div>
-                <button class="secondary-btn" onclick="navigateTo('main-page')" style="background:var(--accent-color)">나에게 어울리는 메뉴 먹으러 가기</button>
+                <div id="result-desc" class="result-desc"></div>
+                <button class="secondary-btn" id="result-go-back" onclick="navigateTo('main-page')" style="background:var(--accent-color); margin-top:20px;">점심 추천 받으러 가기</button>
             </div>
         </div>
     </div>
 
     <script>
-        // 페이지 전환 로직
+        let currentLang = 'ko';
+        let currentFilter = 'all';
+
+        const i18n = {
+            ko: {
+                mainTitle: "오늘 점심 뭐 먹지?",
+                mainSub: "결정 장애 해결사! AI 메뉴 추천",
+                goAnimal: "✨ 보너스: 동물상 테스트 하기",
+                filterAll: "전체", filterKr: "한식", filterAs: "일/중식", filterWs: "양식",
+                placeholder: "메뉴를 추천해 드릴까요?",
+                recommendBtn: "메뉴 추천받기",
+                contactToggle: "제휴 및 맛집 등록 문의",
+                formName: "성함/업체명", formMsg: "문의 내용", formSubmit: "문의 보내기",
+                back: "← 돌아가기",
+                animalTitle: "AI 동물상 테스트",
+                animalSub: "AI가 분석하는 나의 이미지",
+                uploadBtn: "사진 업로드하기",
+                resultGoBack: "점심 추천 받으러 가기",
+                analyzing: "분석 중...",
+                feature: "특징", personality: "성격", love: "연애 스타일",
+                dogTitle: "친근한 강아지상",
+                dogDesc: {
+                    f: "부드럽고 둥글둥글한 인상으로 보는 사람을 기분 좋게 만드는 매력이 있습니다.",
+                    p: "다정다감하고 사교적이며, 어디서나 적응력이 뛰어난 '분위기 메이커'입니다.",
+                    l: "상대방에게 헌신적이며 애정 표현이 솔직하고 풍부한 스타일입니다."
+                },
+                catTitle: "매력적인 고양이상",
+                catDesc: {
+                    f: "눈매가 날카롭고 세련되어 도시적이고 도도한 분위기를 풍깁니다.",
+                    p: "자기주관이 뚜렷하고 관찰력이 좋으며, 겉으로는 차가워 보이지만 내면은 따뜻한 '츤데레' 스타일입니다.",
+                    l: "밀당에 능하며 상대방의 호기심을 자극하는 매혹적인 스타일입니다."
+                }
+            },
+            en: {
+                mainTitle: "What's for Lunch?",
+                mainSub: "AI Menu Recommendation",
+                goAnimal: "✨ Bonus: Animal Face Test",
+                filterAll: "All", filterKr: "Korean", filterAs: "Asian", filterWs: "Western",
+                placeholder: "Shall I recommend a menu?",
+                recommendBtn: "Get Recommendation",
+                contactToggle: "Partnership Inquiry",
+                formName: "Name / Company", formMsg: "Message", formSubmit: "Submit",
+                back: "← Back",
+                animalTitle: "AI Face Test",
+                animalSub: "Analyze your image with AI",
+                uploadBtn: "Upload Photo",
+                resultGoBack: "Go to Lunch Picker",
+                analyzing: "Analyzing...",
+                feature: "Feature", personality: "Personality", love: "Love Style",
+                dogTitle: "Friendly Dog Face",
+                dogDesc: {
+                    f: "A soft and round impression that makes people feel comfortable and happy.",
+                    p: "Affectionate, sociable, and an excellent 'mood maker' who adapts well anywhere.",
+                    l: "Devoted to their partner and honest with a wealth of romantic expression."
+                },
+                catTitle: "Charming Cat Face",
+                catDesc: {
+                    f: "Sharp and sophisticated eyes that exude a chic and urban vibe.",
+                    p: "Strong-willed and observant, with a 'Tsundere' style that is warm inside despite a cool exterior.",
+                    l: "Good at the 'push and pull' of romance and attracting interest with mystery."
+                }
+            }
+        };
+
+        const menuData = [
+            { category: 'kr', ko: "제육덮밥", en: "Spicy Pork Rice", kcal: 780, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
+            { category: 'as', ko: "연어 초밥", en: "Salmon Sushi", kcal: 550, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
+            { category: 'ws', ko: "해산물 파스타", en: "Seafood Pasta", kcal: 620, img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" }
+        ];
+
+        function toggleLang() {
+            currentLang = currentLang === 'ko' ? 'en' : 'ko';
+            updateTexts();
+        }
+
+        function updateTexts() {
+            const t = i18n[currentLang];
+            document.getElementById('main-title').innerText = t.mainTitle;
+            document.getElementById('main-sub').innerText = t.mainSub;
+            document.getElementById('go-animal-btn').innerText = t.goAnimal;
+            document.getElementById('filter-all').innerText = t.filterAll;
+            document.getElementById('filter-kr').innerText = t.filterKr;
+            document.getElementById('filter-as').innerText = t.filterAs;
+            document.getElementById('filter-ws').innerText = t.filterWs;
+            document.getElementById('recommend-btn').innerText = t.recommendBtn;
+            document.getElementById('contact-toggle').innerText = t.contactToggle;
+            document.getElementById('form-name').placeholder = t.formName;
+            document.getElementById('form-msg').placeholder = t.formMsg;
+            document.getElementById('form-submit').innerText = t.formSubmit;
+            document.getElementById('back-btn').innerText = t.back;
+            document.getElementById('animal-title').innerText = t.animalTitle;
+            document.getElementById('animal-sub').innerText = t.animalSub;
+            document.getElementById('upload-btn').innerText = t.uploadBtn;
+            document.getElementById('result-go-back').innerText = t.resultGoBack;
+            if(document.getElementById('main-placeholder')) document.getElementById('main-placeholder').innerText = t.placeholder;
+        }
+
         function navigateTo(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0,0);
             if(pageId === 'animal-page') loadAnimalModel();
         }
-
-        // --- 점심 추천 로직 ---
-        let currentFilter = 'all';
-        const menuData = [
-            { category: 'kr', name: "제육덮밥", kcal: 780, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
-            { category: 'as', name: "연어 초밥", kcal: 550, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
-            { category: 'ws', name: "해산물 파스타", kcal: 620, img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" },
-            { category: 'kr', name: "비빔밥", kcal: 560, img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80" }
-        ];
 
         function setFilter(f, btn) {
             currentFilter = f;
@@ -166,12 +253,11 @@
                     <img src="${food.img}" class="food-image">
                     <div style="padding:15px;">
                         <span style="background:var(--accent-color); color:white; padding:3px 8px; border-radius:5px; font-size:0.75rem;">${food.kcal} kcal</span>
-                        <div style="font-weight:900; font-size:1.2rem; margin-top:5px;">${food.name}</div>
+                        <div style="font-weight:900; font-size:1.2rem; margin-top:5px;">${currentLang === 'ko' ? food.ko : food.en}</div>
                     </div>
                 </div>`;
         }
 
-        // --- 동물상 테스트 로직 (Teachable Machine) ---
         const ANIMAL_URL = "https://teachablemachine.withgoogle.com/models/ZGmPRyuJD/";
         let animalModel;
 
@@ -181,20 +267,11 @@
             }
         }
 
-        const animalDetails = {
-            "강아지상": {
-                desc: "당신은 다정다감하고 활기찬 에너지를 가진 '강아지상'이군요! 친근한 인상으로 주변 사람들에게 인기가 많으며, 밝은 미소가 매력적입니다.",
-                food: "함께 즐길 수 있는 '제육덮밥'이나 '삼겹살'은 어떠신가요?"
-            },
-            "고양이상": {
-                desc: "당신은 세련되고 도도한 매력을 가진 '고양이상'입니다! 첫인상은 차가워 보일 수 있지만, 알면 알수록 깊은 매력을 가진 츤데레 스타일이 많습니다.",
-                food: "깔끔하고 정갈한 '연어 초밥'이나 '파스타'를 추천합니다!"
-            }
-        };
-
         async function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
+            document.getElementById('upload-btn').innerText = i18n[currentLang].analyzing;
+            
             const reader = new FileReader();
             reader.onload = async (e) => {
                 const img = document.getElementById('image-preview');
@@ -203,29 +280,57 @@
                 
                 const prediction = await animalModel.predict(img);
                 prediction.sort((a, b) => b.probability - a.probability);
-
-                const topResult = prediction[0].className;
-                document.getElementById('result-area').style.display = 'block';
-                document.getElementById('result-title').innerText = `당신은 귀여운 ${topResult}!`;
-                document.getElementById('result-desc').innerHTML = `<b>${animalDetails[topResult]?.desc || ""}</b><br><br>🍱 추천 메뉴: ${animalDetails[topResult]?.food || ""}`;
-
-                const barContainer = document.getElementById('label-bars');
-                barContainer.innerHTML = "";
-                prediction.forEach(p => {
-                    const prob = (p.probability * 100).toFixed(0);
-                    barContainer.innerHTML += `
-                        <div class="label-bar-container">
-                            <div class="label-text"><span>${p.className}</span><span>${prob}%</span></div>
-                            <div class="bar-bg"><div class="bar-fill" style="width:${prob}%"></div></div>
-                        </div>`;
-                });
+                
+                showAnimalResult(prediction);
+                document.getElementById('upload-btn').innerText = i18n[currentLang].uploadBtn;
             };
             reader.readAsDataURL(file);
+        }
+
+        function showAnimalResult(prediction) {
+            const top = prediction[0].className; 
+            const t = i18n[currentLang];
+            const resultArea = document.getElementById('result-area');
+            const bars = document.getElementById('label-bars');
+            const desc = document.getElementById('result-desc');
+            
+            resultArea.style.display = 'block';
+            bars.innerHTML = "";
+
+            let content = "";
+            if(top === "강아지상") {
+                document.getElementById('result-title').innerText = t.dogTitle;
+                content = `
+                    <div class="result-section"><span class="result-label">[${t.feature}]</span> ${t.dogDesc.f}</div>
+                    <div class="result-section"><span class="result-label">[${t.personality}]</span> ${t.dogDesc.p}</div>
+                    <div class="result-section"><span class="result-label">[${t.love}]</span> ${t.dogDesc.l}</div>
+                `;
+            } else {
+                document.getElementById('result-title').innerText = t.catTitle;
+                content = `
+                    <div class="result-section"><span class="result-label">[${t.feature}]</span> ${t.catDesc.f}</div>
+                    <div class="result-section"><span class="result-label">[${t.personality}]</span> ${t.catDesc.p}</div>
+                    <div class="result-section"><span class="result-label">[${t.love}]</span> ${t.catDesc.l}</div>
+                `;
+            }
+            desc.innerHTML = content;
+
+            prediction.forEach(p => {
+                const prob = (p.probability * 100).toFixed(0);
+                bars.innerHTML += `
+                    <div style="margin-bottom:5px;">
+                        <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:bold;">
+                            <span>${p.className}</span><span>${prob}%</span>
+                        </div>
+                        <div class="bar-bg"><div class="bar-fill" style="width:${prob}%"></div></div>
+                    </div>`;
+            });
         }
 
         function toggleTheme() {
             const isLight = document.body.getAttribute('data-theme') === 'light';
             document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
+            document.getElementById('theme-btn').innerText = isLight ? '☀️' : '🌙';
         }
 
         function toggleContactForm() {
@@ -233,7 +338,8 @@
             w.style.display = w.style.display === 'block' ? 'none' : 'block';
         }
 
-        // Disqus
+        updateTexts();
+
         (function() {
             var d = document, s = d.createElement('script');
             s.src = 'https://lunch-18.disqus.com/embed.js';
