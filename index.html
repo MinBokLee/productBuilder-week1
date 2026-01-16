@@ -127,7 +127,7 @@
         }
         .placeholder { color: var(--text-sub); font-style: italic; margin: 30px 0; font-size: 1.1rem; text-align: center; }
 
-        /* --- 제휴 문의 폼 스타일 추가 --- */
+        /* 제휴 문의 섹션 스타일 */
         .partnership-section {
             width: 100%; max-width: 450px; margin-top: 20px; margin-bottom: 50px;
         }
@@ -208,18 +208,18 @@
         <button class="form-toggle-btn" onclick="toggleContactForm()" id="toggle-form-text">제휴 및 맛집 등록 문의</button>
         <div id="contact-form-wrapper">
             <span class="form-title">Business Partnership</span>
-            <form action="https://formspree.io/f/xojjjadw" method="POST">
+            <form id="partnership-form" action="https://formspree.io/f/xojjjadw" method="POST" onsubmit="return validateForm()">
                 <div class="form-group">
                     <label>성함 / 업체명</label>
-                    <input type="text" name="name" placeholder="홍길동 / 맛집식당" required>
+                    <input type="text" name="name" id="user-name" placeholder="홍길동 / 맛집식당" required>
                 </div>
                 <div class="form-group">
                     <label>회신받을 이메일</label>
-                    <input type="email" name="_replyto" placeholder="example@email.com" required>
+                    <input type="email" name="_replyto" id="user-email" placeholder="example@email.com" required>
                 </div>
                 <div class="form-group">
                     <label>문의 내용</label>
-                    <textarea name="message" rows="4" placeholder="제휴 제안 또는 메뉴 등록 문의 내용을 적어주세요." required></textarea>
+                    <textarea name="message" id="user-message" rows="4" placeholder="제휴 제안 또는 메뉴 등록 문의 내용을 적어주세요." required></textarea>
                 </div>
                 <input type="hidden" name="_subject" value="오늘점심뭐먹지? 새로운 제휴 문의">
                 <button type="submit" class="submit-btn">문의 보내기</button>
@@ -231,14 +231,32 @@
         let currentLang = 'ko';
         let currentFilter = 'all';
 
-        // 폼 열기/닫기 함수
+        // 폼 유효성 검사 및 알림 기능
+        function validateForm() {
+            const name = document.getElementById('user-name').value.trim();
+            const email = document.getElementById('user-email').value.trim();
+            const message = document.getElementById('user-message').value.trim();
+
+            if (!name || !email || !message) {
+                alert("모든 입력 정보를 기입해 주세요."); // 미입력 시 알림 창
+                return false; // 제출 방지
+            }
+            return true; // 제출 진행
+        }
+
+        // 폼 열기/닫기 및 초기화 기능
         function toggleContactForm() {
             const wrapper = document.getElementById('contact-form-wrapper');
             const btnText = document.getElementById('toggle-form-text');
+            const form = document.getElementById('partnership-form');
+
             if (wrapper.style.display === 'block') {
+                // 창을 닫을 때
                 wrapper.style.display = 'none';
                 btnText.innerText = "제휴 및 맛집 등록 문의";
+                form.reset(); // 데이터 초기화
             } else {
+                // 창을 열 때
                 wrapper.style.display = 'block';
                 btnText.innerText = "문의창 닫기";
                 wrapper.scrollIntoView({ behavior: 'smooth' });
