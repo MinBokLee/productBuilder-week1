@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 신 로또 번호 생성기</title>
+    <title>오늘 점심 뭐 먹지? | What's for Lunch?</title>
     <style>
         :root {
-            --primary-color: #4361ee;
-            --accent-color: #f72585;
+            --primary-color: #ff9f43;
+            --accent-color: #ee5253;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --text-sub: #64748b;
             --stat-bg: #f1f5f9;
             --border-color: #e2e8f0;
+            --nutri-tag: #10ac84;
         }
 
         [data-theme='dark'] {
@@ -26,29 +27,33 @@
         }
 
         body { 
-            font-family: 'Pretendard', -apple-system, sans-serif; 
+            font-family: 'Pretendard', 'Inter', -apple-system, sans-serif; 
             background-color: var(--bg-color); 
             display: flex; flex-direction: column; align-items: center; 
             padding: 20px; margin: 0; color: var(--text-main);
             transition: background-color 0.3s, color 0.3s;
-            min-height: 100vh;
-            justify-content: center;
+            min-height: 100vh; justify-content: center;
         }
 
         .container { 
             background: var(--card-bg); padding: 30px 20px; border-radius: 25px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; 
-            width: 100%; max-width: 500px; position: relative;
+            width: 100%; max-width: 450px; position: relative;
             box-sizing: border-box;
         }
 
-        .theme-toggle {
+        .top-controls {
             position: absolute; top: 15px; right: 15px;
-            background: var(--stat-bg); border: none; border-radius: 50%;
-            width: 36px; height: 36px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem; color: var(--text-main); transition: 0.3s;
+            display: flex; gap: 8px;
         }
+
+        .control-btn {
+            background: var(--stat-bg); border: none; border-radius: 12px;
+            padding: 8px 12px; cursor: pointer;
+            font-size: 0.8rem; font-weight: bold; color: var(--text-main); transition: 0.3s;
+        }
+
+        .theme-toggle { border-radius: 50%; width: 36px; height: 36px; padding: 0; }
 
         h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-main); }
         .subtitle { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
@@ -57,7 +62,7 @@
             background: var(--stat-bg); border-radius: 12px; padding: 15px;
             margin-bottom: 20px; text-align: left; border-left: 5px solid var(--primary-color);
         }
-        .stat-header { font-weight: 800; color: var(--primary-color); font-size: 0.8rem; margin-bottom: 5px; display: block; }
+        .stat-header { font-weight: 800; color: var(--primary-color); font-size: 0.75rem; margin-bottom: 5px; display: block; }
         .stat-content { font-size: 0.8rem; color: var(--text-sub); line-height: 1.5; margin: 0; padding-left: 5px; list-style: none; }
 
         .settings-bar {
@@ -65,7 +70,7 @@
             padding: 10px 15px; background: var(--card-bg); border-radius: 12px;
             border: 1px solid var(--border-color); margin-bottom: 20px;
         }
-        .switch-text { font-weight: 700; font-size: 0.9rem; color: var(--text-sub); }
+        .switch-text { font-weight: 700; font-size: 0.85rem; color: var(--text-sub); }
 
         .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -74,104 +79,170 @@
         input:checked + .slider { background-color: var(--primary-color); }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        #lotto-container { 
-            min-height: 50px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center;
-            margin-bottom: 10px;
+        #menu-container { min-height: 60px; margin-bottom: 20px; }
+        .menu-card {
+            background: var(--card-bg); border: 2px solid var(--primary-color);
+            border-radius: 20px; padding: 25px 20px;
+            opacity: 0; transform: scale(0.95); animation: popIn 0.5s forwards;
+            box-shadow: 0 8px 20px rgba(255, 159, 67, 0.15);
         }
-
-        .placeholder { color: var(--text-sub); font-style: italic; font-size: 1rem; margin: 20px 0; }
-
-        .lotto-row { 
-            display: flex; justify-content: center; align-items: center; 
-            gap: 6px; margin-bottom: 12px; padding: 8px; 
-            background: var(--card-bg); border-radius: 50px; border: 1px solid var(--border-color);
-        }
-
-        .ball { 
-            width: 36px; height: 36px; border-radius: 50%; display: flex; 
-            align-items: center; justify-content: center; color: white; 
-            font-weight: 800; font-size: 0.9rem;
-            opacity: 0; transform: scale(0.5); animation: popIn 0.5s forwards;
-        }
-
-        @media (max-width: 400px) {
-            .ball { width: 30px; height: 30px; font-size: 0.8rem; }
-            .lotto-row { gap: 4px; padding: 6px; }
-        }
-
-        .bonus-plus { font-weight: bold; color: var(--text-sub); font-size: 1rem; margin: 0 2px; opacity: 0; animation: fadeIn 0.5s forwards; }
 
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
-        @keyframes fadeIn { to { opacity: 1; } }
 
-        .ball-1 { background: linear-gradient(135deg, #fbc400, #f9a825); }
-        .ball-11 { background: linear-gradient(135deg, #69c8f2, #2196f3); }
-        .ball-21 { background: linear-gradient(135deg, #ff7272, #f44336); }
-        .ball-31 { background: linear-gradient(135deg, #aaa, #757575); }
-        .ball-41 { background: linear-gradient(135deg, #b0d840, #8bc34a); }
-        .ball-bonus { background: #1e293b; border: 1.5px solid #fff; }
-        [data-theme='dark'] .ball-bonus { background: #f1f5f9; color: #1e293b; border: 1.5px solid #1e293b; }
+        .menu-info { margin-bottom: 15px; }
+        .food-name { font-weight: 900; font-size: 1.5rem; display: block; margin-bottom: 8px; color: var(--text-main); }
+        .kcal-badge { background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 100px; font-size: 0.9rem; font-weight: bold; }
 
-        .btn-group { display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap; }
-        button.primary-btn { flex: 2; min-width: 200px; padding: 16px; font-size: 1.1rem; background-color: var(--accent-color); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        button.copy-btn { flex: 1; min-width: 100px; padding: 16px; font-size: 1rem; background-color: var(--primary-color); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; display: none; }
+        .nutri-bar-container { display: flex; gap: 8px; font-size: 0.75rem; color: var(--text-sub); margin-top: 20px; }
+        .nutri-item { flex: 1; background: var(--stat-bg); padding: 8px; border-radius: 10px; }
+        .nutri-val { display: block; color: var(--nutri-tag); font-weight: 800; font-size: 1rem; margin-top: 2px; }
 
-        /* 🔥 경고문구: 기존 스타일로 복구 */
+        .btn-group { display: flex; gap: 8px; }
+        button.primary-btn { flex: 2; padding: 18px; font-size: 1.1rem; background-color: var(--accent-color); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button.copy-btn { flex: 1; padding: 18px; font-size: 1rem; background-color: var(--primary-color); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; display: none; }
+
         .warning-box {
-            margin-top: 30px; padding: 20px; border-radius: 15px;
-            background: rgba(231, 76, 60, 0.05); border: 1px solid rgba(231, 76, 60, 0.2);
-            font-size: 0.8rem; color: #e74c3c; line-height: 1.6; text-align: left;
+            margin-top: 30px; padding: 15px; border-radius: 15px;
+            background: rgba(255, 159, 67, 0.05); border: 1px solid rgba(255, 159, 67, 0.2);
+            font-size: 0.75rem; color: #d35400; line-height: 1.6; text-align: left;
         }
-        .warning-title { font-weight: bold; display: block; margin-bottom: 5px; }
-        .label { font-weight: bold; color: var(--text-sub); margin-right: 8px; width: 18px; font-size: 0.75rem; }
+        .placeholder { color: var(--text-sub); font-style: italic; margin: 30px 0; font-size: 1.1rem; }
     </style>
 </head>
 <body data-theme="light">
 
     <div class="container">
-        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+        <div class="top-controls">
+            <button class="control-btn" onclick="toggleLang()" id="lang-btn">EN</button>
+            <button class="control-btn theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+        </div>
 
-        <h1>2026 신 로또 번호 생성기</h1>
-        <p class="subtitle">AI 통계 기반 추천</p>
+        <h1 id="title">오늘 점심 뭐 먹지?</h1>
+        <p class="subtitle" id="subtitle">결정 장애 탈출! AI 추천 단일 메뉴</p>
 
         <div class="stat-box">
-            <span class="stat-header">ANALYSIS REPORT</span>
-            <ul class="stat-content">
-                <li>• 빈출: <b>43, 34, 12, 27, 17</b> 가중치 적용</li>
-                <li>• 알고리즘: <b>홀짝/구간 밸런스 필터</b> 작동 중</li>
+            <span class="stat-header" id="stat-header">NUTRITION GUIDELINE</span>
+            <ul class="stat-content" id="stat-content">
+                <li>• 성인 권장 점심 칼로리: <b>600~800kcal</b></li>
+                <li>• 분석: <b>단백질 중심, 저나트륨</b> 필터 적용 중</li>
             </ul>
         </div>
 
         <div class="settings-bar">
-            <span class="switch-text">보너스 번호 포함</span>
+            <span class="switch-text" id="switch-text">디저트/음료 포함</span>
             <label class="switch">
-                <input type="checkbox" id="bonus-toggle" checked>
+                <input type="checkbox" id="bonus-toggle">
                 <span class="slider"></span>
             </label>
         </div>
         
-        <div id="lotto-container">
-            <p class="placeholder">행운을 확인해보세요!</p>
+        <div id="menu-container">
+            <p class="placeholder" id="placeholder">배고픈 당신을 위한<br>오늘의 운명적인 메뉴는?</p>
         </div>
 
         <div class="btn-group">
-            <button class="primary-btn" onclick="generateAnalyticLotto()">5게임 추천받기</button>
-            <button id="copy-btn" class="copy-btn" onclick="copyToClipboard()">결과 복사</button>
+            <button class="primary-btn" onclick="generateLunchMenu()" id="pick-btn">메뉴 추천받기</button>
+            <button id="copy-btn" class="copy-btn" onclick="copyToClipboard()">복사</button>
         </div>
 
-        <div class="warning-box">
-            <span class="warning-title">⚠️ 주의사항 및 안내</span>
-            • 본 시스템은 과거 당첨 데이터를 기반으로 한 확률적 가중치를 사용하지만, <b>실제 당첨을 보장하지 않습니다.</b><br>
-            • 로또는 매 회차 독립적인 확률로 시행되는 무작위 추첨 게임입니다.<br>
-            • 과도한 몰입은 금전적 손실을 초래할 수 있으니 <b>소액으로 즐겁게</b> 이용하시기 바랍니다.
+        <div class="warning-box" id="warning-box">
+            <span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 식사 안내 및 주의사항</span>
+            • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b><br>
+            • 과식은 건강에 해로울 수 있으니 적당량 섭취를 권장합니다.<br>
+            • 점심 메뉴 결정으로 인한 동료와의 갈등은 본 서비스가 책임지지 않습니다.
         </div>
     </div>
 
     <script>
-        let lastGeneratedNumbers = "";
+        let currentLang = 'ko';
+        let lastGeneratedText = "";
+
+        const i18n = {
+            ko: {
+                title: "오늘 점심 뭐 먹지?",
+                subtitle: "결정 장애 탈출! AI 추천 단일 메뉴",
+                statHeader: "NUTRITION GUIDELINE",
+                statContent: "<li>• 성인 권장 점심 칼로리: <b>600~800kcal</b></li><li>• 분석: <b>단백질 중심, 저나트륨</b> 필터 적용 중</li>",
+                switchText: "디저트/음료 포함",
+                placeholder: "배고픈 당신을 위한<br>오늘의 운명적인 메뉴는?",
+                pickBtn: "메뉴 추천받기",
+                copyBtn: "복사",
+                copyAlert: "메뉴 정보가 복사되었습니다! 맛있게 드세요! 😋",
+                sideLabel: "추천 후식",
+                nutri: ["탄수화물", "단백질", "지방"],
+                warning: `<span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 식사 안내 및 주의사항</span>
+                          • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b><br>
+                          • 과식은 건강에 해로울 수 있으니 적당량 섭취를 권장합니다.<br>
+                          • 점심 메뉴 결정으로 인한 동료와의 갈등은 본 서비스가 책임지지 않습니다.`
+            },
+            en: {
+                title: "What's for Lunch?",
+                subtitle: "Escape Indecision! AI Picked Meal",
+                statHeader: "NUTRITION GUIDELINE",
+                statContent: "<li>• Recommended: <b>600~800 kcal</b></li><li>• Filter: <b>High Protein & Low Sodium</b> active</li>",
+                switchText: "Include Side/Drinks",
+                placeholder: "Hungry? <br>Let AI pick your destiny!",
+                pickBtn: "Pick My Meal",
+                copyBtn: "Copy",
+                copyAlert: "Copied to clipboard! Bon appétit! 😋",
+                sideLabel: "Side/Dessert",
+                nutri: ["Carbs", "Protein", "Fat"],
+                warning: `<span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ Dining Disclaimer</span>
+                          • This AI selection <b>does not fully reflect individual allergies or food preferences.</b><br>
+                          • Overeating can be harmful to health; moderate portions are recommended.<br>
+                          • We are not responsible for conflicts with colleagues over meal choices.`
+            }
+        };
+
+        const menuData = {
+            ko: [
+                { name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12 },
+                { name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22 },
+                { name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15 },
+                { name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45 },
+                { name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18 },
+                { name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15 },
+                { name: "짜장면", kcal: 800, c: 120, p: 20, f: 28 },
+                { name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4 },
+                { name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18 },
+                { name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12 }
+            ],
+            en: [
+                { name: "Grilled Chicken Salad", kcal: 350, c: 15, p: 40, f: 12 },
+                { name: "Pepperoni Pizza Slice", kcal: 450, c: 40, p: 18, f: 22 },
+                { name: "Sushi Platter (8pcs)", kcal: 420, c: 65, p: 20, f: 8 },
+                { name: "Classic Cheeseburger", kcal: 650, c: 45, p: 35, f: 38 },
+                { name: "Beef Burrito Bowl", kcal: 720, c: 80, p: 40, f: 28 },
+                { name: "Pasta Carbonara", kcal: 780, c: 85, p: 25, f: 40 },
+                { name: "Chicken Teriyaki Bento", kcal: 680, c: 90, p: 35, f: 15 },
+                { name: "Falafel Wrap", kcal: 580, c: 70, p: 15, f: 25 }
+            ]
+        };
+
+        const dessertData = {
+            ko: [{ name: "아메리카노", kcal: 10 }, { name: "조각 케이크", kcal: 350 }, { name: "제로 콜라", kcal: 0 }],
+            en: [{ name: "Iced Americano", kcal: 5 }, { name: "Chocolate Brownie", kcal: 320 }, { name: "Coke Zero", kcal: 0 }]
+        };
+
+        function toggleLang() {
+            currentLang = currentLang === 'ko' ? 'en' : 'ko';
+            document.getElementById('lang-btn').innerText = currentLang === 'ko' ? 'EN' : 'KO';
+            applyLang();
+            document.getElementById('menu-container').innerHTML = `<p class="placeholder">${i18n[currentLang].placeholder}</p>`;
+            document.getElementById('copy-btn').style.display = "none";
+        }
+
+        function applyLang() {
+            const lang = i18n[currentLang];
+            document.getElementById('title').innerText = lang.title;
+            document.getElementById('subtitle').innerText = lang.subtitle;
+            document.getElementById('stat-header').innerText = lang.statHeader;
+            document.getElementById('stat-content').innerHTML = lang.statContent;
+            document.getElementById('switch-text').innerText = lang.switchText;
+            document.getElementById('pick-btn').innerText = lang.pickBtn;
+            document.getElementById('copy-btn').innerText = lang.copyBtn;
+            document.getElementById('warning-box').innerHTML = lang.warning;
+        }
 
         function toggleTheme() {
             const body = document.body;
@@ -181,85 +252,54 @@
             themeBtn.innerText = isLight ? '☀️' : '🌙';
         }
 
-        const weights = {};
-        for (let i = 1; i <= 45; i++) weights[i] = 10;
-        const hotNumbers = [43, 34, 12, 27, 17, 1, 13, 18, 20, 40, 33, 37];
-        hotNumbers.forEach(n => weights[n] = 25);
+        function generateLunchMenu() {
+            const container = document.getElementById('menu-container');
+            const includeDessert = document.getElementById('bonus-toggle').checked;
+            container.innerHTML = '';
 
-        function getWeightedRandomNumber(exclude) {
-            let totalWeight = 0;
-            const pool = [];
-            for (let i = 1; i <= 45; i++) {
-                if (exclude.includes(i)) continue;
-                totalWeight += weights[i];
-                pool.push({ num: i, weight: totalWeight });
+            const lang = i18n[currentLang];
+            const foods = menuData[currentLang];
+            const desserts = dessertData[currentLang];
+
+            const food = foods[Math.floor(Math.random() * foods.length)];
+            const dessert = desserts[Math.floor(Math.random() * desserts.length)];
+            const totalKcal = includeDessert ? food.kcal + dessert.kcal : food.kcal;
+
+            const card = document.createElement('div');
+            card.className = 'menu-card';
+
+            let html = `
+                <div class="menu-info">
+                    <span class="food-name">${food.name}</span>
+                    <span class="kcal-badge">${totalKcal} kcal</span>
+                </div>
+                <div class="nutri-bar-container">
+                    <div class="nutri-item">${lang.nutri[0]}<span class="nutri-val">${food.c}g</span></div>
+                    <div class="nutri-item">${lang.nutri[1]}<span class="nutri-val">${food.p}g</span></div>
+                    <div class="nutri-item">${lang.nutri[2]}<span class="nutri-val">${food.f}g</span></div>
+                </div>
+            `;
+
+            if (includeDessert) {
+                html += `
+                    <div style="margin-top:20px; padding-top:15px; border-top:1px dashed var(--border-color); font-size:0.9rem;">
+                        ${lang.sideLabel}: <span style="color:var(--accent-color); font-weight:bold;">${dessert.name}</span> (+${dessert.kcal}kcal)
+                    </div>
+                `;
             }
-            const r = Math.random() * totalWeight;
-            return pool.find(p => r <= p.weight).num;
-        }
 
-        function generateSingleGame(includeBonus) {
-            let numbers = [];
-            while (numbers.length < 6) {
-                const n = getWeightedRandomNumber(numbers);
-                if (!numbers.includes(n)) numbers.push(n);
-            }
-            numbers.sort((a, b) => a - b);
-            let bonus = includeBonus ? getWeightedRandomNumber(numbers) : null;
-            return { main: numbers, bonus: bonus };
-        }
+            card.innerHTML = html;
+            container.appendChild(card);
 
-        function generateAnalyticLotto() {
-            const container = document.getElementById('lotto-container');
-            const includeBonus = document.getElementById('bonus-toggle').checked;
-            const copyBtn = document.getElementById('copy-btn');
+            lastGeneratedText = `[${lang.title}]\nMenu: ${food.name}\nTotal: ${totalKcal} kcal\nNutrients: ${lang.nutri[0]}(${food.c}g), ${lang.nutri[1]}(${food.p}g), ${lang.nutri[2]}(${food.f}g)`;
+            if(includeDessert) lastGeneratedText += `\n${lang.sideLabel}: ${dessert.name}`;
             
-            container.innerHTML = ''; 
-            const labels = ['A', 'B', 'C', 'D', 'E'];
-            let copyText = "[추천 로또 번호]\n";
-
-            for (let i = 0; i < 5; i++) {
-                const game = generateSingleGame(includeBonus);
-                const row = document.createElement('div');
-                row.className = 'lotto-row';
-                const label = document.createElement('span');
-                label.className = 'label';
-                label.innerText = labels[i];
-                row.appendChild(label);
-
-                game.main.forEach((num, index) => {
-                    row.appendChild(createBall(num, (i * 0.05) + (index * 0.03)));
-                });
-
-                let rowString = `${labels[i]} : ${game.main.join(', ')}`;
-                if (includeBonus) {
-                    const plus = document.createElement('span');
-                    plus.className = 'bonus-plus'; plus.innerText = '+';
-                    row.appendChild(plus);
-                    row.appendChild(createBall(game.bonus, (i * 0.05) + 0.25, true));
-                    rowString += ` + 보너스(${game.bonus})`;
-                }
-                copyText += rowString + "\n";
-                container.appendChild(row);
-            }
-            lastGeneratedNumbers = copyText;
-            copyBtn.style.display = "block";
-        }
-
-        function createBall(num, delay, isBonus = false) {
-            const ball = document.createElement('div');
-            let colorClass = isBonus ? 'ball-bonus' : 
-                             num <= 10 ? 'ball-1' : num <= 20 ? 'ball-11' : 
-                             num <= 30 ? 'ball-21' : num <= 40 ? 'ball-31' : 'ball-41';
-            ball.className = `ball ${colorClass}`;
-            ball.innerText = num;
-            ball.style.animationDelay = `${delay}s`;
-            return ball;
+            document.getElementById('copy-btn').style.display = "block";
         }
 
         function copyToClipboard() {
-            navigator.clipboard.writeText(lastGeneratedNumbers).then(() => {
-                alert("번호가 복사되었습니다!");
+            navigator.clipboard.writeText(lastGeneratedText).then(() => {
+                alert(i18n[currentLang].copyAlert);
             });
         }
     </script>
