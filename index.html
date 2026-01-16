@@ -51,14 +51,9 @@
             background: var(--stat-bg); border: none; border-radius: 12px;
             padding: 8px 12px; cursor: pointer;
             font-size: 0.8rem; font-weight: bold; color: var(--text-main); transition: 0.3s;
-            display: flex; align-items: center; justify-content: center;
         }
 
-        /* 이모티콘 크기 및 정렬 수정 */
-        .theme-toggle { 
-            border-radius: 50%; width: 34px; height: 34px; padding: 0; 
-            font-size: 1.1rem; line-height: 1;
-        }
+        .theme-toggle { border-radius: 50%; width: 36px; height: 36px; padding: 0; }
 
         h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-main); }
         .subtitle { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
@@ -132,11 +127,12 @@
         }
         .placeholder { color: var(--text-sub); font-style: italic; margin: 30px 0; font-size: 1.1rem; text-align: center; }
 
-        /* 하단 섹션 */
+        /* 하단 섹션 (댓글 및 문의) */
         .bottom-section {
             width: 100%; max-width: 450px; margin-top: 20px; margin-bottom: 50px;
         }
 
+        /* Disqus 컨테이너 */
         #disqus_thread {
             background: var(--card-bg); padding: 20px; border-radius: 20px;
             border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
@@ -236,7 +232,7 @@
                     <textarea name="message" id="user-message" rows="4" placeholder="제휴 제안 또는 메뉴 등록 문의 내용을 적어주세요."></textarea>
                 </div>
                 <input type="hidden" name="_subject" value="오늘점심뭐먹지? 새로운 제휴 문의">
-                <button type="submit" class="submit-btn">보내기</button>
+                <button type="submit" class="submit-btn">문의 보내기</button>
             </form>
         </div>
     </div>
@@ -245,7 +241,6 @@
         var disqus_config = function () {
             this.page.url = window.location.href;  
             this.page.identifier = 'lunch-picker-main'; 
-            this.page.title = '당신의 최애 점심 메뉴는?'; // Disqus 제목 문구 수정
         };
         (function() { 
             var d = document, s = d.createElement('script');
@@ -254,6 +249,7 @@
             (d.head || d.body).appendChild(s);
         })();
     </script>
+    <script id="dsq-count-scr" src="//lunch-18.disqus.com/count.js" async></script>
 
     <script>
         let currentLang = 'ko';
