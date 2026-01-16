@@ -316,4 +316,384 @@
         }
     </script>
 </body>
+</html><!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘 점심 뭐 먹지? | What's for Lunch?</title>
+    <style>
+        :root {
+            --primary-color: #ff9f43;
+            --accent-color: #ee5253;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --stat-bg: #f1f5f9;
+            --border-color: #e2e8f0;
+            --nutri-tag: #10ac84;
+        }
+
+        [data-theme='dark'] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --stat-bg: #334155;
+            --border-color: #334155;
+        }
+
+        body { 
+            font-family: 'Pretendard', 'Inter', -apple-system, sans-serif; 
+            background-color: var(--bg-color); 
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 20px; margin: 0; color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh; justify-content: flex-start;
+        }
+
+        .container { 
+            background: var(--card-bg); padding: 30px 20px; border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; 
+            width: 100%; max-width: 450px; position: relative;
+            box-sizing: border-box; margin: auto;
+        }
+
+        .top-controls {
+            position: absolute; top: 15px; right: 15px;
+            display: flex; gap: 8px;
+        }
+
+        .control-btn {
+            background: var(--stat-bg); border: none; border-radius: 12px;
+            padding: 8px 12px; cursor: pointer;
+            font-size: 0.8rem; font-weight: bold; color: var(--text-main); transition: 0.3s;
+        }
+
+        .theme-toggle { border-radius: 50%; width: 36px; height: 36px; padding: 0; }
+
+        h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-main); }
+        .subtitle { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
+
+        .filter-group {
+            display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 14px; border-radius: 20px; border: 1px solid var(--border-color);
+            background: var(--card-bg); color: var(--text-sub); font-size: 0.85rem; cursor: pointer; transition: 0.2s; font-weight: 600;
+        }
+        .filter-btn.active {
+            background: var(--primary-color); color: white; border-color: var(--primary-color);
+        }
+
+        .stat-box {
+            background: var(--stat-bg); border-radius: 12px; padding: 15px;
+            margin-bottom: 20px; text-align: left; border-left: 5px solid var(--primary-color);
+        }
+        .stat-header { font-weight: 800; color: var(--primary-color); font-size: 0.75rem; margin-bottom: 5px; display: block; }
+        .stat-content { font-size: 0.8rem; color: var(--text-sub); line-height: 1.5; margin: 0; padding-left: 5px; list-style: none; }
+
+        .settings-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 15px; background: var(--card-bg); border-radius: 12px;
+            border: 1px solid var(--border-color); margin-bottom: 20px;
+        }
+        .switch-text { font-weight: 700; font-size: 0.85rem; color: var(--text-sub); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        #menu-container { min-height: 60px; margin-bottom: 20px; }
+        .menu-card {
+            background: var(--card-bg); border: 2px solid var(--primary-color);
+            border-radius: 20px;
+            opacity: 0; transform: scale(0.95); animation: popIn 0.5s forwards;
+            box-shadow: 0 8px 20px rgba(255, 159, 67, 0.15);
+            overflow: hidden; text-align: left;
+        }
+        
+        .food-image {
+            width: 100%; height: 200px; object-fit: cover; background-color: #eee; display: block;
+        }
+
+        @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+
+        .menu-info { padding: 20px 20px 0 20px; }
+        .food-name { font-weight: 900; font-size: 1.5rem; display: block; margin-bottom: 8px; color: var(--text-main); }
+        .kcal-badge { background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 100px; font-size: 0.9rem; font-weight: bold; }
+
+        .nutri-bar-container { 
+            display: flex; gap: 8px; font-size: 0.75rem; color: var(--text-sub); 
+            margin-top: 15px; padding: 0 20px 20px 20px;
+        }
+        .nutri-item { flex: 1; background: var(--stat-bg); padding: 8px; border-radius: 10px; text-align: center; }
+        .nutri-val { display: block; color: var(--nutri-tag); font-weight: 800; font-size: 1rem; margin-top: 2px; }
+
+        .btn-group { display: flex; gap: 8px; width: 100%; }
+        button.primary-btn { flex: 1; padding: 18px; font-size: 1.1rem; background-color: var(--accent-color); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button.primary-btn:hover { filter: brightness(1.1); }
+
+        .warning-box {
+            margin-top: 30px; padding: 15px; border-radius: 15px;
+            background: rgba(255, 159, 67, 0.05); border: 1px solid rgba(255, 159, 67, 0.2);
+            font-size: 0.75rem; color: #d35400; line-height: 1.6; text-align: left;
+        }
+        .placeholder { color: var(--text-sub); font-style: italic; margin: 30px 0; font-size: 1.1rem; text-align: center; }
+
+        /* --- 제휴 문의 폼 스타일 추가 --- */
+        .partnership-section {
+            width: 100%; max-width: 450px; margin-top: 20px; margin-bottom: 50px;
+        }
+        .form-toggle-btn {
+            background: none; border: none; color: var(--text-sub); font-size: 0.85rem; 
+            text-decoration: underline; cursor: pointer; width: 100%; margin-bottom: 10px;
+        }
+        #contact-form-wrapper {
+            background: var(--card-bg); border-radius: 20px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: none; text-align: left;
+            border: 1px solid var(--border-color);
+        }
+        .form-title { font-weight: 800; font-size: 1rem; margin-bottom: 15px; color: var(--text-main); display: block; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.75rem; color: var(--text-sub); margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border-color);
+            background: var(--stat-bg); color: var(--text-main); font-family: inherit; font-size: 0.85rem;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            width: 100%; padding: 12px; background: var(--primary-color); color: white;
+            border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .submit-btn:hover { background: #e67e22; }
+    </style>
+</head>
+<body data-theme="light">
+
+    <div class="container">
+        <div class="top-controls">
+            <button class="control-btn" onclick="toggleLang()" id="lang-btn">EN</button>
+            <button class="control-btn theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+        </div>
+
+        <h1 id="title">오늘 점심 뭐 먹지?</h1>
+        <p class="subtitle" id="subtitle">결정 장애 탈출! AI 추천 단일 메뉴</p>
+
+        <div class="filter-group" id="filter-group">
+            <button class="filter-btn active" onclick="setFilter('all')">전체</button>
+            <button class="filter-btn" onclick="setFilter('kr')">한식</button>
+            <button class="filter-btn" onclick="setFilter('as')">일/중식</button>
+            <button class="filter-btn" onclick="setFilter('ws')">양식</button>
+        </div>
+
+        <div class="stat-box">
+            <span class="stat-header" id="stat-header">NUTRITION GUIDELINE</span>
+            <ul class="stat-content" id="stat-content">
+                <li>• 성인 권장 점심 칼로리: <b>600~800kcal</b></li>
+                <li>• 분석: <b>단백질 중심, 저나트륨</b> 필터 적용 중</li>
+            </ul>
+        </div>
+
+        <div class="settings-bar">
+            <span class="switch-text" id="switch-text">디저트/음료 포함</span>
+            <label class="switch">
+                <input type="checkbox" id="bonus-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div id="menu-container">
+            <p class="placeholder" id="placeholder">배고픈 당신을 위한<br>오늘의 운명적인 메뉴는?</p>
+        </div>
+
+        <div class="btn-group">
+            <button class="primary-btn" onclick="generateLunchMenu()" id="pick-btn">메뉴 추천받기</button>
+        </div>
+
+        <div class="warning-box" id="warning-box">
+            <span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 식사 안내 및 주의사항</span>
+            • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b><br>
+            • 과식은 건강에 해로울 수 있으니 적당량 섭취를 권장합니다.
+        </div>
+    </div>
+
+    <div class="partnership-section">
+        <button class="form-toggle-btn" onclick="toggleContactForm()" id="toggle-form-text">제휴 및 맛집 등록 문의</button>
+        <div id="contact-form-wrapper">
+            <span class="form-title">Business Partnership</span>
+            <form action="https://formspree.io/f/xojjjadw" method="POST">
+                <div class="form-group">
+                    <label>성함 / 업체명</label>
+                    <input type="text" name="name" placeholder="홍길동 / 맛집식당" required>
+                </div>
+                <div class="form-group">
+                    <label>회신받을 이메일</label>
+                    <input type="email" name="_replyto" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>문의 내용</label>
+                    <textarea name="message" rows="4" placeholder="제휴 제안 또는 메뉴 등록 문의 내용을 적어주세요." required></textarea>
+                </div>
+                <input type="hidden" name="_subject" value="오늘점심뭐먹지? 새로운 제휴 문의">
+                <button type="submit" class="submit-btn">문의 보내기</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'ko';
+        let currentFilter = 'all';
+
+        // 폼 열기/닫기 함수
+        function toggleContactForm() {
+            const wrapper = document.getElementById('contact-form-wrapper');
+            const btnText = document.getElementById('toggle-form-text');
+            if (wrapper.style.display === 'block') {
+                wrapper.style.display = 'none';
+                btnText.innerText = "제휴 및 맛집 등록 문의";
+            } else {
+                wrapper.style.display = 'block';
+                btnText.innerText = "문의창 닫기";
+                wrapper.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        const i18n = {
+            ko: {
+                title: "오늘 점심 뭐 먹지?",
+                subtitle: "결정 장애 탈출! AI 추천 단일 메뉴",
+                statHeader: "NUTRITION GUIDELINE",
+                statContent: "<li>• 성인 권장 점심 칼로리: <b>600~800kcal</b></li><li>• 분석: <b>단백질 중심, 저나트륨</b> 필터 적용 중</li>",
+                switchText: "디저트/음료 포함",
+                placeholder: "배고픈 당신을 위한<br>오늘의 운명적인 메뉴는?",
+                pickBtn: "메뉴 추천받기",
+                sideLabel: "추천 후식",
+                nutri: ["탄수화물", "단백질", "지방"],
+                warning: `<span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 식사 안내 및 주의사항</span>
+                          • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b>`
+            },
+            en: {
+                title: "What's for Lunch?",
+                subtitle: "Escape Indecision! AI Picked Meal",
+                statHeader: "NUTRITION GUIDELINE",
+                statContent: "<li>• Recommended: <b>600~800 kcal</b></li><li>• Filter: <b>High Protein</b> active</li>",
+                switchText: "Include Side/Drinks",
+                placeholder: "Hungry? <br>Let AI pick your destiny!",
+                pickBtn: "Pick My Meal",
+                sideLabel: "Side/Dessert",
+                nutri: ["Carbs", "Protein", "Fat"],
+                warning: `<span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ Dining Disclaimer</span>
+                          • This AI selection <b>does not fully reflect individual allergies.</b>`
+            }
+        };
+
+        const menuData = {
+            ko: [
+                { category: 'kr', name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "img/kimchi.jpg" },
+                { category: 'kr', name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
+                { category: 'as', name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
+                { category: 'as', name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "img/donkas.jpg" },
+                { category: 'ws', name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18, img: "img/pasta.jpg" },
+                { category: 'ws', name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
+                { category: 'as', name: "짜장면", kcal: 800, c: 120, p: 20, f: 28, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80" },
+                { category: 'as', name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4, img: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=800&q=80" },
+                { category: 'ws', name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18, img: "img/steak.jpg" },
+                { category: 'kr', name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12, img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80" }
+            ],
+            en: [
+                { category: 'ws', name: "Grilled Chicken Salad", kcal: 350, c: 15, p: 40, f: 12, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" },
+                { category: 'ws', name: "Classic Cheeseburger", kcal: 650, c: 45, p: 35, f: 38, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" }
+            ]
+        };
+
+        const dessertData = {
+            ko: [{ name: "아메리카노", kcal: 10 }, { name: "조각 케이크", kcal: 350 }, { name: "제로 콜라", kcal: 0 }],
+            en: [{ name: "Iced Americano", kcal: 5 }, { name: "Chocolate Brownie", kcal: 320 }, { name: "Coke Zero", kcal: 0 }]
+        };
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'ko' ? 'en' : 'ko';
+            document.getElementById('lang-btn').innerText = currentLang === 'ko' ? 'EN' : 'KO';
+            applyLang();
+            document.getElementById('menu-container').innerHTML = `<p class="placeholder">${i18n[currentLang].placeholder}</p>`;
+        }
+
+        function applyLang() {
+            const lang = i18n[currentLang];
+            document.getElementById('title').innerText = lang.title;
+            document.getElementById('subtitle').innerText = lang.subtitle;
+            document.getElementById('stat-header').innerText = lang.statHeader;
+            document.getElementById('stat-content').innerHTML = lang.statContent;
+            document.getElementById('switch-text').innerText = lang.switchText;
+            document.getElementById('pick-btn').innerText = lang.pickBtn;
+            document.getElementById('warning-box').innerHTML = lang.warning;
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.getElementById('theme-btn');
+            const isLight = body.getAttribute('data-theme') === 'light';
+            body.setAttribute('data-theme', isLight ? 'dark' : 'light');
+            themeBtn.innerText = isLight ? '☀️' : '🌙';
+        }
+
+        function generateLunchMenu() {
+            const container = document.getElementById('menu-container');
+            const includeDessert = document.getElementById('bonus-toggle').checked;
+            container.innerHTML = '';
+
+            const lang = i18n[currentLang];
+            let foods = menuData[currentLang];
+
+            if (currentFilter !== 'all') {
+                foods = foods.filter(item => item.category === currentFilter);
+            }
+
+            const desserts = dessertData[currentLang];
+            const food = foods[Math.floor(Math.random() * foods.length)];
+            const dessert = desserts[Math.floor(Math.random() * desserts.length)];
+            const totalKcal = includeDessert ? food.kcal + dessert.kcal : food.kcal;
+
+            const card = document.createElement('div');
+            card.className = 'menu-card';
+
+            let html = `
+                <img src="${food.img}" alt="${food.name}" class="food-image" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
+                <div class="menu-info">
+                    <span class="food-name">${food.name}</span>
+                    <span class="kcal-badge">${totalKcal} kcal</span>
+                </div>
+                <div class="nutri-bar-container">
+                    <div class="nutri-item">${lang.nutri[0]}<span class="nutri-val">${food.c}g</span></div>
+                    <div class="nutri-item">${lang.nutri[1]}<span class="nutri-val">${food.p}g</span></div>
+                    <div class="nutri-item">${lang.nutri[2]}<span class="nutri-val">${food.f}g</span></div>
+                </div>
+            `;
+
+            if (includeDessert) {
+                html += `
+                    <div style="padding: 15px 20px; border-top:1px dashed var(--border-color); font-size:0.9rem; background: var(--stat-bg);">
+                        ${lang.sideLabel}: <span style="color:var(--accent-color); font-weight:bold;">${dessert.name}</span> (+${dessert.kcal}kcal)
+                    </div>
+                `;
+            }
+
+            card.innerHTML = html;
+            container.appendChild(card);
+        }
+    </script>
+</body>
 </html>
