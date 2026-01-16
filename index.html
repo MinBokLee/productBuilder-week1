@@ -65,9 +65,6 @@
         .result-desc { background: var(--stat-bg); padding: 20px; border-radius: 15px; font-size: 0.95rem; line-height: 1.8; color: var(--text-main); }
         .result-section { margin-bottom: 10px; }
         .result-label { font-weight: bold; color: var(--accent-color); margin-right: 5px; }
-        
-        .bar-bg { background: var(--border-color); height: 8px; border-radius: 4px; overflow: hidden; margin-top: 5px; margin-bottom: 12px; }
-        .bar-fill { background: var(--primary-color); height: 100%; width: 0; transition: 1s; }
 
         .bottom-section { width: 100%; max-width: 450px; margin-top: 20px; margin-bottom: 50px; }
         .form-toggle-btn { background: none; border: none; color: var(--text-sub); text-decoration: underline; cursor: pointer; width: 100%; margin-bottom: 15px; }
@@ -127,7 +124,6 @@
 
             <div id="result-area" class="result-box">
                 <div id="result-title" class="result-title"></div>
-                <div id="label-bars"></div>
                 <div id="result-desc" class="result-desc"></div>
                 <button class="secondary-btn" id="result-go-back" onclick="navigateTo('main-page')" style="background:var(--accent-color); margin-top:20px;">점심 추천 받으러 가기</button>
             </div>
@@ -155,13 +151,13 @@
                 resultGoBack: "점심 추천 받으러 가기",
                 analyzing: "분석 중...",
                 feature: "특징", personality: "성격", love: "연애 스타일",
-                dogTitle: "친근한 강아지상",
+                confirmTitle: "당신은 확실한 {animal}상입니다!",
+                dog: "강아지", cat: "고양이",
                 dogDesc: {
                     f: "부드럽고 둥글둥글한 인상으로 보는 사람을 기분 좋게 만드는 매력이 있습니다.",
                     p: "다정다감하고 사교적이며, 어디서나 적응력이 뛰어난 '분위기 메이커'입니다.",
                     l: "상대방에게 헌신적이며 애정 표현이 솔직하고 풍부한 스타일입니다."
                 },
-                catTitle: "매력적인 고양이상",
                 catDesc: {
                     f: "눈매가 날카롭고 세련되어 도시적이고 도도한 분위기를 풍깁니다.",
                     p: "자기주관이 뚜렷하고 관찰력이 좋으며, 겉으로는 차가워 보이지만 내면은 따뜻한 '츤데레' 스타일입니다.",
@@ -184,13 +180,13 @@
                 resultGoBack: "Go to Lunch Picker",
                 analyzing: "Analyzing...",
                 feature: "Feature", personality: "Personality", love: "Love Style",
-                dogTitle: "Friendly Dog Face",
+                confirmTitle: "You are definitely a {animal} face!",
+                dog: "Dog", cat: "Cat",
                 dogDesc: {
                     f: "A soft and round impression that makes people feel comfortable and happy.",
                     p: "Affectionate, sociable, and an excellent 'mood maker' who adapts well anywhere.",
                     l: "Devoted to their partner and honest with a wealth of romantic expression."
                 },
-                catTitle: "Charming Cat Face",
                 catDesc: {
                     f: "Sharp and sophisticated eyes that exude a chic and urban vibe.",
                     p: "Strong-willed and observant, with a 'Tsundere' style that is warm inside despite a cool exterior.",
@@ -281,32 +277,32 @@
                 const prediction = await animalModel.predict(img);
                 prediction.sort((a, b) => b.probability - a.probability);
                 
-                showAnimalResult(prediction);
+                showAnimalResult(prediction[0]); // 가장 높은 확률 결과만 전달
                 document.getElementById('upload-btn').innerText = i18n[currentLang].uploadBtn;
             };
             reader.readAsDataURL(file);
         }
 
-        function showAnimalResult(prediction) {
-            const top = prediction[0].className; 
+        function showAnimalResult(topPrediction) {
+            const topAnimal = topPrediction.className; 
             const t = i18n[currentLang];
             const resultArea = document.getElementById('result-area');
-            const bars = document.getElementById('label-bars');
             const desc = document.getElementById('result-desc');
+            const title = document.getElementById('result-title');
             
             resultArea.style.display = 'block';
-            bars.innerHTML = "";
+            
+            let animalName = (topAnimal === "강아지상") ? t.dog : t.cat;
+            title.innerText = t.confirmTitle.replace("{animal}", animalName);
 
             let content = "";
-            if(top === "강아지상") {
-                document.getElementById('result-title').innerText = t.dogTitle;
+            if(topAnimal === "강아지상") {
                 content = `
                     <div class="result-section"><span class="result-label">[${t.feature}]</span> ${t.dogDesc.f}</div>
                     <div class="result-section"><span class="result-label">[${t.personality}]</span> ${t.dogDesc.p}</div>
                     <div class="result-section"><span class="result-label">[${t.love}]</span> ${t.dogDesc.l}</div>
                 `;
             } else {
-                document.getElementById('result-title').innerText = t.catTitle;
                 content = `
                     <div class="result-section"><span class="result-label">[${t.feature}]</span> ${t.catDesc.f}</div>
                     <div class="result-section"><span class="result-label">[${t.personality}]</span> ${t.catDesc.p}</div>
@@ -314,17 +310,6 @@
                 `;
             }
             desc.innerHTML = content;
-
-            prediction.forEach(p => {
-                const prob = (p.probability * 100).toFixed(0);
-                bars.innerHTML += `
-                    <div style="margin-bottom:5px;">
-                        <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:bold;">
-                            <span>${p.className}</span><span>${prob}%</span>
-                        </div>
-                        <div class="bar-bg"><div class="bar-fill" style="width:${prob}%"></div></div>
-                    </div>`;
-            });
         }
 
         function toggleTheme() {
