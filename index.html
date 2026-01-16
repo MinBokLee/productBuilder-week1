@@ -8,8 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <style>
         :root {
-            --primary-color: #4f46e5; /* 모던한 블루 바이올렛 */
-            --accent-color: #f43f5e; /* 세련된 로즈 레드 */
+            --primary-color: #4f46e5; 
+            --accent-color: #f43f5e; 
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
@@ -17,6 +17,8 @@
             --stat-bg: #f1f5f9;
             --border-color: #e2e8f0;
             --btn-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            /* 그라데이션 타이틀용 */
+            --title-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
         }
 
         [data-theme='dark'] {
@@ -26,6 +28,7 @@
             --text-sub: #94a3b8;
             --stat-bg: #0f172a;
             --border-color: #334155;
+            --title-gradient: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
         }
 
         body { 
@@ -50,41 +53,53 @@
         .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; }
         .control-btn { background: var(--stat-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 8px 12px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--text-main); transition: 0.2s; }
 
-        /* 추천 버튼 스타일 개선 */
+        /* [수정] 모던 그라데이션 타이틀 스타일 */
+        .brand-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin: 20px 0 8px 0;
+            letter-spacing: -1.5px;
+            background: var(--title-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .brand-underline {
+            width: 40px;
+            height: 5px;
+            background: var(--primary-color);
+            margin: 0 auto 25px auto;
+            border-radius: 10px;
+        }
+
         .primary-btn { 
             width: 100%; padding: 20px; font-size: 1.15rem; background: linear-gradient(135deg, var(--primary-color), #818cf8);
             color: white; border: none; border-radius: 18px; cursor: pointer; font-weight: 700;
             box-shadow: var(--btn-shadow); transition: transform 0.2s, box-shadow 0.2s;
         }
         .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4); }
-        .primary-btn:active { transform: translateY(0); }
 
         .link-btn { background: var(--stat-bg); border: 1px dashed var(--primary-color); color: var(--primary-color); padding: 14px; border-radius: 16px; cursor: pointer; font-weight: 600; width: 100%; margin-bottom: 24px; transition: 0.2s; }
-        .link-btn:hover { background: #eef2ff; }
 
         .filter-group { display: flex; justify-content: center; gap: 10px; margin-bottom: 24px; }
         .filter-btn { padding: 10px 16px; border-radius: 14px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: 500; }
         .filter-btn.active { background: var(--text-main); color: var(--card-bg); border-color: var(--text-main); }
         
-        /* 모던 음식 결과 카드 */
         .menu-card { border-radius: 24px; overflow: hidden; text-align: left; animation: fadeIn 0.4s ease; background: var(--card-bg); border: 1px solid var(--border-color); margin-bottom: 24px; }
         .food-image { width: 100%; height: 240px; object-fit: cover; }
         .food-header { padding: 20px 20px 0 20px; }
         .food-badge { background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         .food-name { margin: 12px 0 8px 0; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
 
-        .nutri-container { padding: 0 20px 20px 20px; }
-        .nutri-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 15px 0; }
+        .nutri-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 15px 20px; }
         .nutri-item { background: var(--stat-bg); padding: 12px; border-radius: 16px; text-align: center; }
-        .nutri-label { font-size: 0.75rem; color: var(--text-sub); display: block; margin-bottom: 4px; font-weight: 500; }
+        .nutri-label { font-size: 0.75rem; color: var(--text-sub); display: block; margin-bottom: 4px; }
         .nutri-value { font-weight: 700; font-size: 1.05rem; }
 
-        .food-story { padding: 15px; background: #fffbeb; border-radius: 16px; border-left: 4px solid #f59e0b; margin-top: 15px; }
+        .food-story { padding: 15px; background: #fffbeb; border-radius: 16px; border-left: 4px solid #f59e0b; margin: 0 20px 20px 20px; }
         [data-theme='dark'] .food-story { background: #451a03; border-left: 4px solid #d97706; }
-        .story-title { font-size: 0.85rem; font-weight: 800; color: #b45309; display: block; margin-bottom: 4px; }
         .story-text { font-size: 0.88rem; color: var(--text-main); line-height: 1.6; }
 
-        /* 동물상 테스트 영역 */
         #image-preview { width: 100%; max-width: 300px; border-radius: 24px; margin: 24px 0; display: none; object-fit: cover; border: 4px solid var(--card-bg); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         .result-box { margin-top: 24px; text-align: left; display: none; }
         .result-title { font-size: 1.8rem; font-weight: 900; color: var(--primary-color); text-align: center; margin-bottom: 20px; }
@@ -102,8 +117,13 @@
                 <button class="control-btn" onclick="toggleLang()">KO / EN</button>
                 <button class="control-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
             </div>
-            <h1 id="main-title" style="margin-top:20px; font-weight:900;">오늘 점심 뭐 먹지?</h1>
-            <p id="main-sub" style="color:var(--text-sub); margin-bottom:30px; font-size:1.1rem;">AI가 당신의 완벽한 한 끼를 큐레이팅합니다.</p>
+            
+            <div style="margin-top:20px;">
+                <h1 id="main-title" class="brand-title">오늘 점심 뭐 먹지?</h1>
+                <div class="brand-underline"></div>
+            </div>
+            
+            <p id="main-sub" style="color:var(--text-sub); margin-bottom:30px; font-size:1.1rem; font-weight: 500;">AI가 당신의 완벽한 한 끼를 큐레이팅합니다.</p>
 
             <button class="link-btn" id="go-animal-btn" onclick="navigateTo('animal-page')">✨ 나랑 어울리는 동물상 테스트</button>
 
@@ -176,7 +196,7 @@
                 uploadBtn: "사진 업로드",
                 resultGoBack: "점심 추천 받으러 가기",
                 analyzing: "AI 분석 중...",
-                carb: "탄수화물", protein: "단백질", fat: "지방", insight: "영양학적 가이드",
+                carb: "탄수화물", protein: "단백질", fat: "지방",
                 confirmTitle: "확실한 '{animal}상' 이시네요!",
                 dog: "강아지", cat: "고양이",
                 dogDesc: "온화하고 친근한 눈매를 가진 당신은 누구에게나 호감을 주는 타입입니다. 성격 또한 다정다감하여 주변 사람들에게 긍정적인 에너지를 전파합니다.",
@@ -197,7 +217,7 @@
                 uploadBtn: "Upload Photo",
                 resultGoBack: "Go to Lunch Picker",
                 analyzing: "Analyzing...",
-                carb: "Carbs", protein: "Protein", fat: "Fat", insight: "Nutrition Guide",
+                carb: "Carbs", protein: "Protein", fat: "Fat",
                 confirmTitle: "You're definitely a '{animal}' face!",
                 dog: "Dog", cat: "Cat",
                 dogDesc: "With warm and friendly eyes, you are a likable type to everyone. Your affectionate personality spreads positive energy to those around you.",
@@ -208,48 +228,21 @@
         const menuData = [
             { 
                 category: 'kr', 
-                ko: { 
-                    name: "매콤 제육볶음", 
-                    summary: "비타민 B1이 풍부한 돼지고기와 고추장의 캡사이신이 만나 신진대사를 촉진합니다.",
-                    story: "제육볶음은 조선 시대 '저육(돼지고기)'에서 유래했습니다. 현대에는 직장인들의 피로 해소를 돕는 가장 강력한 에너지원입니다."
-                },
-                en: { 
-                    name: "Spicy Stir-fried Pork", 
-                    summary: "Rich in Vitamin B1, this dish combines pork and chili paste to boost metabolism and energy.",
-                    story: "Originating from the Joseon Dynasty, it is now the most powerful energy source for busy workers in Korea."
-                },
-                kcal: 750, nutri: { c: "42g", p: "35g", f: "20g" }, 
-                img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" 
+                ko: { name: "매콤 제육볶음", summary: "비타민 B1이 풍부한 돼지고기와 고추장의 캡사이신이 만나 신진대사를 촉진합니다.", story: "제육볶음은 조선 시대 '저육'에서 유래했습니다. 현대에는 직장인들의 피로 해소를 돕는 강력한 에너지원입니다." },
+                en: { name: "Spicy Stir-fried Pork", summary: "Rich in Vitamin B1, this dish combines pork and chili paste to boost metabolism.", story: "Originating from the Joseon Dynasty, it is now the most powerful energy source for busy workers in Korea." },
+                kcal: 750, nutri: { c: "42g", p: "35g", f: "20g" }, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" 
             },
             { 
                 category: 'as', 
-                ko: { 
-                    name: "프리미엄 연어 초밥", 
-                    summary: "DHA가 풍부한 연어는 두뇌 활동을 돕고 혈관 건강을 개선하는 고단백 식품입니다.",
-                    story: "연어는 강렬한 색감만큼 영양도 풍부합니다. 집중력이 필요한 오후 일과를 위해 가볍지만 든든한 선택이 됩니다."
-                },
-                en: { 
-                    name: "Premium Salmon Sushi", 
-                    summary: "Rich in DHA, salmon is a high-protein food that helps brain activity and improves vascular health.",
-                    story: "With its vibrant color and rich nutrients, it's a light yet filling choice for a productive afternoon."
-                },
-                kcal: 520, nutri: { c: "58g", p: "24g", f: "11g" }, 
-                img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" 
+                ko: { name: "프리미엄 연어 초밥", summary: "DHA가 풍부한 연어는 두뇌 활동을 돕고 혈관 건강을 개선하는 고단백 식품입니다.", story: "연어는 강렬한 색감만큼 영양도 풍부합니다. 집중력이 필요한 오후 일과를 위해 가볍지만 든든한 선택이 됩니다." },
+                en: { name: "Premium Salmon Sushi", summary: "Rich in DHA, salmon is a high-protein food that helps brain activity.", story: "With its vibrant color and rich nutrients, it's a light yet filling choice for a productive afternoon." },
+                kcal: 520, nutri: { c: "58g", p: "24g", f: "11g" }, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" 
             },
             { 
                 category: 'ws', 
-                ko: { 
-                    name: "갈릭 알리오 올리오", 
-                    summary: "올리브유의 불포화 지방산과 마늘의 알리신 성분이 면역력을 높이고 콜레스테롤을 낮춥니다.",
-                    story: "이탈리아어로 '마늘과 올리브유'라는 뜻입니다. 소박한 재료지만 심장 건강과 항염증에 탁월한 효능을 가진 건강식입니다."
-                },
-                en: { 
-                    name: "Garlic Aglio e Olio", 
-                    summary: "Unsaturated fatty acids from olive oil and allicin from garlic boost immunity and lower cholesterol.",
-                    story: "Meaning 'Garlic and Oil' in Italian, this simple dish is a healthy choice with excellent heart health and anti-inflammatory benefits."
-                },
-                kcal: 460, nutri: { c: "62g", p: "12g", f: "18g" }, 
-                img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" 
+                ko: { name: "갈릭 알리오 올리오", summary: "올리브유의 불포화 지방산과 마늘의 알리신 성분이 면역력을 높이고 콜레스테롤을 낮춥니다.", story: "이탈리아어로 '마늘과 올리브유'라는 뜻입니다. 소박한 재료지만 심장 건강에 탁월한 효능을 가진 건강식입니다." },
+                en: { name: "Garlic Aglio e Olio", summary: "Olive oil and garlic boost immunity and lower cholesterol.", story: "Meaning 'Garlic and Oil' in Italian, this simple dish is a healthy choice for heart health." },
+                kcal: 460, nutri: { c: "62g", p: "12g", f: "18g" }, img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" 
             }
         ];
 
@@ -303,16 +296,13 @@
                         <h2 class="food-name">${data.name}</h2>
                         <p style="font-size:0.92rem; color:var(--text-sub); margin-bottom:15px;">${data.summary}</p>
                     </div>
-                    <div class="nutri-container">
-                        <div class="nutri-grid">
-                            <div class="nutri-item"><span class="nutri-label">${t.carb}</span><span class="nutri-value">${food.nutri.c}</span></div>
-                            <div class="nutri-item"><span class="nutri-label">${t.protein}</span><span class="nutri-value">${food.nutri.p}</span></div>
-                            <div class="nutri-item"><span class="nutri-label">${t.fat}</span><span class="nutri-value">${food.nutri.f}</span></div>
-                        </div>
-                        <div class="food-story">
-                            <span class="story-title">💡 Insight</span>
-                            <p class="story-text">${data.story}</p>
-                        </div>
+                    <div class="nutri-grid">
+                        <div class="nutri-item"><span class="nutri-label">${t.carb}</span><span class="nutri-value">${food.nutri.c}</span></div>
+                        <div class="nutri-item"><span class="nutri-label">${t.protein}</span><span class="nutri-value">${food.nutri.p}</span></div>
+                        <div class="nutri-item"><span class="nutri-label">${t.fat}</span><span class="nutri-value">${food.nutri.f}</span></div>
+                    </div>
+                    <div class="food-story">
+                        <p class="story-text"><strong>💡 Insight:</strong> ${data.story}</p>
                     </div>
                 </div>`;
         }
@@ -330,7 +320,6 @@
             const file = event.target.files[0];
             if (!file) return;
             document.getElementById('upload-btn').innerText = i18n[currentLang].analyzing;
-            
             const reader = new FileReader();
             reader.onload = async (e) => {
                 const img = document.getElementById('image-preview');
@@ -350,7 +339,6 @@
             const resultArea = document.getElementById('result-area');
             const descArea = document.getElementById('result-desc');
             const titleArea = document.getElementById('result-title');
-            
             resultArea.style.display = 'block';
             let animalName = (topAnimal === "강아지상") ? t.dog : t.cat;
             titleArea.innerText = t.confirmTitle.replace("{animal}", animalName);
