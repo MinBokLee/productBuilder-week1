@@ -58,6 +58,18 @@
         h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-main); }
         .subtitle { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
 
+        /* 필터 그룹 스타일 */
+        .filter-group {
+            display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 14px; border-radius: 20px; border: 1px solid var(--border-color);
+            background: var(--card-bg); color: var(--text-sub); font-size: 0.85rem; cursor: pointer; transition: 0.2s; font-weight: 600;
+        }
+        .filter-btn.active {
+            background: var(--primary-color); color: white; border-color: var(--primary-color);
+        }
+
         .stat-box {
             background: var(--stat-bg); border-radius: 12px; padding: 15px;
             margin-bottom: 20px; text-align: left; border-left: 5px solid var(--primary-color);
@@ -88,30 +100,19 @@
             overflow: hidden; text-align: left;
         }
         
-        /* 이미지 스타일링 */
         .food-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background-color: #eee;
-            display: block;
+            width: 100%; height: 200px; object-fit: cover; background-color: #eee; display: block;
         }
 
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
 
-        .menu-info { 
-            padding: 20px 20px 0 20px;
-        }
+        .menu-info { padding: 20px 20px 0 20px; }
         .food-name { font-weight: 900; font-size: 1.5rem; display: block; margin-bottom: 8px; color: var(--text-main); }
         .kcal-badge { background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 100px; font-size: 0.9rem; font-weight: bold; }
 
         .nutri-bar-container { 
-            display: flex; 
-            gap: 8px; 
-            font-size: 0.75rem; 
-            color: var(--text-sub); 
-            margin-top: 15px;
-            padding: 0 20px 20px 20px;
+            display: flex; gap: 8px; font-size: 0.75rem; color: var(--text-sub); 
+            margin-top: 15px; padding: 0 20px 20px 20px;
         }
         .nutri-item { flex: 1; background: var(--stat-bg); padding: 8px; border-radius: 10px; text-align: center; }
         .nutri-val { display: block; color: var(--nutri-tag); font-weight: 800; font-size: 1rem; margin-top: 2px; }
@@ -138,6 +139,13 @@
 
         <h1 id="title">오늘 점심 뭐 먹지?</h1>
         <p class="subtitle" id="subtitle">결정 장애 탈출! AI 추천 단일 메뉴</p>
+
+        <div class="filter-group" id="filter-group">
+            <button class="filter-btn active" onclick="setFilter('all')">전체</button>
+            <button class="filter-btn" onclick="setFilter('kr')">한식</button>
+            <button class="filter-btn" onclick="setFilter('as')">일/중식</button>
+            <button class="filter-btn" onclick="setFilter('ws')">양식</button>
+        </div>
 
         <div class="stat-box">
             <span class="stat-header" id="stat-header">NUTRITION GUIDELINE</span>
@@ -166,13 +174,13 @@
         <div class="warning-box" id="warning-box">
             <span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 식사 안내 및 주의사항</span>
             • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b><br>
-            • 과식은 건강에 해로울 수 있으니 적당량 섭취를 권장합니다.<br>
-            • 점심 메뉴 결정으로 인한 동료와의 갈등은 본 서비스가 책임지지 않습니다.
+            • 과식은 건강에 해로울 수 있으니 적당량 섭취를 권장합니다.
         </div>
     </div>
 
     <script>
         let currentLang = 'ko';
+        let currentFilter = 'all';
 
         const i18n = {
             ko: {
@@ -186,49 +194,39 @@
                 sideLabel: "추천 후식",
                 nutri: ["탄수화물", "단백질", "지방"],
                 warning: `<span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 식사 안내 및 주의사항</span>
-                          • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b><br>
-                          • 과식은 건강에 해로울 수 있으니 적당량 섭취를 권장합니다.<br>
-                          • 점심 메뉴 결정으로 인한 동료와의 갈등은 본 서비스가 책임지지 않습니다.`
+                          • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b>`
             },
             en: {
                 title: "What's for Lunch?",
                 subtitle: "Escape Indecision! AI Picked Meal",
                 statHeader: "NUTRITION GUIDELINE",
-                statContent: "<li>• Recommended: <b>600~800 kcal</b></li><li>• Filter: <b>High Protein & Low Sodium</b> active</li>",
+                statContent: "<li>• Recommended: <b>600~800 kcal</b></li><li>• Filter: <b>High Protein</b> active</li>",
                 switchText: "Include Side/Drinks",
                 placeholder: "Hungry? <br>Let AI pick your destiny!",
                 pickBtn: "Pick My Meal",
                 sideLabel: "Side/Dessert",
                 nutri: ["Carbs", "Protein", "Fat"],
                 warning: `<span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ Dining Disclaimer</span>
-                          • This AI selection <b>does not fully reflect individual allergies or food preferences.</b><br>
-                          • Overeating can be harmful to health; moderate portions are recommended.<br>
-                          • We are not responsible for conflicts with colleagues over meal choices.`
+                          • This AI selection <b>does not fully reflect individual allergies.</b>`
             }
         };
 
         const menuData = {
             ko: [
-                { name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "https://images.unsplash.com/photo-1627961917711-b0e6e7d6b3c4?auto=format&fit=crop&w=800&q=80" },
-                { name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
-                { name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
-                { name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "https://images.unsplash.com/photo-1596450514735-2d0220ab4174?auto=format&fit=crop&w=800&q=80" },
-                { name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18, img: "https://images.unsplash.com/photo-1563379091339-03b1cbbad820?auto=format&fit=crop&w=800&q=80" },
-                { name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
-                { name: "짜장면", kcal: 800, c: 120, p: 20, f: 28, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80" },
-                { name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4, img: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=800&q=80" },
-                { name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18, img: "https://images.unsplash.com/photo-1605374463051-50e4171d184a?auto=format&fit=crop&w=800&q=80" },
-                { name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12, img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80" }
+                { category: 'kr', name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "img/kimchi.jpg" },
+                { category: 'kr', name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
+                { category: 'as', name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
+                { category: 'as', name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "https://images.unsplash.com/photo-1596450514735-2d0220ab4174?auto=format&fit=crop&w=800&q=80" },
+                { category: 'ws', name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18, img: "img/pasta.jpg" },
+                { category: 'ws', name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
+                { category: 'as', name: "짜장면", kcal: 800, c: 120, p: 20, f: 28, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80" },
+                { category: 'as', name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4, img: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=800&q=80" },
+                { category: 'ws', name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18, img: "img/steak.jpg" },
+                { category: 'kr', name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12, img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80" }
             ],
             en: [
-                { name: "Grilled Chicken Salad", kcal: 350, c: 15, p: 40, f: 12, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" },
-                { name: "Pepperoni Pizza Slice", kcal: 450, c: 40, p: 18, f: 22, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" },
-                { name: "Sushi Platter (8pcs)", kcal: 420, c: 65, p: 20, f: 8, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80" },
-                { name: "Classic Cheeseburger", kcal: 650, c: 45, p: 35, f: 38, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" },
-                { name: "Beef Burrito Bowl", kcal: 720, c: 80, p: 40, f: 28, img: "https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=800&q=80" },
-                { name: "Pasta Carbonara", kcal: 780, c: 85, p: 25, f: 40, img: "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=800&q=80" },
-                { name: "Chicken Teriyaki Bento", kcal: 680, c: 90, p: 35, f: 15, img: "https://images.unsplash.com/photo-1623341214825-9f4f963727da?auto=format&fit=crop&w=800&q=80" },
-                { name: "Falafel Wrap", kcal: 580, c: 70, p: 15, f: 25, img: "https://images.unsplash.com/photo-1547050605-2f1906660613?auto=format&fit=crop&w=800&q=80" }
+                { category: 'ws', name: "Grilled Chicken Salad", kcal: 350, c: 15, p: 40, f: 12, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" },
+                { category: 'ws', name: "Classic Cheeseburger", kcal: 650, c: 45, p: 35, f: 38, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" }
             ]
         };
 
@@ -236,6 +234,14 @@
             ko: [{ name: "아메리카노", kcal: 10 }, { name: "조각 케이크", kcal: 350 }, { name: "제로 콜라", kcal: 0 }],
             en: [{ name: "Iced Americano", kcal: 5 }, { name: "Chocolate Brownie", kcal: 320 }, { name: "Coke Zero", kcal: 0 }]
         };
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
 
         function toggleLang() {
             currentLang = currentLang === 'ko' ? 'en' : 'ko';
@@ -269,9 +275,14 @@
             container.innerHTML = '';
 
             const lang = i18n[currentLang];
-            const foods = menuData[currentLang];
-            const desserts = dessertData[currentLang];
+            let foods = menuData[currentLang];
 
+            // 필터 적용
+            if (currentFilter !== 'all') {
+                foods = foods.filter(item => item.category === currentFilter);
+            }
+
+            const desserts = dessertData[currentLang];
             const food = foods[Math.floor(Math.random() * foods.length)];
             const dessert = desserts[Math.floor(Math.random() * desserts.length)];
             const totalKcal = includeDessert ? food.kcal + dessert.kcal : food.kcal;
@@ -280,7 +291,7 @@
             card.className = 'menu-card';
 
             let html = `
-                <img src="${food.img}" alt="${food.name}" class="food-image">
+                <img src="${food.img}" alt="${food.name}" class="food-image" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
                 <div class="menu-info">
                     <span class="food-name">${food.name}</span>
                     <span class="kcal-badge">${totalKcal} kcal</span>
