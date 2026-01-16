@@ -88,7 +88,6 @@
             overflow: hidden; text-align: left;
         }
         
-        /* 이미지 스타일링 */
         .food-image {
             width: 100%;
             height: 200px;
@@ -209,26 +208,26 @@
 
         const menuData = {
             ko: [
-                { name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "https://images.unsplash.com/photo-1627961917711-b0e6e7d6b3c4?auto=format&fit=crop&w=800&q=80" },
-                { name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
-                { name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
-                { name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "https://images.unsplash.com/photo-1596450514735-2d0220ab4174?auto=format&fit=crop&w=800&q=80" },
-                { name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18, img: "https://images.unsplash.com/photo-1563379091339-03b1cbbad820?auto=format&fit=crop&w=800&q=80" },
-                { name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
-                { name: "짜장면", kcal: 800, c: 120, p: 20, f: 28, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80" },
-                { name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4, img: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=800&q=80" },
-                { name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18, img: "https://images.unsplash.com/photo-1605374463051-50e4171d184a?auto=format&fit=crop&w=800&q=80" },
-                { name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12, img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80" }
+                { name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "https://source.unsplash.com/800x600/?kimchi-stew" },
+                { name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://source.unsplash.com/800x600/?spicy-pork" },
+                { name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15, img: "https://source.unsplash.com/800x600/?salmon-sushi" },
+                { name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "https://source.unsplash.com/800x600/?tonkatsu" },
+                { name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18, img: "https://source.unsplash.com/800x600/?seafood-pasta" },
+                { name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15, img: "https://source.unsplash.com/800x600/?chicken-salad" },
+                { name: "짜장면", kcal: 800, c: 120, p: 20, f: 28, img: "https://source.unsplash.com/800x600/?black-bean-noodles" },
+                { name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4, img: "https://source.unsplash.com/800x600/?beef-pho" },
+                { name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18, img: "https://source.unsplash.com/800x600/?steak-rice-bowl" },
+                { name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12, img: "https://source.unsplash.com/800x600/?bibimbap" }
             ],
             en: [
-                { name: "Grilled Chicken Salad", kcal: 350, c: 15, p: 40, f: 12, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" },
-                { name: "Pepperoni Pizza Slice", kcal: 450, c: 40, p: 18, f: 22, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" },
-                { name: "Sushi Platter (8pcs)", kcal: 420, c: 65, p: 20, f: 8, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80" },
-                { name: "Classic Cheeseburger", kcal: 650, c: 45, p: 35, f: 38, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" },
-                { name: "Beef Burrito Bowl", kcal: 720, c: 80, p: 40, f: 28, img: "https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=800&q=80" },
-                { name: "Pasta Carbonara", kcal: 780, c: 85, p: 25, f: 40, img: "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=800&q=80" },
-                { name: "Chicken Teriyaki Bento", kcal: 680, c: 90, p: 35, f: 15, img: "https://images.unsplash.com/photo-1623341214825-9f4f963727da?auto=format&fit=crop&w=800&q=80" },
-                { name: "Falafel Wrap", kcal: 580, c: 70, p: 15, f: 25, img: "https://images.unsplash.com/photo-1547050605-2f1906660613?auto=format&fit=crop&w=800&q=80" }
+                { name: "Grilled Chicken Salad", kcal: 350, c: 15, p: 40, f: 12, img: "https://source.unsplash.com/800x600/?grilled-chicken-salad" },
+                { name: "Pepperoni Pizza Slice", kcal: 450, c: 40, p: 18, f: 22, img: "https://source.unsplash.com/800x600/?pizza" },
+                { name: "Sushi Platter (8pcs)", kcal: 420, c: 65, p: 20, f: 8, img: "https://source.unsplash.com/800x600/?sushi" },
+                { name: "Classic Cheeseburger", kcal: 650, c: 45, p: 35, f: 38, img: "https://source.unsplash.com/800x600/?burger" },
+                { name: "Beef Burrito Bowl", kcal: 720, c: 80, p: 40, f: 28, img: "https://source.unsplash.com/800x600/?burrito-bowl" },
+                { name: "Pasta Carbonara", kcal: 780, c: 85, p: 25, f: 40, img: "https://source.unsplash.com/800x600/?carbonara" },
+                { name: "Chicken Teriyaki Bento", kcal: 680, c: 90, p: 35, f: 15, img: "https://source.unsplash.com/800x600/?teriyaki" },
+                { name: "Falafel Wrap", kcal: 580, c: 70, p: 15, f: 25, img: "https://source.unsplash.com/800x600/?falafel" }
             ]
         };
 
@@ -279,8 +278,14 @@
             const card = document.createElement('div');
             card.className = 'menu-card';
 
+            // 이미지 URL 랜덤화를 위해 타임스탬프 추가 및 로드 실패 시 대체 이미지 로직 추가
+            const finalImgUrl = `${food.img}&t=${new Date().getTime()}`;
+
             let html = `
-                <img src="${food.img}" alt="${food.name}" class="food-image">
+                <img src="${finalImgUrl}" 
+                     alt="${food.name}" 
+                     class="food-image" 
+                     onerror="this.src='https://via.placeholder.com/800x600?text=Delicious+Meal'">
                 <div class="menu-info">
                     <span class="food-name">${food.name}</span>
                     <span class="kcal-badge">${totalKcal} kcal</span>
