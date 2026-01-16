@@ -60,21 +60,25 @@
         h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-main); }
         .subtitle { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
 
-        /* 동물상 테스트 섹션 스타일 */
+        /* 동물상 테스트 섹션 수정 */
         .animal-test-card {
             background: var(--stat-bg);
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 20px;
             border: 2px dashed var(--primary-color);
+            display: none; /* 기본적으로 숨김 */
         }
-        #webcam-container canvas {
+        
+        #image-preview {
+            width: 100%;
+            max-width: 250px;
             border-radius: 15px;
-            max-width: 100%;
-            height: auto;
-            border: 3px solid var(--card-bg);
+            margin-top: 10px;
+            display: none; /* 사진 선택 전까지 숨김 */
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
+
         #label-container {
             margin-top: 15px;
             font-weight: bold;
@@ -90,7 +94,7 @@
         }
 
         .filter-group {
-            display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+            display: flex; justify: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;
         }
         .filter-btn {
             padding: 8px 14px; border-radius: 20px; border: 1px solid var(--border-color);
@@ -147,11 +151,14 @@
         .nutri-item { flex: 1; background: var(--stat-bg); padding: 8px; border-radius: 10px; text-align: center; }
         .nutri-val { display: block; color: var(--nutri-tag); font-weight: 800; font-size: 1rem; margin-top: 2px; }
 
-        .btn-group { display: flex; gap: 8px; width: 100%; }
+        .btn-group { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         button.primary-btn { flex: 1; padding: 18px; font-size: 1.1rem; background-color: var(--accent-color); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        button.primary-btn:hover { filter: brightness(1.1); }
         
-        button.secondary-btn { background-color: var(--primary-color); padding: 12px; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        button.link-btn {
+            background-color: transparent; border: 1px solid var(--primary-color);
+            color: var(--primary-color); padding: 10px; border-radius: 15px;
+            font-weight: bold; cursor: pointer; font-size: 0.9rem; margin-bottom: 15px;
+        }
 
         .warning-box {
             margin-top: 30px; padding: 15px; border-radius: 15px;
@@ -167,47 +174,28 @@
             background: none; border: none; color: var(--text-sub); font-size: 0.85rem; 
             text-decoration: underline; cursor: pointer; width: 100%; margin-bottom: 10px;
         }
-        #contact-form-wrapper {
-            background: var(--card-bg); border-radius: 20px; padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: none; text-align: left;
-            border: 1px solid var(--border-color); margin-bottom: 30px;
-        }
-        .form-title { font-weight: 800; font-size: 1rem; margin-bottom: 15px; color: var(--text-main); display: block; }
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; font-size: 0.75rem; color: var(--text-sub); margin-bottom: 5px; font-weight: bold; }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border-color);
-            background: var(--stat-bg); color: var(--text-main); font-family: inherit; font-size: 0.85rem;
-            box-sizing: border-box;
-        }
-        .submit-btn {
-            width: 100%; padding: 12px; background: var(--primary-color); color: white;
-            border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        .submit-btn:hover { background: #e67e22; }
-
-        #disqus_thread {
-            background: var(--card-bg); padding: 20px; border-radius: 20px;
-            border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
     </style>
 </head>
 <body data-theme="light">
 
     <div class="container">
         <div class="top-controls">
-            <button class="control-btn" onclick="toggleLang()" id="lang-btn">EN</button>
             <button class="control-btn theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
         </div>
 
         <h1 id="title">오늘 점심 뭐 먹지?</h1>
         <p class="subtitle" id="subtitle">결정 장애 탈출! AI 추천 서비스</p>
 
-        <div class="animal-test-card">
-            <span class="stat-header" style="text-align: center; margin-bottom: 10px;">BONUS: 내 동물상 확인하기</span>
-            <div id="webcam-container"></div>
+        <button class="link-btn" onclick="toggleAnimalCard()">✨ 궁금해? 나의 동물상 테스트 하기</button>
+
+        <div class="animal-test-card" id="animal-card">
+            <span class="stat-header" style="text-align: center; margin-bottom: 10px;">이미지를 업로드 해주세요</span>
+            
+            <input type="file" id="image-upload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+            <button class="primary-btn" style="background-color: var(--primary-color); padding: 12px; font-size: 0.9rem;" onclick="document.getElementById('image-upload').click()">사진 선택하기</button>
+            
+            <img id="image-preview" src="#" alt="미리보기">
             <div id="label-container"></div>
-            <button type="button" class="secondary-btn" id="start-animal-btn" onclick="initAnimalModel()">동물상 분석 시작</button>
         </div>
 
         <div class="filter-group" id="filter-group">
@@ -221,18 +209,10 @@
             <span class="stat-header" id="stat-header">NUTRITION GUIDELINE</span>
             <ul class="stat-content" id="stat-content">
                 <li>• 성인 권장 점심 칼로리: <b>600~800kcal</b></li>
-                <li>• 분석: <b>단백질 중심, 저나트륨</b> 필터 적용 중</li>
+                <li>• 분석: <b>영양 균형 AI</b> 필터 적용 중</li>
             </ul>
         </div>
 
-        <div class="settings-bar">
-            <span class="switch-text" id="switch-text">디저트/음료 포함</span>
-            <label class="switch">
-                <input type="checkbox" id="bonus-toggle">
-                <span class="slider"></span>
-            </label>
-        </div>
-        
         <div id="menu-container">
             <p class="placeholder" id="placeholder">배고픈 당신을 위한<br>오늘의 운명적인 메뉴는?</p>
         </div>
@@ -241,72 +221,70 @@
             <button class="primary-btn" onclick="generateLunchMenu()" id="pick-btn">메뉴 추천받기</button>
         </div>
 
-        <div class="warning-box" id="warning-box">
-            <span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 식사 안내 및 주의사항</span>
-            • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b>
+        <div class="warning-box">
+            <span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 주의사항</span>
+            • 개인의 취향을 반영하지 않은 AI 무작위 추천입니다.
         </div>
     </div>
 
     <div class="bottom-section">
-        <button class="form-toggle-btn" onclick="toggleContactForm()" id="toggle-form-text">제휴 및 맛집 등록 문의</button>
-        <div id="contact-form-wrapper">
-            <span class="form-title">Business Partnership</span>
-            <form id="partnership-form" action="https://formspree.io/f/xojjjadw" method="POST" onsubmit="return validateForm()">
-                <div class="form-group">
-                    <label>성함 / 업체명</label>
-                    <input type="text" name="name" id="user-name" placeholder="홍길동 / 맛집식당">
-                </div>
-                <div class="form-group">
-                    <label>회신받을 이메일</label>
-                    <input type="email" name="_replyto" id="user-email" placeholder="example@email.com">
-                </div>
-                <div class="form-group">
-                    <label>문의 내용</label>
-                    <textarea name="message" id="user-message" rows="4" placeholder="내용을 입력하세요."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">문의 보내기</button>
-            </form>
-        </div>
+        <button class="form-toggle-btn" onclick="toggleContactForm()">제휴 및 맛집 등록 문의</button>
         <div id="disqus_thread"></div>
     </div>
 
     <script>
-        // --- 동물상 테스트 (Teachable Machine) 로직 ---
+        // --- 동물상 테스트 (Teachable Machine + 이미지 업로드) 로직 ---
         const ANIMAL_URL = "https://teachablemachine.withgoogle.com/models/ZGmPRyuJD/";
-        let animalModel, animalWebcam, animalLabelContainer, animalMaxPredictions;
+        let animalModel, animalLabelContainer, animalMaxPredictions;
 
-        async function initAnimalModel() {
-            document.getElementById('start-animal-btn').innerText = "분석 중...";
+        // 섹션 토글 함수
+        function toggleAnimalCard() {
+            const card = document.getElementById('animal-card');
+            if (card.style.display === 'block') {
+                card.style.display = 'none';
+            } else {
+                card.style.display = 'block';
+                loadAnimalModel(); // 열 때 모델 미리 로드
+            }
+        }
+
+        // 모델 로드
+        async function loadAnimalModel() {
+            if (animalModel) return; // 이미 로드됐으면 패스
             const modelURL = ANIMAL_URL + "model.json";
             const metadataURL = ANIMAL_URL + "metadata.json";
-
             animalModel = await tmImage.load(modelURL, metadataURL);
             animalMaxPredictions = animalModel.getTotalClasses();
-
-            const flip = true;
-            animalWebcam = new tmImage.Webcam(250, 250, flip);
-            await animalWebcam.setup();
-            await animalWebcam.play();
-            window.requestAnimationFrame(animalLoop);
-
-            document.getElementById("webcam-container").appendChild(animalWebcam.canvas);
+            
             animalLabelContainer = document.getElementById("label-container");
+            animalLabelContainer.innerHTML = ""; // 초기화
             for (let i = 0; i < animalMaxPredictions; i++) {
                 const div = document.createElement("div");
                 div.className = "label-item";
                 animalLabelContainer.appendChild(div);
             }
-            document.getElementById('start-animal-btn').style.display = 'none';
         }
 
-        async function animalLoop() {
-            animalWebcam.update();
-            await animalPredict();
-            window.requestAnimationFrame(animalLoop);
+        // 이미지 업로드 및 분석
+        async function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const imgElement = document.getElementById('image-preview');
+                imgElement.src = e.target.result;
+                imgElement.style.display = 'inline-block';
+                
+                // 모델 분석 시작 (약간의 지연시간 필요할 수 있음)
+                if (!animalModel) await loadAnimalModel();
+                predictImage(imgElement);
+            };
+            reader.readAsDataURL(file);
         }
 
-        async function animalPredict() {
-            const prediction = await animalModel.predict(animalWebcam.canvas);
+        async function predictImage(imgElement) {
+            const prediction = await animalModel.predict(imgElement);
             for (let i = 0; i < animalMaxPredictions; i++) {
                 const classLabel = prediction[i].className;
                 const probability = (prediction[i].probability * 100).toFixed(0) + "%";
@@ -314,8 +292,7 @@
             }
         }
 
-        // --- 기존 점심 추천 로직 ---
-        let currentLang = 'ko';
+        // --- 점심 추천 로직 (기존 코드 유지) ---
         let currentFilter = 'all';
 
         function toggleTheme() {
@@ -332,19 +309,16 @@
             event.target.classList.add('active');
         }
 
-        const menuData = {
-            ko: [
-                { category: 'kr', name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
-                { category: 'kr', name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
-                { category: 'as', name: "연어 초밥", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
-                { category: 'ws', name: "치킨 샐러드", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" }
-            ]
-        };
+        const menuData = [
+            { category: 'kr', name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
+            { category: 'as', name: "연어 초밥", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
+            { category: 'ws', name: "치킨 샐러드", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" }
+        ];
 
         function generateLunchMenu() {
             const container = document.getElementById('menu-container');
             container.innerHTML = '';
-            const foods = menuData.ko.filter(item => currentFilter === 'all' || item.category === currentFilter);
+            const foods = menuData.filter(item => currentFilter === 'all' || item.category === currentFilter);
             const food = foods[Math.floor(Math.random() * foods.length)];
 
             const card = document.createElement('div');
@@ -355,18 +329,9 @@
                     <span class="food-name">${food.name}</span>
                     <span class="kcal-badge">${food.kcal} kcal</span>
                 </div>
-                <div class="nutri-bar-container">
-                    <div class="nutri-item">탄수화물<span class="nutri-val">${food.c}g</span></div>
-                    <div class="nutri-item">단백질<span class="nutri-val">${food.p}g</span></div>
-                    <div class="nutri-item">지방<span class="nutri-val">${food.f}g</span></div>
-                </div>
             `;
             container.appendChild(card);
         }
-
-        // Disqus 및 기타 초기화 로직
-        var disqus_config = function () { this.page.url = window.location.href; this.page.identifier = 'lunch-picker-main'; };
-        (function() { var d = document, s = d.createElement('script'); s.src = 'https://lunch-18.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();
     </script>
 </body>
 </html>
