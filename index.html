@@ -39,7 +39,7 @@
             background: var(--card-bg); padding: 30px 20px; border-radius: 25px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; 
             width: 100%; max-width: 450px; position: relative;
-            box-sizing: border-box; margin: 0 auto;
+            box-sizing: border-box; margin: auto;
         }
 
         .top-controls {
@@ -127,26 +127,18 @@
         }
         .placeholder { color: var(--text-sub); font-style: italic; margin: 30px 0; font-size: 1.1rem; text-align: center; }
 
-        /* 하단 섹션 (댓글 및 문의) */
-        .bottom-section {
+        /* 제휴 문의 섹션 스타일 */
+        .partnership-section {
             width: 100%; max-width: 450px; margin-top: 20px; margin-bottom: 50px;
         }
-
-        /* Disqus 컨테이너 */
-        #disqus_thread {
-            background: var(--card-bg); padding: 20px; border-radius: 20px;
-            border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-
         .form-toggle-btn {
             background: none; border: none; color: var(--text-sub); font-size: 0.85rem; 
-            text-decoration: underline; cursor: pointer; width: 100%; margin-bottom: 10px; margin-top: 10px;
+            text-decoration: underline; cursor: pointer; width: 100%; margin-bottom: 10px;
         }
         #contact-form-wrapper {
             background: var(--card-bg); border-radius: 20px; padding: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: none; text-align: left;
-            border: 1px solid var(--border-color); margin-bottom: 30px;
+            border: 1px solid var(--border-color);
         }
         .form-title { font-weight: 800; font-size: 1rem; margin-bottom: 15px; color: var(--text-main); display: block; }
         .form-group { margin-bottom: 12px; }
@@ -212,9 +204,7 @@
         </div>
     </div>
 
-    <div class="bottom-section">
-        <div id="disqus_thread"></div>
-
+    <div class="partnership-section">
         <button class="form-toggle-btn" onclick="toggleContactForm()" id="toggle-form-text">제휴 및 맛집 등록 문의</button>
         <div id="contact-form-wrapper">
             <span class="form-title">Business Partnership</span>
@@ -238,23 +228,10 @@
     </div>
 
     <script>
-        var disqus_config = function () {
-            this.page.url = window.location.href;  
-            this.page.identifier = 'lunch-picker-main'; 
-        };
-        (function() { 
-            var d = document, s = d.createElement('script');
-            s.src = 'https://lunch-18.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <script id="dsq-count-scr" src="//lunch-18.disqus.com/count.js" async></script>
-
-    <script>
         let currentLang = 'ko';
         let currentFilter = 'all';
 
+        // 폼 유효성 검사 및 알림 기능 (메뉴명 적용)
         function validateForm() {
             const nameField = document.getElementById('user-name');
             const emailField = document.getElementById('user-email');
@@ -278,6 +255,7 @@
             return true;
         }
 
+        // 폼 열기/닫기 및 초기화 기능
         function toggleContactForm() {
             const wrapper = document.getElementById('contact-form-wrapper');
             const btnText = document.getElementById('toggle-form-text');
@@ -286,7 +264,7 @@
             if (wrapper.style.display === 'block') {
                 wrapper.style.display = 'none';
                 btnText.innerText = "제휴 및 맛집 등록 문의";
-                form.reset();
+                form.reset(); // 데이터 초기화
             } else {
                 wrapper.style.display = 'block';
                 btnText.innerText = "문의창 닫기";
