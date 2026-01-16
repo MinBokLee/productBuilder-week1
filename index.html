@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘 점심 뭐 먹지? | What's for Lunch?</title>
+    <title>오늘 점심 뭐 먹지? | 동물상 테스트</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <style>
         :root {
             --primary-color: #ff9f43;
@@ -39,7 +41,7 @@
             background: var(--card-bg); padding: 30px 20px; border-radius: 25px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; 
             width: 100%; max-width: 450px; position: relative;
-            box-sizing: border-box; margin: 0 auto;
+            box-sizing: border-box; margin: 0 auto 20px auto;
         }
 
         .top-controls {
@@ -57,6 +59,35 @@
 
         h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-main); }
         .subtitle { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
+
+        /* 동물상 테스트 섹션 스타일 */
+        .animal-test-card {
+            background: var(--stat-bg);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px dashed var(--primary-color);
+        }
+        #webcam-container canvas {
+            border-radius: 15px;
+            max-width: 100%;
+            height: auto;
+            border: 3px solid var(--card-bg);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        #label-container {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .label-item {
+            background: var(--card-bg);
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
 
         .filter-group {
             display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
@@ -119,6 +150,8 @@
         .btn-group { display: flex; gap: 8px; width: 100%; }
         button.primary-btn { flex: 1; padding: 18px; font-size: 1.1rem; background-color: var(--accent-color); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         button.primary-btn:hover { filter: brightness(1.1); }
+        
+        button.secondary-btn { background-color: var(--primary-color); padding: 12px; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
 
         .warning-box {
             margin-top: 30px; padding: 15px; border-radius: 15px;
@@ -127,7 +160,6 @@
         }
         .placeholder { color: var(--text-sub); font-style: italic; margin: 30px 0; font-size: 1.1rem; text-align: center; }
 
-        /* 제휴 문의 및 댓글 섹션 스타일 */
         .bottom-section {
             width: 100%; max-width: 450px; margin-top: 20px; margin-bottom: 50px;
         }
@@ -154,7 +186,6 @@
         }
         .submit-btn:hover { background: #e67e22; }
 
-        /* Disqus 컨테이너 */
         #disqus_thread {
             background: var(--card-bg); padding: 20px; border-radius: 20px;
             border: 1px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
@@ -170,7 +201,14 @@
         </div>
 
         <h1 id="title">오늘 점심 뭐 먹지?</h1>
-        <p class="subtitle" id="subtitle">결정 장애 탈출! AI 추천 단일 메뉴</p>
+        <p class="subtitle" id="subtitle">결정 장애 탈출! AI 추천 서비스</p>
+
+        <div class="animal-test-card">
+            <span class="stat-header" style="text-align: center; margin-bottom: 10px;">BONUS: 내 동물상 확인하기</span>
+            <div id="webcam-container"></div>
+            <div id="label-container"></div>
+            <button type="button" class="secondary-btn" id="start-animal-btn" onclick="initAnimalModel()">동물상 분석 시작</button>
+        </div>
 
         <div class="filter-group" id="filter-group">
             <button class="filter-btn active" onclick="setFilter('all')">전체</button>
@@ -205,14 +243,12 @@
 
         <div class="warning-box" id="warning-box">
             <span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 식사 안내 및 주의사항</span>
-            • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b><br>
-            • 과식은 건강에 해로울 수 있으니 적당량 섭취를 권장합니다.
+            • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b>
         </div>
     </div>
 
     <div class="bottom-section">
         <button class="form-toggle-btn" onclick="toggleContactForm()" id="toggle-form-text">제휴 및 맛집 등록 문의</button>
-        
         <div id="contact-form-wrapper">
             <span class="form-title">Business Partnership</span>
             <form id="partnership-form" action="https://formspree.io/f/xojjjadw" method="POST" onsubmit="return validateForm()">
@@ -226,152 +262,61 @@
                 </div>
                 <div class="form-group">
                     <label>문의 내용</label>
-                    <textarea name="message" id="user-message" rows="4" placeholder="제휴 제안 또는 메뉴 등록 문의 내용을 적어주세요."></textarea>
+                    <textarea name="message" id="user-message" rows="4" placeholder="내용을 입력하세요."></textarea>
                 </div>
-                <input type="hidden" name="_subject" value="오늘점심뭐먹지? 새로운 제휴 문의">
                 <button type="submit" class="submit-btn">문의 보내기</button>
             </form>
         </div>
-
         <div id="disqus_thread"></div>
     </div>
 
     <script>
-        var disqus_config = function () {
-            this.page.url = window.location.href;  
-            this.page.identifier = 'lunch-picker-main'; 
-        };
-        (function() { 
-            var d = document, s = d.createElement('script');
-            s.src = 'https://lunch-18.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <script id="dsq-count-scr" src="//lunch-18.disqus.com/count.js" async></script>
+        // --- 동물상 테스트 (Teachable Machine) 로직 ---
+        const ANIMAL_URL = "https://teachablemachine.withgoogle.com/models/ZGmPRyuJD/";
+        let animalModel, animalWebcam, animalLabelContainer, animalMaxPredictions;
 
-    <script>
+        async function initAnimalModel() {
+            document.getElementById('start-animal-btn').innerText = "분석 중...";
+            const modelURL = ANIMAL_URL + "model.json";
+            const metadataURL = ANIMAL_URL + "metadata.json";
+
+            animalModel = await tmImage.load(modelURL, metadataURL);
+            animalMaxPredictions = animalModel.getTotalClasses();
+
+            const flip = true;
+            animalWebcam = new tmImage.Webcam(250, 250, flip);
+            await animalWebcam.setup();
+            await animalWebcam.play();
+            window.requestAnimationFrame(animalLoop);
+
+            document.getElementById("webcam-container").appendChild(animalWebcam.canvas);
+            animalLabelContainer = document.getElementById("label-container");
+            for (let i = 0; i < animalMaxPredictions; i++) {
+                const div = document.createElement("div");
+                div.className = "label-item";
+                animalLabelContainer.appendChild(div);
+            }
+            document.getElementById('start-animal-btn').style.display = 'none';
+        }
+
+        async function animalLoop() {
+            animalWebcam.update();
+            await animalPredict();
+            window.requestAnimationFrame(animalLoop);
+        }
+
+        async function animalPredict() {
+            const prediction = await animalModel.predict(animalWebcam.canvas);
+            for (let i = 0; i < animalMaxPredictions; i++) {
+                const classLabel = prediction[i].className;
+                const probability = (prediction[i].probability * 100).toFixed(0) + "%";
+                animalLabelContainer.childNodes[i].innerHTML = `<span>${classLabel}</span> <span>${probability}</span>`;
+            }
+        }
+
+        // --- 기존 점심 추천 로직 ---
         let currentLang = 'ko';
         let currentFilter = 'all';
-
-        // 폼 유효성 검사 (항목명 포함)
-        function validateForm() {
-            const nameField = document.getElementById('user-name');
-            const emailField = document.getElementById('user-email');
-            const messageField = document.getElementById('user-message');
-
-            if (!nameField.value.trim()) {
-                alert("성함 / 업체명을 입력해 주세요.");
-                nameField.focus();
-                return false;
-            }
-            if (!emailField.value.trim()) {
-                alert("회신받을 이메일을 입력해 주세요.");
-                emailField.focus();
-                return false;
-            }
-            if (!messageField.value.trim()) {
-                alert("문의 내용을 입력해 주세요.");
-                messageField.focus();
-                return false;
-            }
-            return true;
-        }
-
-        function toggleContactForm() {
-            const wrapper = document.getElementById('contact-form-wrapper');
-            const btnText = document.getElementById('toggle-form-text');
-            const form = document.getElementById('partnership-form');
-
-            if (wrapper.style.display === 'block') {
-                wrapper.style.display = 'none';
-                btnText.innerText = "제휴 및 맛집 등록 문의";
-                form.reset();
-            } else {
-                wrapper.style.display = 'block';
-                btnText.innerText = "문의창 닫기";
-                wrapper.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        const i18n = {
-            ko: {
-                title: "오늘 점심 뭐 먹지?",
-                subtitle: "결정 장애 탈출! AI 추천 단일 메뉴",
-                statHeader: "NUTRITION GUIDELINE",
-                statContent: "<li>• 성인 권장 점심 칼로리: <b>600~800kcal</b></li><li>• 분석: <b>단백질 중심, 저나트륨</b> 필터 적용 중</li>",
-                switchText: "디저트/음료 포함",
-                placeholder: "배고픈 당신을 위한<br>오늘의 운명적인 메뉴는?",
-                pickBtn: "메뉴 추천받기",
-                sideLabel: "추천 후식",
-                nutri: ["탄수화물", "단백질", "지방"],
-                warning: `<span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ 식사 안내 및 주의사항</span>
-                          • 본 시스템은 AI가 임의로 선정한 메뉴이며, <b>개인의 알레르기나 취향을 완전히 반영하지 않습니다.</b>`
-            },
-            en: {
-                title: "What's for Lunch?",
-                subtitle: "Escape Indecision! AI Picked Meal",
-                statHeader: "NUTRITION GUIDELINE",
-                statContent: "<li>• Recommended: <b>600~800 kcal</b></li><li>• Filter: <b>High Protein</b> active</li>",
-                switchText: "Include Side/Drinks",
-                placeholder: "Hungry? <br>Let AI pick your destiny!",
-                pickBtn: "Pick My Meal",
-                sideLabel: "Side/Dessert",
-                nutri: ["Carbs", "Protein", "Fat"],
-                warning: `<span style="font-weight:bold; display:block; margin-bottom:5px;">⚠️ Dining Disclaimer</span>
-                          • This AI selection <b>does not fully reflect individual allergies.</b>`
-            }
-        };
-
-        const menuData = {
-            ko: [
-                { category: 'kr', name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "img/kimchi.jpg" },
-                { category: 'kr', name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
-                { category: 'as', name: "연어 초밥(10pcs)", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
-                { category: 'as', name: "돈카츠 정식", kcal: 900, c: 90, p: 40, f: 45, img: "img/donkas.png" },
-                { category: 'ws', name: "해산물 파스타", kcal: 620, c: 85, p: 28, f: 18, img: "img/pasta.jpg" },
-                { category: 'ws', name: "치킨 샐러드 볼", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
-                { category: 'as', name: "짜장면", kcal: 800, c: 120, p: 20, f: 28, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80" },
-                { category: 'as', name: "소고기 쌀국수", kcal: 420, c: 75, p: 20, f: 4, img: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=800&q=80" },
-                { category: 'ws', name: "스테이크 덮밥", kcal: 680, c: 85, p: 45, f: 18, img: "img/steak.jpg" },
-                { category: 'kr', name: "돌솥 비빔밥", kcal: 560, c: 95, p: 18, f: 12, img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80" }
-            ],
-            en: [
-                { category: 'ws', name: "Grilled Chicken Salad", kcal: 350, c: 15, p: 40, f: 12, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" },
-                { category: 'ws', name: "Classic Cheeseburger", kcal: 650, c: 45, p: 35, f: 38, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" }
-            ]
-        };
-
-        const dessertData = {
-            ko: [{ name: "아메리카노", kcal: 10 }, { name: "조각 케이크", kcal: 350 }, { name: "제로 콜라", kcal: 0 }],
-            en: [{ name: "Iced Americano", kcal: 5 }, { name: "Chocolate Brownie", kcal: 320 }, { name: "Coke Zero", kcal: 0 }]
-        };
-
-        function setFilter(filter) {
-            currentFilter = filter;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
-
-        function toggleLang() {
-            currentLang = currentLang === 'ko' ? 'en' : 'ko';
-            document.getElementById('lang-btn').innerText = currentLang === 'ko' ? 'EN' : 'KO';
-            applyLang();
-            document.getElementById('menu-container').innerHTML = `<p class="placeholder">${i18n[currentLang].placeholder}</p>`;
-        }
-
-        function applyLang() {
-            const lang = i18n[currentLang];
-            document.getElementById('title').innerText = lang.title;
-            document.getElementById('subtitle').innerText = lang.subtitle;
-            document.getElementById('stat-header').innerText = lang.statHeader;
-            document.getElementById('stat-content').innerHTML = lang.statContent;
-            document.getElementById('switch-text').innerText = lang.switchText;
-            document.getElementById('pick-btn').innerText = lang.pickBtn;
-            document.getElementById('warning-box').innerHTML = lang.warning;
-        }
 
         function toggleTheme() {
             const body = document.body;
@@ -381,50 +326,47 @@
             themeBtn.innerText = isLight ? '☀️' : '🌙';
         }
 
+        function setFilter(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        const menuData = {
+            ko: [
+                { category: 'kr', name: "김치찌개 백반", kcal: 450, c: 65, p: 20, f: 12, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
+                { category: 'kr', name: "제육덮밥", kcal: 780, c: 110, p: 35, f: 22, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" },
+                { category: 'as', name: "연어 초밥", kcal: 550, c: 80, p: 25, f: 15, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" },
+                { category: 'ws', name: "치킨 샐러드", kcal: 380, c: 25, p: 35, f: 15, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" }
+            ]
+        };
+
         function generateLunchMenu() {
             const container = document.getElementById('menu-container');
-            const includeDessert = document.getElementById('bonus-toggle').checked;
             container.innerHTML = '';
-
-            const lang = i18n[currentLang];
-            let foods = menuData[currentLang];
-
-            if (currentFilter !== 'all') {
-                foods = foods.filter(item => item.category === currentFilter);
-            }
-
-            const desserts = dessertData[currentLang];
+            const foods = menuData.ko.filter(item => currentFilter === 'all' || item.category === currentFilter);
             const food = foods[Math.floor(Math.random() * foods.length)];
-            const dessert = desserts[Math.floor(Math.random() * desserts.length)];
-            const totalKcal = includeDessert ? food.kcal + dessert.kcal : food.kcal;
 
             const card = document.createElement('div');
             card.className = 'menu-card';
-
-            let html = `
-                <img src="${food.img}" alt="${food.name}" class="food-image" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
+            card.innerHTML = `
+                <img src="${food.img}" class="food-image">
                 <div class="menu-info">
                     <span class="food-name">${food.name}</span>
-                    <span class="kcal-badge">${totalKcal} kcal</span>
+                    <span class="kcal-badge">${food.kcal} kcal</span>
                 </div>
                 <div class="nutri-bar-container">
-                    <div class="nutri-item">${lang.nutri[0]}<span class="nutri-val">${food.c}g</span></div>
-                    <div class="nutri-item">${lang.nutri[1]}<span class="nutri-val">${food.p}g</span></div>
-                    <div class="nutri-item">${lang.nutri[2]}<span class="nutri-val">${food.f}g</span></div>
+                    <div class="nutri-item">탄수화물<span class="nutri-val">${food.c}g</span></div>
+                    <div class="nutri-item">단백질<span class="nutri-val">${food.p}g</span></div>
+                    <div class="nutri-item">지방<span class="nutri-val">${food.f}g</span></div>
                 </div>
             `;
-
-            if (includeDessert) {
-                html += `
-                    <div style="padding: 15px 20px; border-top:1px dashed var(--border-color); font-size:0.9rem; background: var(--stat-bg);">
-                        ${lang.sideLabel}: <span style="color:var(--accent-color); font-weight:bold;">${dessert.name}</span> (+${dessert.kcal}kcal)
-                    </div>
-                `;
-            }
-
-            card.innerHTML = html;
             container.appendChild(card);
         }
+
+        // Disqus 및 기타 초기화 로직
+        var disqus_config = function () { this.page.url = window.location.href; this.page.identifier = 'lunch-picker-main'; };
+        (function() { var d = document, s = d.createElement('script'); s.src = 'https://lunch-18.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();
     </script>
 </body>
 </html>
