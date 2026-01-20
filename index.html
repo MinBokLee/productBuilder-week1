@@ -415,3 +415,137 @@
     { category: 'en', ko: { name: "팬케이크", summary: "밀가루 반죽을 얇게 구워 시럽, 과일 등과 곁들여 먹는 서양식 브런치 메뉴. 달콤하고 부드러운 맛.", story: "팬케이크는 고대 그리스 시대부터 존재했던 간단한 빵 요리에서 유래했습니다. 주로 아침 식사나 브런치 메뉴로 인기가 많으며, 다양한 토핑과 함께 즐길 수 있습니다." }, en: { name: "Pancake", summary: "A Western brunch menu of thin flour batter baked and served with syrup, fruit, etc. Sweet and soft taste.", story: "Pancakes originated from simple bread dishes existing in ancient Greek times. They are popular for breakfast or brunch, and can be enjoyed with various toppings." }, kcal: 350, nutri: { c: "40g", p: "8g", f: "18g" }, img: "https://i.ibb.co/LzqmJ4q/kimchi.jpg" },
     { category: 'en', ko: { name: "와플", summary: "격자무늬 틀에 구워 시럽, 과일, 아이스크림 등과 곁들여 먹는 서양식 디저트. 겉바속촉의 매력.", story: "와플은 중세 시대 벨기에에서 시작되어 유럽 전역으로 퍼져나갔습니다. 바삭한 겉과 부드러운 속의 조화가 일품이며, 디저트나 브런치 메뉴로 사랑받고 있습니다." }, en: { name: "Waffle", summary: "A Western dessert baked in a grid pattern and served with syrup, fruit, ice cream, etc. The charm of crispy outside and soft inside.", story: "Waffles originated in medieval Belgium and spread throughout Europe. The harmony of crispy exterior and soft interior is excellent, and they are loved as a dessert or brunch item." }, kcal: 400, nutri: { c: "50g", p: "10g", f: "20g" }, img: "https://i.ibb.co/LzqmJ4q/kimchi.jpg" }
 ];
+
+        function toggleLang() {
+            currentLang = currentLang === 'ko' ? 'en' : 'ko';
+            updateTexts();
+        }
+
+        function updateTexts() {
+            const t = i18n[currentLang];
+            document.getElementById('main-title').innerText = t.mainTitle;
+            document.getElementById('main-sub').innerText = t.mainSub;
+            document.getElementById('go-animal-btn').innerText = t.goAnimal;
+            document.getElementById('filter-all').innerText = t.filterAll;
+            document.getElementById('filter-kr').innerText = t.filterKr;
+            document.getElementById('filter-ch').innerText = t.filterCh;
+            document.getElementById('filter-jp').innerText = t.filterJp;
+            document.getElementById('filter-en').innerText = t.filterEn;
+            document.getElementById('recommend-btn').innerText = t.recommendBtn;
+            document.getElementById('back-btn').innerText = t.back;
+            document.getElementById('animal-title').innerText = t.animalTitle;
+            document.getElementById('animal-sub').innerText = t.animalSub;
+            document.getElementById('upload-btn').innerText = t.uploadBtn;
+            document.getElementById('result-go-back').innerText = t.resultGoBack;
+            if(document.getElementById('main-placeholder')) document.getElementById('main-placeholder').innerText = t.placeholder;
+        }
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            if(pageId === 'animal-page') loadAnimalModel();
+        }
+
+        function setFilter(f, btn) {
+            currentFilter = f;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function generateLunchMenu() {
+            try {
+                const container = document.getElementById('menu-container');
+                const foods = menuData.filter(i => currentFilter === 'all' || i.category === currentFilter);
+                if (foods.length === 0) {
+                    container.innerHTML = `<p style="color:var(--text-sub); font-weight:500;">추천할 메뉴가 없습니다.</p>`;
+                    return;
+                }
+                const food = foods[Math.floor(Math.random() * foods.length)];
+                const t = i18n[currentLang];
+                const data = food[currentLang];
+
+                container.innerHTML = `
+                    <div class="menu-card">
+                        <img src="${food.img}" class="food-image">
+                        <div class="food-header">
+                            ${food.kcal ? `<span class="food-badge">${food.kcal} KCAL</span>` : ''}
+                            <h2 class="food-name">${data.name}</h2>
+                            ${data.summary ? `<p style="font-size:0.92rem; color:var(--text-sub); margin-bottom:15px;">${data.summary}</p>` : ''}
+                        </div>
+                        ${food.nutri ? `
+                        <div class="nutri-grid">
+                            <div class="nutri-item"><span class="nutri-label">${t.carb}</span><span class="nutri-value">${food.nutri.c}</span></div>
+                            <div class="nutri-item"><span class="nutri-label">${t.protein}</span><span class="nutri-value">${food.nutri.p}</span></div>
+                            <div class="nutri-item"><span class="nutri-label">${t.fat}</span><span class="nutri-value">${food.nutri.f}</span></div>
+                        </div>` : ''}
+                        ${data.story ? `
+                        <div class="food-story">
+                            <p class="story-text"><strong>💡 Insight:</strong> ${data.story}</p>
+                        </div>` : ''}
+                    </div>`;
+            } catch (error) {
+                console.error("Error in generateLunchMenu:", error);
+                document.getElementById('menu-container').innerHTML = `<p style="color:red; font-weight:bold;">메뉴 생성 중 오류 발생: ${error.message}</p>`;
+            }
+        }
+
+        const ANIMAL_URL = "https://teachablemachine.withgoogle.com/models/ZGmPRyuJD/";
+        let animalModel;
+
+        async function loadAnimalModel() {
+            if (!animalModel) {
+                animalModel = await tmImage.load(ANIMAL_URL + "model.json", ANIMAL_URL + "metadata.json");
+            }
+        }
+
+        async function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            document.getElementById('upload-btn').innerText = i18n[currentLang].analyzing;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const img = document.getElementById('image-preview');
+                img.src = e.target.result;
+                img.style.display = 'inline-block';
+                const prediction = await animalModel.predict(img);
+                prediction.sort((a, b) => b.probability - a.probability);
+                showAnimalResult(prediction[0]);
+                document.getElementById('upload-btn').innerText = i18n[currentLang].uploadBtn;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showAnimalResult(topPrediction) {
+            const topAnimal = topPrediction.className; 
+            const t = i18n[currentLang];
+            const resultArea = document.getElementById('result-area');
+            const descArea = document.getElementById('result-desc');
+            const titleArea = document.getElementById('result-title');
+            resultArea.style.display = 'block';
+            let animalName = (topAnimal === "강아지상") ? t.dog : t.cat;
+            titleArea.innerText = t.confirmTitle.replace("{animal}", animalName);
+            descArea.innerText = (topAnimal === "강아지상") ? t.dogDesc : t.catDesc;
+        }
+
+        function toggleTheme() {
+            const isLight = document.body.getAttribute('data-theme') === 'light';
+            document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
+            document.getElementById('theme-btn').innerText = isLight ? '☀️' : '🌙';
+        }
+
+        function toggleContactForm() {
+            const w = document.getElementById('contact-form-wrapper');
+            w.style.display = w.style.display === 'block' ? 'none' : 'block';
+        }
+
+        updateTexts();
+
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lunch-18.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+</body>
+</html>
