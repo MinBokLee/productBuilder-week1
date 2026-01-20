@@ -81,7 +81,7 @@
 
         .link-btn { background: var(--stat-bg); border: 1px dashed var(--primary-color); color: var(--primary-color); padding: 14px; border-radius: 16px; cursor: pointer; font-weight: 600; width: 100%; margin-bottom: 24px; transition: 0.2s; }
 
-        .filter-group { display: flex; justify-content: center; gap: 10px; margin-bottom: 24px; }
+        .filter-group { display: flex; justify-content: center; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
         .filter-btn { padding: 10px 16px; border-radius: 14px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: 500; }
         .filter-btn.active { background: var(--text-main); color: var(--card-bg); border-color: var(--text-main); }
         
@@ -130,8 +130,9 @@
             <div class="filter-group">
                 <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)" id="filter-all">전체</button>
                 <button class="filter-btn" data-filter="kr" onclick="setFilter('kr', this)" id="filter-kr">한식</button>
-                <button class="filter-btn" data-filter="as" onclick="setFilter('as', this)" id="filter-as">아시안</button>
-                <button class="filter-btn" data-filter="ws" onclick="setFilter('ws', this)" id="filter-ws">양식</button>
+                <button class="filter-btn" data-filter="ch" onclick="setFilter('ch', this)" id="filter-ch">중식</button>
+                <button class="filter-btn" data-filter="jp" onclick="setFilter('jp', this)" id="filter-jp">일식</button>
+                <button class="filter-btn" data-filter="en" onclick="setFilter('en', this)" id="filter-en">양식</button>
             </div>
 
             <div id="menu-container">
@@ -185,7 +186,7 @@
                 mainTitle: "오늘 점심 뭐 먹지?",
                 mainSub: "AI가 당신의 완벽한 한 끼를 큐레이팅합니다.",
                 goAnimal: "✨ 나랑 어울리는 동물상 테스트",
-                filterAll: "전체", filterKr: "한식", filterAs: "아시안", filterWs: "양식",
+                filterAll: "전체", filterKr: "한식", filterCh: "중식", filterJp: "일식", filterEn: "양식",
                 placeholder: "버튼을 누르면 메뉴가 추천됩니다.",
                 recommendBtn: "지금 추천 받기",
                 contactToggle: "문의 및 제휴",
@@ -206,7 +207,7 @@
                 mainTitle: "What's for Lunch?",
                 mainSub: "AI curates your perfect meal.",
                 goAnimal: "✨ AI Animal Face Test",
-                filterAll: "All", filterKr: "Korean", filterAs: "Asian", filterWs: "Western",
+                filterAll: "All", filterKr: "Korean", filterCh: "Chinese", filterJp: "Japanese", filterEn: "Western",
                 placeholder: "Press button to get menu.",
                 recommendBtn: "Get Recommendation",
                 contactToggle: "Contact & Partnership",
@@ -226,25 +227,94 @@
         };
 
         const menuData = [
-            { 
-                category: 'kr', 
-                ko: { name: "매콤 제육볶음", summary: "비타민 B1이 풍부한 돼지고기와 고추장의 캡사이신이 만나 신진대사를 촉진합니다.", story: "제육볶음은 조선 시대 '저육'에서 유래했습니다. 현대에는 직장인들의 피로 해소를 돕는 강력한 에너지원입니다." },
-                en: { name: "Spicy Stir-fried Pork", summary: "Rich in Vitamin B1, this dish combines pork and chili paste to boost metabolism.", story: "Originating from the Joseon Dynasty, it is now the most powerful energy source for busy workers in Korea." },
-                kcal: 750, nutri: { c: "42g", p: "35g", f: "20g" }, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80" 
-            },
-            { 
-                category: 'as', 
-                ko: { name: "프리미엄 연어 초밥", summary: "DHA가 풍부한 연어는 두뇌 활동을 돕고 혈관 건강을 개선하는 고단백 식품입니다.", story: "연어는 강렬한 색감만큼 영양도 풍부합니다. 집중력이 필요한 오후 일과를 위해 가볍지만 든든한 선택이 됩니다." },
-                en: { name: "Premium Salmon Sushi", summary: "Rich in DHA, salmon is a high-protein food that helps brain activity.", story: "With its vibrant color and rich nutrients, it's a light yet filling choice for a productive afternoon." },
-                kcal: 520, nutri: { c: "58g", p: "24g", f: "11g" }, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" 
-            },
-            { 
-                category: 'ws', 
-                ko: { name: "갈릭 알리오 올리오", summary: "올리브유의 불포화 지방산과 마늘의 알리신 성분이 면역력을 높이고 콜레스테롤을 낮춥니다.", story: "이탈리아어로 '마늘과 올리브유'라는 뜻입니다. 소박한 재료지만 심장 건강에 탁월한 효능을 가진 건강식입니다." },
-                en: { name: "Garlic Aglio e Olio", summary: "Olive oil and garlic boost immunity and lower cholesterol.", story: "Meaning 'Garlic and Oil' in Italian, this simple dish is a healthy choice for heart health." },
-                kcal: 460, nutri: { c: "62g", p: "12g", f: "18g" }, img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" 
-            }
-        ];
+    // 한식 메뉴 20개
+    { category: 'kr', ko: { name: "김치찌개" }, en: { name: "Kimchi Stew" } },
+    { category: 'kr', ko: { name: "된장찌개" }, en: { name: "Soybean Paste Stew" } },
+    { category: 'kr', ko: { name: "비빔밥" }, en: { name: "Bibimbap" } },
+    { category: 'kr', ko: { name: "불고기" }, en: { name: "Bulgogi" } },
+    { category: 'kr', ko: { name: "제육볶음" }, en: { name: "Spicy Stir-fried Pork" } },
+    { category: 'kr', ko: { name: "순두부찌개" }, en: { name: "Soft Tofu Stew" } },
+    { category: 'kr', ko: { name: "삼계탕" }, en: { name: "Ginseng Chicken Soup" } },
+    { category: 'kr', ko: { name: "갈비탕" }, en: { name: "Short Rib Soup" } },
+    { category: 'kr', ko: { name: "냉면" }, en: { name: "Cold Noodles" } },
+    { category: 'kr', ko: { name: "떡볶이" }, en: { name: "Tteokbokki" } },
+    { category: 'kr', ko: { name: "김밥" }, en: { name: "Gimbap" } },
+    { category: 'kr', ko: { name: "부대찌개" }, en: { name: "Army Stew" } },
+    { category: 'kr', ko: { name: "해물파전" }, en: { name: "Seafood Pancake" } },
+    { category: 'kr', ko: { name: "잡채" }, en: { name: "Japchae" } },
+    { category: 'kr', ko: { name: "설렁탕" }, en: { name: "Ox Bone Soup" } },
+    { category: 'kr', ko: { name: "감자탕" }, en: { name: "Pork Back-bone Stew" } },
+    { category: 'kr', ko: { name: "닭갈비" }, en: { name: "Spicy Stir-fried Chicken" } },
+    { category: 'kr', ko: { name: "보쌈" }, en: { name: "Boiled Pork Wraps" } },
+    { category: 'kr', ko: { name: "육개장" }, en: { name: "Spicy Beef Soup" } },
+    { category: 'kr', ko: { name: "돌솥비빔밥" }, en: { name: "Hot Stone Pot Bibimbap" } },
+
+    // 중식 메뉴 20개
+    { category: 'ch', ko: { name: "짜장면" }, en: { name: "Jajangmyeon" } },
+    { category: 'ch', ko: { name: "짬뽕" }, en: { name: "Jjamppong" } },
+    { category: 'ch', ko: { name: "탕수육" }, en: { name: "Sweet and Sour Pork" } },
+    { category: 'ch', ko: { name: "마파두부" }, en: { name: "Mapo Tofu" } },
+    { category: 'ch', ko: { name: "양장피" }, en: { name: "Liangpi" } },
+    { category: 'ch', ko: { name: "깐풍기" }, en: { name: "Kkanpunggi" } },
+    { category: 'ch', ko: { name: "고추잡채" }, en: { name: "Gochujapchae" } },
+    { category: 'ch', ko: { name: "울면" }, en: { name: "Ulmyeon" } },
+    { category: 'ch', ko: { name: "기스면" }, en: { name: "Giseomyeon" } },
+    { category: 'ch', ko: { name: "난자완스" }, en: { name: "Nanjawanseu" } },
+    { category: 'ch', ko: { name: "라조기" }, en: { name: "Rajogi" } },
+    { category: 'ch', ko: { name: "유산슬" }, en: { name: "Yusanseul" } },
+    { category: 'ch', ko: { name: "팔보채" }, en: { name: "Palbochae" } },
+    { category: 'ch', ko: { name: "해물누룽지탕" }, en: { name: "Seafood Nurungjitang" } },
+    { category: 'ch', ko: { name: "동파육" }, en: { name: "Dongpayuk" } },
+    { category: 'ch', ko: { name: "멘보샤" }, en: { name: "Menbosha" } },
+    { category: 'ch', ko: { name: "오향장육" }, en: { name: "Ohyangjangyuk" } },
+    { category: 'ch', ko: { name: "경장육슬" }, en: { name: "Gyeongjangyukseul" } },
+    { category: 'ch', ko: { name: "마라탕" }, en: { name: "Malatang" } },
+    { category: 'ch', ko: { name: "마라샹궈" }, en: { name: "Mala Xiang Guo" } },
+
+    // 일식 메뉴 20개
+    { category: 'jp', ko: { name: "초밥" }, en: { name: "Sushi" } },
+    { category: 'jp', ko: { name: "라멘" }, en: { name: "Ramen" } },
+    { category: 'jp', ko: { name: "돈까스" }, en: { name: "Donkatsu" } },
+    { category: 'jp', ko: { name: "우동" }, en: { name: "Udon" } },
+    { category: 'jp', ko: { name: "소바" }, en: { name: "Soba" } },
+    { category: 'jp', ko: { name: "텐동" }, en: { name: "Tendon" } },
+    { category: 'jp', ko: { name: "규동" }, en: { name: "Gyudon" } },
+    { category: 'jp', ko: { name: "카레라이스" }, en: { name: "Curry Rice" } },
+    { category: 'jp', ko: { name: "오코노미야끼" }, en: { name: "Okonomiyaki" } },
+    { category: 'jp', ko: { name: "타코야끼" }, en: { name: "Takoyaki" } },
+    { category: 'jp', ko: { name: "야끼소바" }, en: { name: "Yakisoba" } },
+    { category: 'jp', ko: { name: "가츠동" }, en: { name: "Katsudon" } },
+    { category: 'jp', ko: { name: "오야코동" }, en: { name: "Oyakodon" } },
+    { category: 'jp', ko: { name: "스키야키" }, en: { name: "Sukiyaki" } },
+    { category: 'jp', ko: { name: "샤브샤브" }, en: { name: "Shabu-shabu" } },
+    { category: 'jp', ko: { name: "나가사키 짬뽕" }, en: { name: "Nagasaki Jjamppong" } },
+    { category: 'jp', ko: { name: "메밀소바" }, en: { name: "Buckwheat Soba" } },
+    { category: 'jp', ko: { name: "사시미" }, en: { name: "Sashimi" } },
+    { category: 'jp', ko: { name: "장어덮밥" }, en: { name: "Unagi Donburi" } },
+    { category: 'jp', ko: { name: "야키토리" }, en: { name: "Yakitori" } },
+
+    // 양식 메뉴 20개
+    { category: 'en', ko: { name: "파스타" }, en: { name: "Pasta" } },
+    { category: 'en', ko: { name: "피자" }, en: { name: "Pizza" } },
+    { category: 'en', ko: { name: "스테이크" }, en: { name: "Steak" } },
+    { category: 'en', ko: { name: "리조또" }, en: { name: "Risotto" } },
+    { category: 'en', ko: { name: "햄버거" }, en: { name: "Hamburger" } },
+    { category: 'en', ko: { name: "샌드위치" }, en: { name: "Sandwich" } },
+    { category: 'en', ko: { name: "샐러드" }, en: { name: "Salad" } },
+    { category: 'en', ko: { name: "스프" }, en: { name: "Soup" } },
+    { category: 'en', ko: { name: "빠에야" }, en: { name: "Paella" } },
+    { category: 'en', ko: { name: "라자냐" }, en: { name: "Lasagna" } },
+    { category: 'en', ko: { name: "타코" }, en: { name: "Taco" } },
+    { category: 'en', ko: { name: "브리또" }, en: { name: "Burrito" } },
+    { category: 'en', ko: { name: "퀘사디아" }, en: { name: "Quesadilla" } },
+    { category: 'en', ko: { name: "미트볼" }, en: { name: "Meatball" } },
+    { category: 'en', ko: { name: "피쉬 앤 칩스" }, en: { name: "Fish and Chips" } },
+    { category: 'en', ko: { name: "바베큐" }, en: { name: "Barbecue" } },
+    { category: 'en', ko: { name: "핫도그" }, en: { name: "Hot Dog" } },
+    { category: 'en', ko: { name: "오믈렛" }, en: { name: "Omelet" } },
+    { category: 'en', ko: { name: "팬케이크" }, en: { name: "Pancake" } },
+    { category: 'en', ko: { name: "와플" }, en: { name: "Waffle" } }
+];
 
         function toggleLang() {
             currentLang = currentLang === 'ko' ? 'en' : 'ko';
@@ -258,8 +328,9 @@
             document.getElementById('go-animal-btn').innerText = t.goAnimal;
             document.getElementById('filter-all').innerText = t.filterAll;
             document.getElementById('filter-kr').innerText = t.filterKr;
-            document.getElementById('filter-as').innerText = t.filterAs;
-            document.getElementById('filter-ws').innerText = t.filterWs;
+            document.getElementById('filter-ch').innerText = t.filterCh;
+            document.getElementById('filter-jp').innerText = t.filterJp;
+            document.getElementById('filter-en').innerText = t.filterEn;
             document.getElementById('recommend-btn').innerText = t.recommendBtn;
             document.getElementById('back-btn').innerText = t.back;
             document.getElementById('animal-title').innerText = t.animalTitle;
@@ -290,19 +361,8 @@
 
             container.innerHTML = `
                 <div class="menu-card">
-                    <img src="${food.img}" class="food-image">
                     <div class="food-header">
-                        <span class="food-badge">${food.kcal} KCAL</span>
                         <h2 class="food-name">${data.name}</h2>
-                        <p style="font-size:0.92rem; color:var(--text-sub); margin-bottom:15px;">${data.summary}</p>
-                    </div>
-                    <div class="nutri-grid">
-                        <div class="nutri-item"><span class="nutri-label">${t.carb}</span><span class="nutri-value">${food.nutri.c}</span></div>
-                        <div class="nutri-item"><span class="nutri-label">${t.protein}</span><span class="nutri-value">${food.nutri.p}</span></div>
-                        <div class="nutri-item"><span class="nutri-label">${t.fat}</span><span class="nutri-value">${food.nutri.f}</span></div>
-                    </div>
-                    <div class="food-story">
-                        <p class="story-text"><strong>💡 Insight:</strong> ${data.story}</p>
                     </div>
                 </div>`;
         }
