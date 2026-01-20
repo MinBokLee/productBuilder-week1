@@ -228,70 +228,170 @@
 
         const menuData = [
     // 한식 메뉴 20개
-    { category: 'kr', ko: { name: "김치찌개", summary: "잘 익은 김치와 돼지고기를 넣어 끓인 매콤하고 칼칼한 국물 맛이 일품인 한국의 대표적인 찌개 요리", img: "https://i.ibb.co/LzqmJ4q/kimchi.jpg" }, en: { name: "Kimchi Stew", summary: "A representative Korean stew with a spicy and refreshing soup taste, boiled with well-ripened kimchi and pork." }, kcal: 463, nutri: { c: "12g", p: "25g", f: "33g" } },
-    { category: 'kr', ko: { name: "된장찌개", summary: "구수한 된장을 풀어 각종 채소와 두부, 해산물 등을 넣고 끓여낸 찌개", img: "https://i.ibb.co/Vvz9wVb/doenjang.jpg" }, en: { name: "Soybean Paste Stew", summary: "A stew made with savory soybean paste, various vegetables, tofu, and seafood." }, kcal: 201, nutri: { c: "14g", p: "17g", f: "9g" } },
-    { category: 'kr', ko: { name: "비빔밥", summary: "밥 위에 각종 나물과 고기, 계란 등을 얹어 고추장이나 간장 양념으로 비벼 먹는 음식", img: "https://i.ibb.co/k3CrxSg/bibimbap.jpg" }, en: { name: "Bibimbap", summary: "A dish served with rice topped with various vegetables, meat, and eggs, mixed with gochujang or soy sauce." }, kcal: 599, nutri: { c: "92g", p: "23g", f: "14g" } },
-    { category: 'kr', ko: { name: "불고기", summary: "얇게 썬 소고기를 간장 양념에 재워 야채와 함께 볶거나 구워 먹는 한국의 대표적인 고기 요리", img: "https://i.ibb.co/yQr6r3g/bulgogi.jpg" }, en: { name: "Bulgogi", summary: "A representative Korean meat dish made by stir-frying or grilling thinly sliced beef marinated in soy sauce with vegetables." }, kcal: 471, nutri: { c: "29g", p: "33g", f: "24g" } },
-    { category: 'kr', ko: { name: "제육볶음", summary: "돼지고기를 고추장 양념에 재워 각종 채소와 함께 볶아낸 매콤한 맛의 요리", img: "https://i.ibb.co/9vj8kS8/jeyuk.jpg" }, en: { name: "Spicy Stir-fried Pork", summary: "A spicy dish made by stir-frying pork marinated in gochujang sauce with various vegetables." }, kcal: 585, nutri: { c: "23g", p: "40g", f: "37g" } },
-    { category: 'kr', ko: { name: "순두부찌개", summary: "부드러운 순두부와 해산물, 고기, 채소 등을 넣고 얼큰하게 끓여낸 찌개", img: "https://i.ibb.co/GcJ3D2x/sundubu.jpg" }, en: { name: "Soft Tofu Stew", summary: "A spicy stew made with soft tofu, seafood, meat, and vegetables." }, kcal: 216, nutri: { c: "12g", p: "17g", f: "11g" } },
-    { category: 'kr', ko: { name: "삼계탕", summary: "어린 닭에 찹쌀, 인삼, 대추 등을 넣고 푹 고아 만든 한국의 전통 보양식", img: "https.ibb.co/bFz8p0j/samgyetang.jpg" }, en: { name: "Ginseng Chicken Soup", summary: "A traditional Korean health food made by stuffing a young chicken with glutinous rice, ginseng, and jujubes and boiling it." }, kcal: 918, nutri: { c: "55g", p: "113g", f: "29g" } },
-    { category: 'kr', ko: { name: "갈비탕", summary: "소갈비를 푹 고아 맑은 국물을 낸 탕으로, 깊고 진한 맛이 특징", img: "https://i.ibb.co/dGtSk7t/galbitang.jpg" }, en: { name: "Short Rib Soup", summary: "A soup with a clear and deep taste, made by boiling beef ribs for a long time." }, kcal: 468, nutri: { c: "5g", p: "43g", f: "31g" } },
-    { category: 'kr', ko: { name: "냉면", summary: "차가운 육수에 쫄깃한 면발을 말아먹는 여름철 별미", img: "https://i.ibb.co/hZJ0Kz4/naengmyeon.jpg" }, en: { name: "Cold Noodles", summary: "A summer delicacy of chewy noodles in a cold broth." }, kcal: 480, nutri: { c: "87g", p: "18g", f: "6g" } },
-    { category: 'kr', ko: { name: "떡볶이", summary: "쌀떡 또는 밀떡을 고추장 소스에 볶아 만든 매콤달콤한 한국의 대표 간식", img: "https://i.ibb.co/pnqYJtQ/tteokbokki.jpg" }, en: { name: "Tteokbokki", summary: "A representative Korean snack with a sweet and spicy taste, made by stir-frying rice cakes or wheat cakes in gochujang sauce." }, kcal: 304, nutri: { c: "64g", p: "7g", f: "2g" } },
-    { category: 'kr', ko: { name: "김밥", summary: "밥과 다양한 재료를 김에 싸서 말아 먹기 좋게 썬 음식", img: "https://i.ibb.co/8bLp0g5/gimbap.jpg" }, en: { name: "Gimbap", summary: "A dish made by rolling rice and various ingredients in seaweed and cutting them into bite-sized pieces." }, kcal: 359, nutri: { c: "59g", p: "13g", f: "9g" } },
-    { category: 'kr', ko: { name: "부대찌개", summary: "햄, 소시지, 라면 등 다양한 재료를 넣고 얼큰하게 끓인 찌개", img: "https://i.ibb.co/pwnwM5g/budaejjigae.jpg" }, en: { name: "Army Stew", summary: "A spicy stew with various ingredients such as ham, sausage, and ramen." }, kcal: 519, nutri: { c: "45g", p: "25g", f: "26g" } },
-    { category: 'kr', ko: { name: "해물파전", summary: "싱싱한 해산물과 쪽파를 듬뿍 넣어 바삭하게 부쳐낸 전", img: "https://i.ibb.co/9hxvR3D/haemulpajeon.jpg" }, en: { name: "Seafood Pancake", summary: "A savory pancake made with fresh seafood and green onions." }, kcal: 469, nutri: { c: "46g", p: "23g", f: "21g" } },
-    { category: 'kr', ko: { name: "잡채", summary: "시금치, 당근, 양파 등 다양한 채소와 당면을 간장 양념으로 볶아낸 잔치 음식", img: "https://i.ibb.co/k2Gz8V5/japchae.jpg" }, en: { name: "Japchae", summary: "A festive dish made by stir-frying various vegetables such as spinach, carrots, and onions with glass noodles in soy sauce." }, kcal: 358, nutri: { c: "56g", p: "8g", f: "12g" } },
-    { category: 'kr', ko: { name: "설렁탕", summary: "소뼈를 푹 고아 만든 뽀얀 국물에 밥과 소면을 말아먹는 든든한 한 끼", img: "https://i.ibb.co/GnbbM2p/seolleongtang.jpg" }, en: { name: "Ox Bone Soup", summary: "A hearty meal of rice and noodles in a milky soup made from ox bones." }, kcal: 439, nutri: { c: "56g", p: "34g", f: "9g" } },
-    { category: 'kr', ko: { name: "감자탕", summary: "돼지 등뼈와 감자를 넣어 얼큰하게 끓인 전골 요리", img: "https://i.ibb.co/k1Wz7gR/gamjatang.jpg" }, en: { name: "Pork Back-bone Stew", summary: "A spicy hot pot dish with pork back-bone and potatoes." }, kcal: 960, nutri: { c: "41g", p: "97g", f: "44g" } },
-    { category: 'kr', ko: { name: "닭갈비", summary: "토막 낸 닭고기를 채소와 함께 매콤한 양념에 볶아 먹는 요리", img: "https://i.ibb.co/qj3d2P5/dakgalbi.jpg" }, en: { name: "Spicy Stir-fried Chicken", summary: "A dish of stir-fried chicken in a spicy sauce with vegetables." }, kcal: 654, nutri: { c: "44g", p: "50g", f: "31g" } },
-    { category: 'kr', ko: { name: "보쌈", summary: "향신료를 넣은 물에 삶은 돼지고기를 얇게 썰어 김치, 쌈 채소와 함께 먹는 요리", img: "https://i.ibb.co/f2TjPqf/bossam.jpg" }, en: { name: "Boiled Pork Wraps", summary: "Thinly sliced pork boiled in spiced water and eaten with kimchi and wrap vegetables." }, kcal: 1206, nutri: { c: "12g", p: "94g", f: "89g" } },
-    { category: 'kr', ko: { name: "육개장" }, en: { name: "Spicy Beef Soup" } },
-    { category: 'kr', ko: { name: "돌솥비빔밥" }, en: { name: "Hot Stone Pot Bibimbap" } },
+    { 
+        category: 'kr', 
+        ko: { name: "김치찌개", summary: "잘 익은 김치와 돼지고기를 넣어 끓인 매콤하고 칼칼한 국물 맛이 일품인 한국의 대표적인 찌개 요리.", story: "김치찌개는 한국인의 밥상에서 빠질 수 없는 대표적인 음식으로, 김치의 시원하고 칼칼한 맛이 일품입니다. 돼지고기나 참치 등을 넣어 더욱 풍성하게 즐길 수 있습니다." }, 
+        en: { name: "Kimchi Stew", summary: "A representative Korean stew with a spicy and refreshing soup taste, boiled with well-ripened kimchi and pork.", story: "Kimchi stew is a staple on Korean dining tables, renowned for its cool and spicy kick. It can be enjoyed even more richly by adding ingredients like pork or tuna." }, 
+        kcal: 463, nutri: { c: "12g", p: "25g", f: "33g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "된장찌개", summary: "구수한 된장을 풀어 각종 채소와 두부, 해산물 등을 넣고 끓여낸 찌개. 한국인의 소울 푸드.", story: "된장찌개는 한국의 전통 발효 음식인 된장을 주재료로 하여 깊고 구수한 맛이 특징입니다. 다양한 재료를 넣어 건강하고 따뜻한 한 끼를 제공합니다." }, 
+        en: { name: "Soybean Paste Stew", summary: "A stew made with savory soybean paste, various vegetables, tofu, and seafood. A soul food for Koreans.", story: "Doenjang-jjigae is characterized by its deep and savory flavor, made primarily from doenjang, a traditional Korean fermented food. It offers a healthy and warm meal with various ingredients." }, 
+        kcal: 201, nutri: { c: "14g", p: "17g", f: "9g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "비빔밥", summary: "밥 위에 각종 나물과 고기, 계란 등을 얹어 고추장이나 간장 양념으로 비벼 먹는 음식. 오색 비주얼이 식욕을 자극.", story: "비빔밥은 밥과 다양한 채소, 고기, 계란 등 여러 가지 재료를 한 그릇에 담아 비벼 먹는 한국의 전통 음식입니다. 영양 균형이 잘 잡혀 있으며 시각적으로도 아름답습니다." }, 
+        en: { name: "Bibimbap", summary: "A dish served with rice topped with various vegetables, meat, and eggs, mixed with gochujang or soy sauce. Its colorful visuals stimulate appetite.", story: "Bibimbap is a traditional Korean dish consisting of rice and various ingredients such as vegetables, meat, and eggs, all mixed in one bowl. It is nutritionally balanced and visually appealing." }, 
+        kcal: 599, nutri: { c: "92g", p: "23g", f: "14g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "불고기", summary: "얇게 썬 소고기를 간장 양념에 재워 야채와 함께 볶거나 구워 먹는 한국의 대표적인 고기 요리. 남녀노소 누구나 좋아하는 맛.", story: "불고기는 한국의 대표적인 고기 요리로, 달콤 짭짤한 양념에 재운 소고기를 볶아 만듭니다. 부드러운 고기와 채소가 어우러져 밥반찬이나 술안주로 인기가 많습니다." }, 
+        en: { name: "Bulgogi", summary: "A representative Korean meat dish made by stir-frying or grilling thinly sliced beef marinated in soy sauce with vegetables. A taste loved by all ages.", story: "Bulgogi is a representative Korean meat dish, made by stir-frying marinated beef in a sweet and savory sauce. Its tender meat and vegetables make it popular as a side dish for rice or an accompaniment to drinks." }, 
+        kcal: 471, nutri: { c: "29g", p: "33g", f: "24g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "제육볶음", summary: "돼지고기를 고추장 양념에 재워 각종 채소와 함께 볶아낸 매콤한 맛의 요리. 스트레스 해소에 제격.", story: "제육볶음은 매콤한 고추장 양념에 돼지고기와 채소를 볶아 만든 한국의 인기 메뉴입니다. 칼칼한 맛이 입맛을 돋우고 스트레스를 해소하는 데 도움을 줍니다." }, 
+        en: { name: "Spicy Stir-fried Pork", summary: "A spicy dish made by stir-frying pork marinated in gochujang sauce with various vegetables. Perfect for stress relief.", story: "Jeyuk-bokkeum is a popular Korean dish made by stir-frying pork and vegetables in a spicy gochujang sauce. Its pungent flavor enhances appetite and helps relieve stress." }, 
+        kcal: 585, nutri: { c: "23g", p: "40g", f: "37g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "순두부찌개", summary: "부드러운 순두부와 해산물, 고기, 채소 등을 넣고 얼큰하게 끓여낸 찌개. 해장에도 좋아요.", story: "순두부찌개는 몽글몽글한 순두부를 넣어 부드러운 식감이 특징인 한국의 찌개입니다. 얼큰하고 시원한 국물이 해산물이나 고기와 잘 어우러져 해장용으로도 좋습니다." }, 
+        en: { name: "Soft Tofu Stew", summary: "A spicy stew made with soft tofu, seafood, meat, and vegetables. Also good for hangovers.", story: "Sundubu-jjigae is a Korean stew characterized by its soft texture from silken tofu. Its spicy and refreshing broth pairs well with seafood or meat, making it excellent for hangovers." }, 
+        kcal: 216, nutri: { c: "12g", p: "17g", f: "11g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "삼계탕", summary: "어린 닭에 찹쌀, 인삼, 대추 등을 넣고 푹 고아 만든 한국의 전통 보양식. 여름철 원기 회복에 최고.", story: "삼계탕은 영계 뱃속에 찹쌀, 인삼, 대추, 마늘 등을 넣어 푹 고아 만든 한국의 대표적인 보양식입니다. 특히 더운 여름철 몸의 기력을 보충하는 데 도움을 줍니다." }, 
+        en: { name: "Ginseng Chicken Soup", summary: "A traditional Korean health food made by stuffing a young chicken with glutinous rice, ginseng, and jujubes and boiling it. Best for regaining energy in summer.", story: "Samgyetang is a representative Korean health food made by simmering a young chicken stuffed with glutinous rice, ginseng, jujubes, and garlic. It is especially beneficial for replenishing body energy during hot summer months." }, 
+        kcal: 918, nutri: { c: "55g", p: "113g", f: "29g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "갈비탕", summary: "소갈비를 푹 고아 맑은 국물을 낸 탕으로, 깊고 진한 맛이 특징. 든든한 한 끼 식사로 최고.", story: "갈비탕은 소갈비를 오랜 시간 푹 고아 만든 맑고 깊은 맛의 국물 요리입니다. 부드러운 갈빗살과 시원한 국물이 어우러져 든든하고 영양가 있는 식사를 제공합니다." }, 
+        en: { name: "Short Rib Soup", summary: "A soup with a clear and deep taste, made by boiling beef ribs for a long time. Best for a hearty meal.", story: "Galbitang is a clear and deeply flavored soup made by simmering beef ribs for a long time. Its tender ribs and refreshing broth make for a hearty and nutritious meal." }, 
+        kcal: 468, nutri: { c: "5g", p: "43g", f: "31g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "냉면", summary: "차가운 육수에 쫄깃한 면발을 말아먹는 여름철 별미. 더위를 잊게 하는 시원함.", story: "냉면은 차가운 육수에 메밀 면을 넣어 시원하게 즐기는 한국의 여름철 대표 음식입니다. 새콤달콤한 맛과 쫄깃한 면발이 더위를 잊게 해줍니다." }, 
+        en: { name: "Cold Noodles", summary: "A summer delicacy of chewy noodles in a cold broth. Refreshing enough to forget the heat.", story: "Naengmyeon is a representative Korean summer dish enjoyed chilled with buckwheat noodles in a cold broth. Its tangy-sweet flavor and chewy noodles help beat the summer heat." }, 
+        kcal: 480, nutri: { c: "87g", p: "18g", f: "6g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "떡볶이", summary: "쌀떡 또는 밀떡을 고추장 소스에 볶아 만든 매콤달콤한 한국의 대표 간식. 언제 먹어도 맛있어요.", story: "떡볶이는 쫄깃한 떡과 어묵, 채소 등을 매콤달콤한 고추장 양념에 볶아 만든 한국의 인기 간식입니다. 남녀노소 모두가 좋아하는 맛으로, 간단하면서도 든든하게 즐길 수 있습니다." }, 
+        en: { name: "Tteokbokki", summary: "A representative Korean snack with a sweet and spicy taste, made by stir-frying rice cakes or wheat cakes in gochujang sauce. Always delicious.", story: "Tteokbokki is a popular Korean snack made with chewy rice cakes, fish cakes, and vegetables stir-fried in a sweet and spicy gochujang sauce. Loved by all ages, it's a simple yet satisfying treat." }, 
+        kcal: 304, nutri: { c: "64g", p: "7g", f: "2g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "김밥", summary: "밥과 다양한 재료를 김에 싸서 말아 먹기 좋게 썬 음식. 소풍 도시락의 필수 메뉴.", story: "김밥은 밥과 각종 채소, 계란, 햄, 단무지 등을 김에 싸서 만든 한국의 대표적인 간편식입니다. 소풍이나 나들이 갈 때 도시락 메뉴로 인기가 많습니다." }, 
+        en: { name: "Gimbap", summary: "A dish made by rolling rice and various ingredients in seaweed and cutting them into bite-sized pieces. An essential picnic lunch menu.", story: "Gimbap is a representative Korean portable meal made by rolling rice, various vegetables, eggs, ham, and pickled radish in seaweed. It's popular as a lunchbox item for picnics and outings." }, 
+        kcal: 359, nutri: { c: "59g", p: "13g", f: "9g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "부대찌개", summary: "햄, 소시지, 라면 등 다양한 재료를 넣고 얼큰하게 끓인 찌개. 푸짐하고 얼큰한 맛.", story: "부대찌개는 한국전쟁 이후 미군 부대에서 나온 햄, 소시지 등을 활용하여 만든 음식에서 유래했습니다. 얼큰한 국물과 푸짐한 재료가 특징인 한국인의 인기 메뉴입니다." }, 
+        en: { name: "Army Stew", summary: "A spicy stew with various ingredients such as ham, sausage, and ramen. Rich and spicy flavor.", story: "Budae-jjigae originated from dishes made with ham, sausages, etc., from US military bases after the Korean War. It's a popular Korean dish characterized by its spicy broth and generous ingredients." }, 
+        kcal: 519, nutri: { c: "45g", p: "25g", f: "26g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "해물파전", summary: "싱싱한 해산물과 쪽파를 듬뿍 넣어 바삭하게 부쳐낸 전. 비 오는 날 생각나는 맛.", story: "해물파전은 다양한 해산물과 파를 넣어 바삭하게 부쳐낸 한국의 전통 전입니다. 막걸리와 함께 비 오는 날 즐겨 먹는 음식으로 유명합니다." }, 
+        en: { name: "Seafood Pancake", summary: "A savory pancake made with fresh seafood and green onions. A taste that comes to mind on a rainy day.", story: "Haemul Pajeon is a traditional Korean pancake made with various seafood and green onions, fried until crispy. It's famous for being enjoyed with makgeolli on rainy days." }, 
+        kcal: 469, nutri: { c: "46g", p: "23g", f: "21g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "잡채", summary: "시금치, 당근, 양파 등 다양한 채소와 당면을 간장 양념으로 볶아낸 잔치 음식. 특별한 날에 좋아요.", story: "잡채는 당면과 다양한 채소, 고기 등을 간장 양념에 볶아 만든 한국의 전통적인 잔치 음식입니다. 알록달록한 색감과 쫄깃한 식감이 특징입니다." }, 
+        en: { name: "Japchae", summary: "A festive dish made by stir-frying various vegetables such as spinach, carrots, and onions with glass noodles in soy sauce. Good for special occasions.", story: "Japchae is a traditional Korean festive dish made by stir-frying glass noodles and various vegetables and meat in a soy sauce seasoning. It is characterized by its colorful appearance and chewy texture." }, 
+        kcal: 358, nutri: { c: "56g", p: "8g", f: "12g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "설렁탕", summary: "소뼈를 푹 고아 만든 뽀얀 국물에 밥과 소면을 말아먹는 든든한 한 끼. 기력 회복에 도움.", story: "설렁탕은 소뼈를 오랜 시간 고아 만든 뽀얀 국물이 일품인 한국의 전통 보양식입니다. 따뜻하고 진한 국물이 몸의 기력을 회복하는 데 도움을 줍니다." }, 
+        en: { name: "Ox Bone Soup", summary: "A hearty meal of rice and noodles in a milky soup made from ox bones. Helps restore energy.", story: "Seolleongtang is a traditional Korean health food with an excellent milky broth made from simmering ox bones for a long time. Its warm and rich broth helps restore body energy." }, 
+        kcal: 439, nutri: { c: "56g", p: "34g", f: "9g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "감자탕", summary: "돼지 등뼈와 감자를 넣어 얼큰하게 끓인 전골 요리. 술안주로도 좋아요.", story: "감자탕은 돼지 등뼈와 감자, 우거지 등을 넣고 얼큰하게 끓인 한국의 대표적인 전골 요리입니다. 뼈에 붙은 살코기를 발라 먹는 재미가 있으며, 해장국이나 술안주로 인기가 많습니다." }, 
+        en: { name: "Pork Back-bone Stew", summary: "A spicy hot pot dish with pork back-bone and potatoes. Also good as a side dish for drinks.", story: "Gamjatang is a representative Korean hot pot dish made with pork backbones, potatoes, and dried radish greens in a spicy broth. It's popular as a hangover soup or an accompaniment to drinks, offering the enjoyment of picking meat from the bones." }, 
+        kcal: 960, nutri: { c: "41g", p: "97g", f: "44g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "닭갈비", summary: "토막 낸 닭고기를 채소와 함께 매콤한 양념에 볶아 먹는 요리. 춘천의 명물.", story: "닭갈비는 닭고기와 양배추, 고구마, 떡 등을 매콤한 양념에 볶아 먹는 한국의 인기 메뉴입니다. 특히 춘천 지역의 대표적인 음식으로 유명하며, 볶음밥으로 마무리하는 것이 별미입니다." }, 
+        en: { name: "Spicy Stir-fried Chicken", summary: "A dish of stir-fried chicken in a spicy sauce with vegetables. A specialty of Chuncheon.", story: "Dakgalbi is a popular Korean dish made by stir-frying chicken and vegetables such as cabbage, sweet potatoes, and rice cakes in a spicy sauce. It is especially famous as a representative dish of the Chuncheon region, and finishing with fried rice is a special treat." }, 
+        kcal: 654, nutri: { c: "44g", p: "50g", f: "31g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "보쌈", summary: "향신료를 넣은 물에 삶은 돼지고기를 얇게 썰어 김치, 쌈 채소와 함께 먹는 요리. 부드러운 고기 맛이 일품.", story: "보쌈은 부드럽게 삶은 돼지고기를 김치나 쌈 채소에 싸서 먹는 한국의 전통 음식입니다. 고소하고 담백한 돼지고기와 아삭한 김치의 조화가 일품입니다." }, 
+        en: { name: "Boiled Pork Wraps", summary: "Thinly sliced pork boiled in spiced water and eaten with kimchi and wrap vegetables. Excellent tender meat flavor.", story: "Bossam is a traditional Korean dish of tender boiled pork, eaten wrapped in kimchi or leafy vegetables. The harmony of savory pork and crunchy kimchi is exquisite." }, 
+        kcal: 1206, nutri: { c: "12g", p: "94g", f: "89g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "육개장", summary: "소고기를 찢어 넣고 고사리, 숙주나물과 함께 얼큰하게 끓인 국. 해장국으로도 인기가 많아요.", story: "육개장은 소고기를 주재료로 하여 고사리, 숙주나물 등 다양한 채소를 넣고 얼큰하게 끓인 한국의 전통 국입니다. 특히 해장국으로 인기가 많으며, 뜨끈하고 시원한 국물이 특징입니다." }, 
+        en: { name: "Spicy Beef Soup", summary: "A spicy soup made with shredded beef, bracken, and bean sprouts. Also popular as a hangover soup.", story: "Yukgaejang is a traditional Korean soup made with shredded beef and various vegetables like bracken and bean sprouts in a spicy broth. It's especially popular as a hangover soup, known for its hot and refreshing broth." }, 
+        kcal: 369, nutri: { c: "18g", p: "29g", f: "20g" }, img: "img/kimchi.jpg" 
+    },
+    { 
+        category: 'kr', 
+        ko: { name: "돌솥비빔밥", summary: "뜨겁게 달군 돌솥에 밥과 나물을 얹어 비벼 먹는 비빔밥. 누룽지까지 즐길 수 있어요.", story: "돌솥비빔밥은 뜨겁게 달군 돌솥에 밥과 다양한 나물, 고기, 계란 등을 넣어 비벼 먹는 비빔밥입니다. 돌솥의 열기로 인해 밥이 따뜻하게 유지되며, 바닥에 눌어붙은 누룽지가 별미입니다." }, 
+        en: { name: "Hot Stone Pot Bibimbap", summary: "Bibimbap served in a hot stone pot, which is stirred with vegetables and rice. You can also enjoy the scorched rice.", story: "Dolsot Bibimbap is a variation of Bibimbap served in a sizzling hot stone pot with rice, various seasoned vegetables, meat, and an egg. The hot pot keeps the rice warm, and the crispy scorched rice at the bottom is a delicious treat." }, 
+        kcal: 630, nutri: { c: "98g", p: "25g", f: "15g" }, img: "img/kimchi.jpg" 
+    },
 
     // 중식 메뉴 20개
-    { category: 'ch', ko: { name: "짜장면" }, en: { name: "Jajangmyeon" } },
-    { category: 'ch', ko: { name: "짬뽕" }, en: { name: "Jjamppong" } },
-    { category: 'ch', ko: { name: "탕수육" }, en: { name: "Sweet and Sour Pork" } },
-    { category: 'ch', ko: { name: "마파두부" }, en: { name: "Mapo Tofu" } },
-    { category: 'ch', ko: { name: "양장피" }, en: { name: "Liangpi" } },
-    { category: 'ch', ko: { name: "깐풍기" }, en: { name: "Kkanpunggi" } },
-    { category: 'ch', ko: { name: "고추잡채" }, en: { name: "Gochujapchae" } },
-    { category: 'ch', ko: { name: "울면" }, en: { name: "Ulmyeon" } },
-    { category: 'ch', ko: { name: "기스면" }, en: { name: "Giseomyeon" } },
-    { category: 'ch', ko: { name: "난자완스" }, en: { name: "Nanjawanseu" } },
-    { category: 'ch', ko: { name: "라조기" }, en: { name: "Rajogi" } },
-    { category: 'ch', ko: { name: "유산슬" }, en: { name: "Yusanseul" } },
-    { category: 'ch', ko: { name: "팔보채" }, en: { name: "Palbochae" } },
-    { category: 'ch', ko: { name: "해물누룽지탕" }, en: { name: "Seafood Nurungjitang" } },
-    { category: 'ch', ko: { name: "동파육" }, en: { name: "Dongpayuk" } },
-    { category: 'ch', ko: { name: "멘보샤" }, en: { name: "Menbosha" } },
-    { category: 'ch', ko: { name: "오향장육" }, en: { name: "Ohyangjangyuk" } },
-    { category: 'ch', ko: { name: "경장육슬" }, en: { name: "Gyeongjangyukseul" } },
-    { category: 'ch', ko: { name: "마라탕" }, en: { name: "Malatang" } },
-    { category: 'ch', ko: { name: "마라샹궈" }, en: { name: "Mala Xiang Guo" } },
+    { category: 'ch', ko: { name: "짜장면", summary: "진한 춘장 소스에 비벼 먹는 한국식 중화요리의 대표 메뉴. 남녀노소 모두가 좋아하는 맛.", story: "짜장면은 한국식 중화요리의 대표 메뉴로, 춘장에 캐러멜을 넣어 달콤한 맛이 특징입니다. 푸짐한 면과 짜장 소스의 조화는 언제나 만족스러운 한 끼를 선사합니다." }, en: { name: "Jajangmyeon", summary: "A representative menu of Korean-style Chinese cuisine, served with a thick black bean sauce. A taste loved by all ages.", story: "Jajangmyeon is a quintessential Korean-Chinese dish, characterized by its sweet black bean sauce. The generous noodles combined with the savory sauce always provide a satisfying meal." }, kcal: 864, nutri: { c: "134g", p: "31g", f: "22g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "짬뽕", summary: "각종 해산물과 채소를 듬뿍 넣어 얼큰하게 끓인 중화요리. 해장 메뉴로 최고.", story: "짬뽕은 해산물과 채소를 고추기름에 볶아 얼큰하게 끓여낸 한국식 중화요리입니다. 시원하고 칼칼한 국물은 해장용으로도 인기가 많습니다." }, en: { name: "Jjamppong", summary: "A Chinese dish with plenty of seafood and vegetables, boiled spicy. Best as a hangover cure.", story: "Jjamppong is a Korean-Chinese dish made by stir-frying seafood and vegetables in chili oil and boiling them in a spicy broth. Its refreshing and pungent soup is popular as a hangover remedy." }, kcal: 788, nutri: { c: "102g", p: "37g", f: "26g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "탕수육", summary: "바삭하게 튀긴 돼지고기에 새콤달콤한 소스를 부어 먹는 요리. 찍먹 vs 부먹 논쟁의 주인공.", story: "탕수육은 돼지고기를 바삭하게 튀겨 새콤달콤한 소스를 곁들여 먹는 한국식 중화요리입니다. 바삭한 튀김옷과 소스의 조화가 일품이며, 부먹과 찍먹 논쟁으로도 유명합니다." }, en: { name: "Sweet and Sour Pork", summary: "A dish of crispy fried pork with a sweet and sour sauce. The protagonist of the 'dipping vs pouring' debate.", story: "Tangsuyuk is a Korean-Chinese dish of crispy fried pork served with a sweet and sour sauce. The harmony of the crunchy coating and the sauce is exquisite, also famous for the 'pour-over vs dip-in' debate." }, kcal: 1315, nutri: { c: "128g", p: "58g", f: "63g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "마파두부", summary: "부드러운 두부와 다진 고기를 매콤한 두반장 소스에 볶아 만든 중국 사천 요리. 밥도둑.", story: "마파두부는 매콤한 두반장 소스에 부드러운 두부와 다진 고기를 볶아 만든 중국 사천 지방의 대표 요리입니다. 혀가 얼얼한 마라 맛이 특징이며, 밥과 함께 먹으면 더욱 맛있습니다." }, en: { name: "Mapo Tofu", summary: "Chinese Sichuan dish made with soft tofu and minced meat stir-fried in spicy doubanjiang sauce. A 'rice thief'.", story: "Mapo Tofu is a representative Sichuan dish made with soft tofu and minced meat stir-fried in a spicy doubanjiang sauce. It's characterized by its numbing mala flavor and is especially delicious when eaten with rice." }, kcal: 236, nutri: { c: "10g", p: "12g", f: "17g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "양장피", summary: "전분으로 만든 피와 각종 채소, 해산물 등을 겨자 소스에 비벼 먹는 요리. 톡 쏘는 맛이 일품.", story: "양장피는 전분으로 만든 넓적한 피에 해산물, 채소, 고기 등을 곁들여 겨자 소스에 비벼 먹는 중국 요리입니다. 톡 쏘는 겨자 맛이 입맛을 돋우고 다채로운 식감이 즐거움을 줍니다." }, en: { name: "Liangpi", summary: "A dish made of starch noodles, various vegetables, and seafood, mixed with mustard sauce. Excellent pungent flavor.", story: "Liangpi is a Chinese dish made with wide starch noodles, seafood, vegetables, and meat, mixed with a pungent mustard sauce. Its sharp mustard flavor stimulates the appetite, and its varied textures are delightful." }, kcal: 420, nutri: { c: "60g", p: "20g", f: "10g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "깐풍기", summary: "튀긴 닭고기에 매콤달콤한 소스를 입혀 만든 요리. 바삭한 식감과 중독적인 맛.", story: "깐풍기는 닭고기를 바삭하게 튀겨 매콤달콤한 소스를 입힌 한국식 중화요리입니다. 바삭한 튀김옷과 윤기 나는 소스의 조화가 일품이며, 맥주 안주로도 인기가 많습니다." }, en: { name: "Kkanpunggi", summary: "A dish of fried chicken in a spicy and sweet sauce. Crispy texture and addictive taste.", story: "Kkanpunggi is a Korean-Chinese dish of crispy fried chicken coated in a spicy and sweet sauce. The combination of its crunchy texture and glossy sauce is excellent, and it's also popular as a beer snack." }, kcal: 869, nutri: { c: "75g", p: "50g", f: "41g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "고추잡채", summary: "돼지고기와 피망, 버섯 등 다양한 채소를 고추기름에 볶아 꽃빵과 함께 먹는 요리. 화려한 비주얼.", story: "고추잡채는 돼지고기와 피망, 버섯 등 다양한 채소를 고추기름에 볶아 만든 중국 요리입니다. 주로 꽃빵에 싸서 먹으며, 아삭한 채소와 부드러운 고기의 조화가 좋습니다." }, en: { name: "Gochujapchae", summary: "A dish of stir-fried pork, bell peppers, and various vegetables in chili oil, served with flower buns. Splendid visuals.", story: "Gochujapchae is a Chinese dish made by stir-frying pork, bell peppers, mushrooms, and other vegetables in chili oil. It's usually eaten wrapped in flower buns, offering a great combination of crisp vegetables and tender meat." }, kcal: 450, nutri: { c: "20g", p: "30g", f: "28g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "울면", summary: "해산물과 채소를 넣고 끓인 걸쭉한 국물에 면을 말아 먹는 시원한 한국식 중화 면 요리. 해장에도 좋아요.", story: "울면은 해산물과 채소를 걸쭉한 육수에 끓여 면과 함께 먹는 한국식 중화 면 요리입니다. 짬뽕과 비슷하지만 맵지 않고 시원하여 해장용으로도 좋습니다." }, en: { name: "Ulmyeon", summary: "A refreshing Korean-Chinese noodle dish with thick seafood and vegetable broth. Also good for hangovers.", story: "Ulmyeon is a Korean-Chinese noodle dish made with seafood and vegetables in a thick broth, served with noodles. Similar to Jjamppong but not spicy, its refreshing taste makes it good for hangovers." }, kcal: 700, nutri: { c: "90g", p: "25g", f: "25g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "기스면", summary: "닭 육수에 가늘게 찢은 닭고기와 채소를 넣어 끓인 맑고 개운한 국물의 중화 면 요리. 담백한 맛.", story: "기스면은 맑은 닭 육수에 가늘게 찢은 닭고기와 채소를 넣어 끓인 중국 면 요리입니다. 담백하고 개운한 맛이 특징이며, 속을 편안하게 해줍니다." }, en: { name: "Giseomyeon", summary: "A Chinese noodle dish with clear and refreshing chicken broth, shredded chicken, and vegetables. Mild taste.", story: "Giseomyeon is a Chinese noodle dish made with clear chicken broth, shredded chicken, and vegetables. It's characterized by its mild and refreshing taste, providing comfort to the stomach." }, kcal: 650, nutri: { c: "80g", p: "30g", f: "20g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "난자완스", summary: "다진 고기를 완자로 빚어 튀긴 후 채소와 함께 굴 소스에 볶아낸 요리. 부드러운 식감.", story: "난자완스는 다진 고기를 완자로 만들어 튀긴 후 채소와 함께 굴 소스에 볶아낸 중국 요리입니다. 부드러운 완자와 진한 소스의 조화가 훌륭합니다." }, en: { name: "Nanjawanseu", summary: "A dish of fried meat patties stir-fried with vegetables in oyster sauce. Soft texture.", story: "Nanjawanseu is a Chinese dish made by frying minced meat patties and stir-frying them with vegetables in oyster sauce. The combination of soft patties and rich sauce is excellent." }, kcal: 780, nutri: { c: "30g", p: "45g", f: "50g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "라조기", summary: "닭고기를 바삭하게 튀겨 매콤한 소스와 함께 볶아낸 사천식 닭고기 요리. 밥반찬, 술안주로 최고.", story: "라조기는 닭고기를 바삭하게 튀긴 후 매콤한 소스와 함께 볶아 만든 사천식 닭고기 요리입니다. 밥반찬이나 술안주로 인기가 많으며, 중독성 있는 매운맛이 특징입니다." }, en: { name: "Rajogi", summary: "A Sichuan-style chicken dish made by stir-frying crispy fried chicken with a spicy sauce. Best for side dishes or snacks with drinks.", story: "Rajogi is a Sichuan-style chicken dish made by stir-frying crispy fried chicken with a spicy sauce. It's popular as a side dish for rice or an accompaniment to drinks, characterized by its addictive spicy flavor." }, kcal: 820, nutri: { c: "40g", p: "55g", f: "48g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "유산슬", summary: "해삼, 새우, 돼지고기 등 세 가지 재료를 채 썰어 볶아 걸쭉하게 만든 중국 요리. 고급스러운 맛.", story: "유산슬은 해삼, 새우, 돼지고기 등 세 가지 귀한 재료를 가늘게 채 썰어 볶은 후 걸쭉하게 만든 중국 요리입니다. 부드러운 식감과 재료의 조화로운 맛이 고급스러움을 더합니다." }, en: { name: "Yusanseul", summary: "A Chinese dish made by stir-frying three shredded ingredients such as sea cucumber, shrimp, and pork, and thickening it with starch. Luxurious taste.", story: "Yusanseul is a Chinese dish made by finely shredding three precious ingredients like sea cucumber, shrimp, and pork, stir-frying them, and then thickening with starch. Its soft texture and harmonious flavors add to its luxurious appeal." }, kcal: 550, nutri: { c: "35g", p: "30g", f: "30g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "팔보채", summary: "해삼, 새우, 전복 등 여덟 가지 진귀한 재료를 볶아 만든 고급 중화요리. 귀한 손님 접대에 좋아요.", story: "팔보채는 여덟 가지 귀한 재료를 넣어 만든 고급 중국 요리입니다. 해산물과 채소가 풍부하게 들어가 영양가 높고 화려한 비주얼을 자랑하여 귀한 손님 접대에 좋습니다." }, en: { name: "Palbochae", summary: "A luxurious Chinese dish made by stir-frying eight precious ingredients such as sea cucumber, shrimp, and abalone. Good for entertaining important guests.", story: "Palbochae is a luxurious Chinese dish made with eight precious ingredients. Rich in seafood and vegetables, it boasts high nutritional value and a splendid appearance, making it suitable for entertaining important guests." }, kcal: 680, nutri: { c: "40g", p: "45g", f: "38g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "해물누룽지탕", summary: "바삭한 누룽지에 각종 해산물과 채소를 넣고 걸쭉하게 끓인 탕. 고소하고 시원한 맛.", story: "해물누룽지탕은 바삭하게 튀긴 누룽지에 해산물과 채소를 넣어 걸쭉하게 끓인 중국 요리입니다. 고소한 누룽지와 시원한 해산물 국물이 잘 어우러져 속을 편안하게 해줍니다." }, en: { name: "Seafood Nurungjitang", summary: "A soup made by adding various seafood and vegetables to crispy scorched rice and boiling it until thick. Savory and refreshing taste.", story: "Haemul Nurungji Tang is a Chinese dish made with crispy fried scorched rice, seafood, and vegetables in a thick broth. The savory scorched rice and refreshing seafood soup blend well, providing comfort to the stomach." }, kcal: 620, nutri: { c: "70g", p: "25g", f: "28g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "동파육", summary: "오겹살을 간장과 향신료에 오랜 시간 졸여 부드럽게 만든 중국 항저우 대표 요리. 부드러운 식감과 깊은 풍미.", story: "동파육은 돼지고기 삼겹살을 간장과 다양한 향신료에 오랜 시간 졸여 만든 중국 항저우의 대표 요리입니다. 부드러운 육질과 달콤 짭짤한 소스의 깊은 풍미가 특징입니다." }, en: { name: "Dongpayuk", summary: "A representative dish from Hangzhou, China, made by braising pork belly in soy sauce and spices for a long time until tender. Soft texture and rich flavor.", story: "Dongpo Pork is a representative dish from Hangzhou, China, made by braising pork belly in soy sauce and various spices for a long time. It's characterized by its tender meat and the deep, sweet, and savory flavor of its sauce." }, kcal: 950, nutri: { c: "30g", p: "50g", f: "70g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "멘보샤", summary: "다진 새우를 식빵 사이에 넣고 튀겨낸 바삭하고 고소한 샌드위치 튀김. 맥주 안주로 최고.", story: "멘보샤는 다진 새우를 식빵 사이에 넣고 튀겨낸 중국 요리로, 바삭한 식감과 고소한 새우 맛이 일품입니다. 맥주 안주나 간식으로 인기가 많습니다." }, en: { name: "Menbosha", summary: "Crispy and savory fried shrimp toast made by deep-frying minced shrimp between two slices of bread. Best with beer.", story: "Menbosha is a Chinese dish of crispy fried shrimp toast, with minced shrimp between slices of bread. Its crispy texture and savory shrimp flavor are excellent, and it's popular as a beer snack or appetizer." }, kcal: 600, nutri: { c: "40g", p: "25g", f: "35g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "오향장육", summary: "돼지고기를 오향(다섯 가지 향신료)에 졸여 차갑게 식혀 얇게 썰어 먹는 중국식 냉채. 담백하고 향긋.", story: "오향장육은 돼지고기를 다섯 가지 향신료에 졸여 만든 중국식 냉채입니다. 차갑게 식혀 얇게 썰어 먹으며, 담백하고 향긋한 맛이 특징입니다." }, en: { name: "Ohyangjangyuk", summary: "Chinese cold dish made by simmering pork in five spices, chilling it, and then thinly slicing it. Mild and fragrant.", story: "Ohyangjangyuk is a Chinese cold dish made by simmering pork in five spices. It's served thinly sliced and chilled, characterized by its mild and fragrant taste." }, kcal: 400, nutri: { c: "10g", p: "30g", f: "25g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "경장육슬", summary: "얇게 채 썬 돼지고기를 춘장에 볶아 파채, 오이채와 함께 건두부에 싸서 먹는 요리. 베이징의 맛.", story: "경장육슬은 얇게 채 썬 돼지고기를 춘장에 볶아 파채, 오이채 등과 함께 건두부에 싸서 먹는 베이징 지역의 대표 요리입니다. 달콤 짭짤한 소스와 신선한 채소의 조화가 좋습니다." }, en: { name: "Gyeongjangyukseul", summary: "A dish of shredded pork stir-fried in soybean paste, served with shredded green onions and cucumbers, wrapped in dried tofu skin. Taste of Beijing.", story: "Gyeongjangyukseul is a representative Beijing dish made with finely shredded pork stir-fried in soybean paste, served with shredded green onions, cucumbers, etc., wrapped in dried tofu skin. The combination of sweet and savory sauce with fresh vegetables is excellent." }, kcal: 500, nutri: { c: "30g", p: "35g", f: "28g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "마라탕", summary: "얼얼하고 매운 중국 사천 지방의 대표적인 국물 요리. 취향에 따라 다양한 재료를 넣어 즐기는 매콤한 맛.", story: "마라탕은 중국 사천 지방의 대표적인 국물 요리로, 마라(麻辣) 특유의 얼얼하고 매운맛이 특징입니다. 다양한 재료를 직접 골라 넣어 자신만의 마라탕을 즐길 수 있습니다." }, en: { name: "Malatang", summary: "A representative spicy and numbing soup dish from Sichuan, China, enjoyed with various ingredients according to preference.", story: "Malatang is a representative soup dish from Sichuan, China, characterized by its numbing and spicy mala flavor. You can choose various ingredients to create your own personalized malatang." }, kcal: 650, nutri: { c: "50g", p: "30g", f: "35g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "마라샹궈", summary: "마라 소스에 각종 재료를 볶아 만든 중국식 볶음 요리. 얼얼하고 매운맛이 특징.", story: "마라샹궈는 마라 소스에 다양한 채소, 고기, 해산물 등을 볶아 만든 중국식 볶음 요리입니다. 마라탕과 비슷하지만 국물이 없어 더욱 진한 마라 맛을 느낄 수 있습니다." }, en: { name: "Mala Xiang Guo", summary: "A Chinese stir-fried dish made with various ingredients in mala sauce, characterized by its numbing and spicy flavor.", story: "Mala Xiang Guo is a Chinese stir-fried dish made with various vegetables, meat, and seafood in mala sauce. Similar to malatang but without soup, it offers a richer mala flavor." }, kcal: 750, nutri: { c: "45g", p: "40g", f: "45g" }, img: "img/kimchi.jpg" },
 
     // 일식 메뉴 20개
-    { category: 'jp', ko: { name: "초밥" }, en: { name: "Sushi" } },
-    { category: 'jp', ko: { name: "라멘" }, en: { name: "Ramen" } },
-    { category: 'jp', ko: { name: "돈까스" }, en: { name: "Donkatsu" } },
-    { category: 'jp', ko: { name: "우동" }, en: { name: "Udon" } },
-    { category: 'jp', ko: { name: "소바" }, en: { name: "Soba" } },
-    { category: 'jp', ko: { name: "텐동" }, en: { name: "Tendon" } },
-    { category: 'jp', ko: { name: "규동" }, en: { name: "Gyudon" } },
-    { category: 'jp', ko: { name: "카레라이스" }, en: { name: "Curry Rice" } },
-    { category: 'jp', ko: { name: "오코노미야끼" }, en: { name: "Okonomiyaki" } },
-    { category: 'jp', ko: { name: "타코야끼" }, en: { name: "Takoyaki" } },
-    { category: 'jp', ko: { name: "야끼소바" }, en: { name: "Yakisoba" } },
-    { category: 'jp', ko: { name: "가츠동" }, en: { name: "Katsudon" } },
-    { category: 'jp', ko: { name: "오야코동" }, en: { name: "Oyakodon" } },
-    { category: 'jp', ko: { name: "스키야키" }, en: { name: "Sukiyaki" } },
-    { category: 'jp', ko: { name: "샤브샤브" }, en: { name: "Shabu-shabu" } },
-    { category: 'jp', ko: { name: "나가사키 짬뽕" }, en: { name: "Nagasaki Jjamppong" } },
-    { category: 'jp', ko: { name: "메밀소바" }, en: { name: "Buckwheat Soba" } },
-    { category: 'jp', ko: { name: "사시미" }, en: { name: "Sashimi" } },
-    { category: 'jp', ko: { name: "장어덮밥" }, en: { name: "Unagi Donburi" } },
-    { category: 'jp', ko: { name: "야키토리" }, en: { name: "Yakitori" } },
+    { category: 'jp', ko: { name: "초밥", summary: "식초로 양념한 밥 위에 신선한 해산물 등 다양한 재료를 얹어 만든 일본 대표 음식. 신선함이 생명.", story: "초밥은 신선한 해산물과 식초 양념을 한 밥으로 만든 일본의 대표적인 음식입니다. 재료의 신선도가 중요하며, 다양한 종류의 초밥을 즐길 수 있습니다." }, en: { name: "Sushi", summary: "A representative Japanese dish made with vinegared rice topped with various fresh ingredients, such as seafood. Freshness is key.", story: "Sushi is a quintessential Japanese dish featuring fresh seafood atop vinegared rice. The freshness of the ingredients is paramount, and a wide variety of sushi types are available for enjoyment." }, kcal: 350, nutri: { c: "50g", p: "20g", f: "10g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "라멘", summary: "일본식 밀가루 면에 따뜻한 육수와 다양한 고명을 얹어 먹는 일본 대표 면 요리. 깊고 진한 육수 맛.", story: "라멘은 일본의 대표적인 면 요리로, 지역별로 다양한 육수와 면, 고명을 자랑합니다. 깊고 진한 육수와 쫄깃한 면발, 그리고 차슈, 계란 등 푸짐한 고명이 어우러져 한 끼 식사로 든든합니다." }, en: { name: "Ramen", summary: "A representative Japanese noodle dish made with Japanese wheat noodles, warm broth, and various toppings. Deep and rich broth flavor.", story: "Ramen is a representative Japanese noodle dish, boasting diverse broths, noodles, and toppings depending on the region. The rich and deep broth, chewy noodles, and generous toppings like chashu and egg make for a satisfying meal." }, kcal: 500, nutri: { c: "60g", p: "25g", f: "20g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "돈까스", summary: "돼지고기를 빵가루 입혀 튀겨낸 일본식 커틀릿. 바삭한 식감과 풍부한 육즙이 특징.", story: "돈까스는 돼지고기를 빵가루 입혀 바삭하게 튀겨낸 일본식 커틀릿입니다. 겉은 바삭하고 속은 촉촉한 돈까스는 밥과 함께 든든한 한 끼 식사로 인기가 많습니다." }, en: { name: "Donkatsu", summary: "Japanese-style cutlet made by deep-frying breaded pork. Characterized by its crispy texture and rich juices.", story: "Donkatsu is a Japanese cutlet made by deep-frying breaded pork until crispy. The crispy exterior and juicy interior make it a popular and satisfying meal when served with rice." }, kcal: 650, nutri: { c: "40g", p: "30g", f: "40g" }, img: "img/donkas.png" },
+    { category: 'jp', ko: { name: "우동", summary: "굵고 쫄깃한 면발을 뜨거운 국물에 말아 먹는 일본 대표 면 요리. 시원하고 담백한 국물.", story: "우동은 굵고 쫄깃한 면발을 뜨거운 육수에 말아 먹는 일본의 대표적인 면 요리입니다. 가쓰오부시로 맛을 낸 시원하고 담백한 국물이 특징이며, 다양한 고명을 얹어 즐길 수 있습니다." }, en: { name: "Udon", summary: "A representative Japanese noodle dish with thick, chewy noodles served in hot broth. Cool and mild broth.", story: "Udon is a representative Japanese noodle dish featuring thick, chewy noodles in a hot broth. Its refreshing and mild broth, flavored with bonito flakes, is a key characteristic, and it can be enjoyed with various toppings." }, kcal: 400, nutri: { c: "70g", p: "15g", f: "8g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "소바", summary: "메밀가루로 만든 가늘고 긴 면을 차가운 쯔유에 찍어 먹거나 따뜻한 국물에 넣어 먹는 일본 면 요리. 깔끔하고 시원.", story: "소바는 메밀가루로 만든 가늘고 긴 면을 차가운 쯔유에 찍어 먹거나 따뜻한 국물에 넣어 먹는 일본 면 요리입니다. 깔끔하고 시원한 맛으로 여름철에 특히 인기가 많습니다." }, en: { name: "Soba", summary: "Japanese noodle dish made from buckwheat flour, served cold with dipping sauce or in hot broth. Clean and refreshing.", story: "Soba is a Japanese noodle dish made with thin buckwheat noodles, eaten by dipping them in cold tsuyu or served in hot broth. Its clean and refreshing taste makes it especially popular in summer." }, kcal: 350, nutri: { c: "60g", p: "18g", f: "5g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "텐동", summary: "밥 위에 바삭하게 튀긴 튀김(덴푸라)을 얹고 특제 소스를 뿌려 먹는 일본식 덮밥. 바삭한 식감.", story: "텐동은 밥 위에 새우, 채소 등 다양한 재료를 튀긴 덴푸라를 얹고 특제 소스를 뿌려 먹는 일본식 덮밥입니다. 바삭한 튀김과 달콤 짭짤한 소스의 조화가 일품입니다." }, en: { name: "Tendon", summary: "Japanese tempura rice bowl with crispy fried tempura on rice, drizzled with special sauce. Crispy texture.", story: "Tendon is a Japanese rice bowl dish topped with various tempura items like shrimp and vegetables, drizzled with a special sauce. The crispy tempura combined with the sweet and savory sauce is exquisite." }, kcal: 700, nutri: { c: "80g", p: "20g", f: "35g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "규동", summary: "얇게 썬 소고기와 양파를 간장 양념에 졸여 밥 위에 얹어 먹는 일본식 덮밥. 달콤 짭짤한 맛.", story: "규동은 얇게 썬 소고기와 양파를 간장 양념에 달콤 짭짤하게 졸여 밥 위에 얹어 먹는 일본식 덮밥입니다. 간단하면서도 든든하여 한 끼 식사로 인기가 많습니다." }, en: { name: "Gyudon", summary: "Japanese rice bowl dish with thinly sliced beef and onions simmered in a savory soy-based sauce, served over rice. Sweet and savory taste.", story: "Gyudon is a Japanese rice bowl dish featuring thinly sliced beef and onions simmered in a sweet and savory soy-based sauce, served over rice. It's popular as a simple yet hearty meal." }, kcal: 600, nutri: { c: "70g", p: "25g", f: "25g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "카레라이스", summary: "따뜻한 밥 위에 부드럽고 진한 일본식 카레를 얹어 먹는 요리. 남녀노소 모두가 좋아하는 맛.", story: "일본식 카레라이스는 다양한 채소와 고기를 넣어 부드럽고 진한 맛을 내는 것이 특징입니다. 밥과 함께 든든하게 즐길 수 있는 메뉴로, 남녀노소 모두에게 인기가 많습니다." }, en: { name: "Curry Rice", summary: "A dish of warm rice topped with mild and rich Japanese curry. A taste loved by all ages.", story: "Japanese curry rice is characterized by its mild and rich flavor, made with various vegetables and meat. It's a popular dish enjoyed by all ages, providing a satisfying meal with rice." }, kcal: 750, nutri: { c: "100g", p: "20g", f: "30g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "오코노미야끼", summary: "밀가루 반죽에 고기, 해산물, 채소 등 좋아하는 재료를 넣어 철판에 구워 소스를 발라 먹는 일본식 부침개. 길거리 음식의 대표.", story: "오코노미야끼는 밀가루 반죽에 양배추, 고기, 해산물 등 다양한 재료를 넣어 철판에 구운 일본식 부침개입니다. 오코노미야끼 소스와 마요네즈, 가쓰오부시를 뿌려 먹는 것이 일반적입니다." }, en: { name: "Okonomiyaki", summary: "Japanese savory pancake made with flour batter and your favorite ingredients like meat, seafood, and vegetables, grilled on a teppan and topped with sauce. A representative street food.", story: "Okonomiyaki is a Japanese savory pancake made with flour batter and various ingredients like cabbage, meat, and seafood, grilled on a griddle. It's typically topped with okonomiyaki sauce, mayonnaise, and bonito flakes." }, kcal: 550, nutri: { c: "60g", p: "20g", f: "25g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "타코야끼", summary: "밀가루 반죽 안에 문어를 넣어 동그랗게 구운 일본 대표 길거리 음식. 쫄깃하고 고소.", story: "타코야끼는 밀가루 반죽 안에 문어 조각을 넣어 전용 틀에 구운 일본의 대표적인 길거리 음식입니다. 겉은 바삭하고 속은 촉촉하며, 문어의 쫄깃한 식감이 좋습니다." }, en: { name: "Takoyaki", summary: "A representative Japanese street food made by grilling octopus in a round batter. Chewy and savory.", story: "Takoyaki is a representative Japanese street food made by grilling octopus pieces in a special mold within a flour batter. It's crispy on the outside and moist on the inside, with a chewy octopus texture." }, kcal: 350, nutri: { c: "40g", p: "15g", f: "15g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "야끼소바", summary: "돼지고기와 채소를 넣고 볶은 일본식 볶음면. 짭짤하고 고소한 소스가 특징.", story: "야끼소바는 삶은 중화면에 돼지고기와 양배추, 양파 등 다양한 채소를 넣고 특제 소스로 볶아 만든 일본 요리입니다. 짭짤하고 고소한 맛이 일품이며, 간편하게 즐길 수 있습니다." }, en: { name: "Yakisoba", summary: "Japanese stir-fried noodles with pork and vegetables, characterized by its savory and rich sauce.", story: "Yakisoba is a Japanese dish made by stir-frying boiled Chinese noodles with pork, cabbage, onions, and other vegetables in a special sauce. Its savory and rich flavor is excellent, and it's a convenient dish to enjoy." }, kcal: 550, nutri: { c: "70g", p: "20g", f: "20g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "가츠동", summary: "밥 위에 바삭하게 튀긴 돈까스와 달걀을 얹고 특제 소스를 뿌려 먹는 일본식 덮밥. 든든한 한 끼.", story: "가츠동은 바삭하게 튀긴 돈까스를 달콤 짭짤한 간장 소스와 함께 밥 위에 얹고, 부드러운 달걀로 덮어 만든 일본식 덮밥입니다. 든든하고 만족스러운 한 끼 식사로 인기가 많습니다." }, en: { name: "Katsudon", summary: "Japanese rice bowl dish with crispy fried pork cutlet and egg, topped with special sauce. A hearty meal.", story: "Katsudon is a Japanese rice bowl dish featuring crispy fried pork cutlet over rice, seasoned with a sweet and savory soy-based sauce and topped with a soft egg. It's popular as a hearty and satisfying meal." }, kcal: 700, nutri: { c: "80g", p: "30g", f: "30g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "오야코동", summary: "닭고기와 달걀을 함께 졸여 밥 위에 얹은 일본식 덮밥. 부드러운 식감.", story: "오야코동은 닭고기와 달걀, 양파를 간장 기반의 달콤 짭짤한 소스에 졸여 밥 위에 얹어 먹는 일본식 덮밥입니다. 부드러운 닭고기와 달걀의 조화가 좋습니다." }, en: { name: "Oyakodon", summary: "Japanese rice bowl dish with chicken and egg simmered together and served over rice. Soft texture.", story: "Oyakodon is a Japanese rice bowl dish made by simmering chicken, eggs, and onions in a sweet and savory soy-based sauce, served over rice. The combination of tender chicken and eggs is excellent." }, kcal: 600, nutri: { c: "70g", p: "30g", f: "25g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "스키야키", summary: "얇게 썬 소고기와 채소 등을 간장 양념에 자작하게 끓여 먹는 일본식 전골. 여럿이 함께 즐기기 좋아요.", story: "스키야키는 얇게 썬 소고기와 다양한 채소를 간장 기반의 달콤 짭짤한 육수에 자작하게 끓여 먹는 일본식 전골입니다. 날달걀에 찍어 먹으면 더욱 부드럽고 고소합니다." }, en: { name: "Sukiyaki", summary: "Japanese hot pot dish with thinly sliced beef and vegetables simmered in soy sauce-based broth. Good for sharing.", story: "Sukiyaki is a Japanese hot pot dish made with thinly sliced beef and various vegetables simmered in a sweet and savory soy-based broth. Dipping it in raw egg makes it even smoother and richer." }, kcal: 800, nutri: { c: "50g", p: "40g", f: "45g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "샤브샤브", summary: "얇게 썬 고기와 채소를 끓는 육수에 살짝 데쳐 소스에 찍어 먹는 일본식 전골. 담백하고 깔끔한 맛.", story: "샤브샤브는 얇게 썬 고기와 채소를 끓는 육수에 살짝 데쳐 양념장에 찍어 먹는 일본식 전골입니다. 담백하고 깔끔한 맛이 특징이며, 재료 본연의 맛을 즐길 수 있습니다." }, en: { name: "Shabu-shabu", summary: "Japanese hot pot dish with thinly sliced meat and vegetables lightly boiled in broth and dipped in sauce. Mild and clean taste.", story: "Shabu-shabu is a Japanese hot pot dish where thinly sliced meat and vegetables are lightly boiled in broth and dipped in a sauce. It's characterized by its mild and clean taste, allowing you to enjoy the natural flavors of the ingredients." }, kcal: 650, nutri: { c: "40g", p: "40g", f: "35g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "나가사키 짬뽕", summary: "돼지뼈와 닭 육수를 기본으로 해산물과 채소를 넣어 끓여낸 시원하고 담백한 일본식 짬뽕. 한국식과 다른 매력.", story: "나가사키 짬뽕은 일본 나가사키 지역의 명물로, 돼지뼈와 닭 육수를 기본으로 해산물과 채소를 넣어 끓인 담백한 맛의 짬뽕입니다. 한국식 짬뽕과는 다른 순하고 시원한 맛이 특징입니다." }, en: { name: "Nagasaki Champon", summary: "Japanese champon with a clear and light broth based on pork bone and chicken stock, with seafood and vegetables. Different charm from Korean style.", story: "Nagasaki Champon is a specialty of Nagasaki, Japan, a mild and refreshing champon made with pork bone and chicken broth, seafood, and vegetables. It's characterized by a gentle and clean taste, different from Korean-style Jjamppong." }, kcal: 700, nutri: { c: "80g", p: "30g", f: "30g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "메밀소바", summary: "메밀 면을 차가운 쯔유에 찍어 먹는 일본 대표 면 요리. 깔끔하고 시원한 맛.", story: "메밀소바는 메밀가루로 만든 면을 차가운 쯔유에 찍어 먹거나 따뜻한 국물에 넣어 먹는 일본의 전통 면 요리입니다. 깔끔하고 시원한 맛으로 특히 여름철에 인기가 많습니다." }, en: { name: "Memil Soba", summary: "A representative Japanese noodle dish made with buckwheat noodles, dipped in cold tsuyu sauce. Clean and refreshing taste.", story: "Memil Soba is a traditional Japanese noodle dish made from buckwheat flour, served by dipping cold noodles in tsuyu sauce or in hot broth. Its clean and refreshing taste makes it especially popular in summer." }, kcal: 380, nutri: { c: "65g", p: "15g", f: "6g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "사시미", summary: "신선한 해산물을 얇게 썰어 간장과 와사비를 곁들여 먹는 일본 요리. 재료 본연의 맛.", story: "사시미는 신선한 제철 해산물을 얇게 썰어 간장과 와사비를 곁들여 먹는 일본 요리입니다. 재료 본연의 맛과 신선함을 가장 잘 느낄 수 있는 메뉴입니다." }, en: { name: "Sashimi", summary: "Japanese dish of thinly sliced fresh seafood, served with soy sauce and wasabi. Original taste of ingredients.", story: "Sashimi is a Japanese dish made by thinly slicing fresh seasonal seafood and serving it with soy sauce and wasabi. It's the best way to experience the natural flavor and freshness of the ingredients." }, kcal: 250, nutri: { c: "5g", p: "40g", f: "10g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "장어덮밥", summary: "양념한 장어를 밥 위에 얹어 먹는 일본식 덮밥. 원기 회복에 좋은 보양식.", story: "장어덮밥은 양념에 구운 장어를 밥 위에 얹어 먹는 일본의 대표적인 보양식입니다. 달콤 짭짤한 소스와 부드러운 장어가 어우러져 기력 회복에 도움을 줍니다." }, en: { name: "Unagi Donburi", summary: "Japanese rice bowl dish with grilled eel seasoned with sauce, known for its energy-boosting properties.", story: "Unagi Donburi is a representative Japanese health food featuring grilled eel with sauce served over rice. The combination of sweet and savory sauce with tender eel helps restore energy." }, kcal: 800, nutri: { c: "70g", p: "40g", f: "40g" }, img: "img/kimchi.jpg" },
+    { category: 'jp', ko: { name: "야키토리", summary: "닭고기나 채소를 꼬치에 꿰어 숯불에 구워낸 일본식 꼬치 요리. 맥주 안주로 최고.", story: "야키토리는 닭고기나 다양한 채소를 꼬치에 꿰어 숯불에 구워낸 일본식 꼬치 요리입니다. 담백한 맛부터 짭짤한 맛까지 다양하며, 맥주 안주로 인기가 많습니다." }, en: { name: "Yakitori", summary: "Japanese skewers made by grilling chicken or vegetables on charcoal. Best with beer.", story: "Yakitori is a Japanese skewer dish made by grilling chicken or various vegetables on charcoal. It ranges from mild to savory flavors and is very popular as a beer snack." }, kcal: 300, nutri: { c: "10g", p: "30g", f: "15g" }, img: "img/kimchi.jpg" },
 
     // 양식 메뉴 20개
     { category: 'en', ko: { name: "파스타" }, en: { name: "Pasta" } },
@@ -305,8 +405,8 @@
     { category: 'en', ko: { name: "빠에야" }, en: { name: "Paella" } },
     { category: 'en', ko: { name: "라자냐" }, en: { name: "Lasagna" } },
     { category: 'en', ko: { name: "타코" }, en: { name: "Taco" } },
-    { category: 'en', ko: { name: "브리또" }, en: { name: "Burrito" } },
-    { category: 'en', ko: { name: "퀘사디아" }, en: { name: "Quesadilla" } },
+    { category: 'en', ko: { name: "브리또" }, en: { name: "Burrito" } }
+    ,{ category: 'en', ko: { name: "퀘사디아" }, en: { name: "Quesadilla" } },
     { category: 'en', ko: { name: "미트볼" }, en: { name: "Meatball" } },
     { category: 'en', ko: { name: "피쉬 앤 칩스" }, en: { name: "Fish and Chips" } },
     { category: 'en', ko: { name: "바베큐" }, en: { name: "Barbecue" } },
@@ -315,115 +415,3 @@
     { category: 'en', ko: { name: "팬케이크" }, en: { name: "Pancake" } },
     { category: 'en', ko: { name: "와플" }, en: { name: "Waffle" } }
 ];
-
-        function toggleLang() {
-            currentLang = currentLang === 'ko' ? 'en' : 'ko';
-            updateTexts();
-        }
-
-        function updateTexts() {
-            const t = i18n[currentLang];
-            document.getElementById('main-title').innerText = t.mainTitle;
-            document.getElementById('main-sub').innerText = t.mainSub;
-            document.getElementById('go-animal-btn').innerText = t.goAnimal;
-            document.getElementById('filter-all').innerText = t.filterAll;
-            document.getElementById('filter-kr').innerText = t.filterKr;
-            document.getElementById('filter-ch').innerText = t.filterCh;
-            document.getElementById('filter-jp').innerText = t.filterJp;
-            document.getElementById('filter-en').innerText = t.filterEn;
-            document.getElementById('recommend-btn').innerText = t.recommendBtn;
-            document.getElementById('back-btn').innerText = t.back;
-            document.getElementById('animal-title').innerText = t.animalTitle;
-            document.getElementById('animal-sub').innerText = t.animalSub;
-            document.getElementById('upload-btn').innerText = t.uploadBtn;
-            document.getElementById('result-go-back').innerText = t.resultGoBack;
-            if(document.getElementById('main-placeholder')) document.getElementById('main-placeholder').innerText = t.placeholder;
-        }
-
-        function navigateTo(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            if(pageId === 'animal-page') loadAnimalModel();
-        }
-
-        function setFilter(f, btn) {
-            currentFilter = f;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-
-        function generateLunchMenu() {
-            const container = document.getElementById('menu-container');
-            const foods = menuData.filter(i => currentFilter === 'all' || i.category === currentFilter);
-            const food = foods[Math.floor(Math.random() * foods.length)];
-            const t = i18n[currentLang];
-            const data = food[currentLang];
-
-            container.innerHTML = `
-                <div class="menu-card">
-                    <div class="food-header">
-                        <h2 class="food-name">${data.name}</h2>
-                    </div>
-                </div>`;
-        }
-
-        const ANIMAL_URL = "https://teachablemachine.withgoogle.com/models/ZGmPRyuJD/";
-        let animalModel;
-
-        async function loadAnimalModel() {
-            if (!animalModel) {
-                animalModel = await tmImage.load(ANIMAL_URL + "model.json", ANIMAL_URL + "metadata.json");
-            }
-        }
-
-        async function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            document.getElementById('upload-btn').innerText = i18n[currentLang].analyzing;
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const img = document.getElementById('image-preview');
-                img.src = e.target.result;
-                img.style.display = 'inline-block';
-                const prediction = await animalModel.predict(img);
-                prediction.sort((a, b) => b.probability - a.probability);
-                showAnimalResult(prediction[0]);
-                document.getElementById('upload-btn').innerText = i18n[currentLang].uploadBtn;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function showAnimalResult(topPrediction) {
-            const topAnimal = topPrediction.className; 
-            const t = i18n[currentLang];
-            const resultArea = document.getElementById('result-area');
-            const descArea = document.getElementById('result-desc');
-            const titleArea = document.getElementById('result-title');
-            resultArea.style.display = 'block';
-            let animalName = (topAnimal === "강아지상") ? t.dog : t.cat;
-            titleArea.innerText = t.confirmTitle.replace("{animal}", animalName);
-            descArea.innerText = (topAnimal === "강아지상") ? t.dogDesc : t.catDesc;
-        }
-
-        function toggleTheme() {
-            const isLight = document.body.getAttribute('data-theme') === 'light';
-            document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
-            document.getElementById('theme-btn').innerText = isLight ? '☀️' : '🌙';
-        }
-
-        function toggleContactForm() {
-            const w = document.getElementById('contact-form-wrapper');
-            w.style.display = w.style.display === 'block' ? 'none' : 'block';
-        }
-
-        updateTexts();
-
-        (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://lunch-18.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-</body>
-</html>
