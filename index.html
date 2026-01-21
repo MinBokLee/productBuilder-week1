@@ -36,7 +36,9 @@
             background-color: var(--bg-color); 
             margin: 0; color: var(--text-main);
             transition: all 0.3s ease; min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.7;
+            letter-spacing: -0.02em;
+            word-spacing: 0.05em;
         }
 
         .page { display: none; width: 100%; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; }
@@ -89,7 +91,7 @@
         .food-image { width: 100%; height: 240px; object-fit: cover; }
         .food-header { padding: 20px 20px 0 20px; }
         .food-badge { background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-        .food-name { margin: 12px 0 8px 0; font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+        .food-name { margin: 12px 0 8px 0; font-size: 1.2rem; font-weight: 800; letter-spacing: -0.4px; }
 
         .nutri-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 15px 20px; }
         .nutri-item { background: var(--stat-bg); padding: 12px; border-radius: 16px; text-align: center; }
@@ -125,7 +127,7 @@
             
             <p id="main-sub" style="color:var(--text-sub); margin-bottom:30px; font-size:1.1rem; font-weight: 500;">AI가 당신의 완벽한 한 끼를 큐레이팅합니다.</p>
 
-            <button class="link-btn" id="go-animal-btn" onclick="navigateTo('animal-page')">✨ 나랑 어울리는 동물상 테스트</button>
+
 
             <div class="filter-group">
                 <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)" id="filter-all">전체</button>
@@ -156,27 +158,6 @@
         </div>
     </div>
 
-    <div id="animal-page" class="page">
-        <div class="container">
-            <button id="back-btn" style="position:absolute; left:20px; top:20px; border:none; background:none; cursor:pointer; font-weight:800; color:var(--primary-color); font-size:1rem;" onclick="navigateTo('main-page')">← HOME</button>
-            <h1 id="animal-title" style="margin-top:30px; font-weight:900;">AI 동물상 테스트</h1>
-            <p id="animal-sub" style="color:var(--text-sub);">사진으로 당신의 이미지를 분석합니다.</p>
-
-            <div style="margin:40px 0;">
-                <input type="file" id="image-upload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-                <button class="primary-btn" id="upload-btn" onclick="document.getElementById('image-upload').click()">사진 업로드</button>
-            </div>
-
-            <center><img id="image-preview" src="#"></center>
-
-            <div id="result-area" class="result-box">
-                <div id="result-title" class="result-title"></div>
-                <div id="result-desc" class="result-desc"></div>
-                <button class="primary-btn" id="result-go-back" onclick="navigateTo('main-page')" style="margin-top:24px;">점심 추천 받으러 가기</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         let currentLang = 'ko';
         let currentFilter = 'all';
@@ -185,44 +166,66 @@
             ko: {
                 mainTitle: "오늘 점심 뭐 먹지?",
                 mainSub: "AI가 당신의 완벽한 한 끼를 큐레이팅합니다.",
-                goAnimal: "✨ 나랑 어울리는 동물상 테스트",
+
                 filterAll: "전체", filterKr: "한식", filterCh: "중식", filterJp: "일식", filterEn: "양식",
                 placeholder: "버튼을 누르면 메뉴가 추천됩니다.",
                 recommendBtn: "지금 추천 받기",
                 contactToggle: "문의 및 제휴",
                 formName: "성함", formMsg: "메시지", formSubmit: "전송",
                 back: "← HOME",
-                animalTitle: "AI 동물상 테스트",
-                animalSub: "사진으로 당신의 이미지를 분석합니다.",
-                uploadBtn: "사진 업로드",
-                resultGoBack: "점심 추천 받으러 가기",
-                analyzing: "AI 분석 중...",
+
+
+
+
+
                 carb: "탄수화물", protein: "단백질", fat: "지방",
-                confirmTitle: "확실한 '{animal}상' 이시네요!",
-                dog: "강아지", cat: "고양이",
-                dogDesc: "온화하고 친근한 눈매를 가진 당신은 누구에게나 호감을 주는 타입입니다. 성격 또한 다정다감하여 주변 사람들에게 긍정적인 에너지를 전파합니다.",
-                catDesc: "시크하고 세련된 매력이 돋보이는 고양이상입니다. 자기주관이 뚜렷하며 때로는 도도해 보이지만, 소중한 사람들에게는 깊은 애정을 쏟는 반전 매력이 있습니다."
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
             },
             en: {
                 mainTitle: "What's for Lunch?",
                 mainSub: "AI curates your perfect meal.",
-                goAnimal: "✨ AI Animal Face Test",
+
                 filterAll: "All", filterKr: "Korean", filterCh: "Chinese", filterJp: "Japanese", filterEn: "Western",
                 placeholder: "Press button to get menu.",
                 recommendBtn: "Get Recommendation",
                 contactToggle: "Contact & Partnership",
                 formName: "Name", formMsg: "Message", formSubmit: "Send",
                 back: "← HOME",
-                animalTitle: "AI Face Test",
-                animalSub: "Analyze your image with AI.",
-                uploadBtn: "Upload Photo",
-                resultGoBack: "Go to Lunch Picker",
-                analyzing: "Analyzing...",
+
+
+
+
+
                 carb: "Carbs", protein: "Protein", fat: "Fat",
-                confirmTitle: "You're definitely a '{animal}' face!",
-                dog: "Dog", cat: "Cat",
-                dogDesc: "With warm and friendly eyes, you are a likable type to everyone. Your affectionate personality spreads positive energy to those around you.",
-                catDesc: "A chic and sophisticated cat-like charm. You have a clear sense of self and may seem aloof, but you have a hidden warmth for your loved ones."
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+                leopardDesc: "You have a sharp and urban leopard-like presence. You possess an intelligent and sophisticated image, with a strong independent nature."
             }
         };
 
@@ -350,15 +353,15 @@
     },
 
     // 중식 메뉴 20개
-    { category: 'ch', ko: { name: "짜장면", summary: "진한 춘장 소스에 비벼 먹는 한국식 중화요리의 대표 메뉴. 남녀노소 모두가 좋아하는 맛.", story: "짜장면은 한국식 중화요리의 대표 메뉴로, 춘장에 캐러멜을 넣어 달콤한 맛이 특징입니다. 푸짐한 면과 짜장 소스의 조화는 언제나 만족스러운 한 끼를 선사합니다." }, en: { name: "Jajangmyeon", summary: "A representative menu of Korean-style Chinese cuisine, served with a thick black bean sauce. A taste loved by all ages.", story: "Jajangmyeon is a quintessential Korean-Chinese dish, characterized by its sweet black bean sauce. The generous noodles combined with the savory sauce always provide a satisfying meal." }, kcal: 864, nutri: { c: "134g", p: "31g", f: "22g" }, img: "img/kimchi.jpg" },
-    { category: 'ch', ko: { name: "짬뽕", summary: "각종 해산물과 채소를 듬뿍 넣어 얼큰하게 끓인 중화요리. 해장 메뉴로 최고.", story: "짬뽕은 해산물과 채소를 고추기름에 볶아 얼큰하게 끓여낸 한국식 중화요리입니다. 시원하고 칼칼한 국물은 해장용으로도 인기가 많습니다." }, en: { name: "Jjamppong", summary: "A Chinese dish with plenty of seafood and vegetables, boiled spicy. Best as a hangover cure.", story: "Jjamppong is a Korean-Chinese dish made by stir-frying seafood and vegetables in chili oil and boiling them in a spicy broth. Its refreshing and pungent soup is popular as a hangover remedy." }, kcal: 788, nutri: { c: "102g", p: "37g", f: "26g" }, img: "img/kimchi.jpg" },
-    { category: 'ch', ko: { name: "탕수육", summary: "바삭하게 튀긴 돼지고기에 새콤달콤한 소스를 부어 먹는 요리. 찍먹 vs 부먹 논쟁의 주인공.", story: "탕수육은 돼지고기를 바삭하게 튀겨 새콤달콤한 소스를 곁들여 먹는 한국식 중화요리입니다. 바삭한 튀김옷과 소스의 조화가 일품이며, 부먹과 찍먹 논쟁으로도 유명합니다." }, en: { name: "Sweet and Sour Pork", summary: "A dish of crispy fried pork with a sweet and sour sauce. The protagonist of the 'dipping vs pouring' debate.", story: "Tangsuyuk is a Korean-Chinese dish of crispy fried pork served with a sweet and sour sauce. The harmony of the crunchy coating and the sauce is exquisite, also famous for the 'pour-over vs dip-in' debate." }, kcal: 1315, nutri: { c: "128g", p: "58g", f: "63g" }, img: "img/kimchi.jpg" },
-    { category: 'ch', ko: { name: "마파두부", summary: "부드러운 두부와 다진 고기를 매콤한 두반장 소스에 볶아 만든 중국 사천 요리. 밥도둑.", story: "마파두부는 매콤한 두반장 소스에 부드러운 두부와 다진 고기를 볶아 만든 중국 사천 지방의 대표 요리입니다. 혀가 얼얼한 마라 맛이 특징이며, 밥과 함께 먹으면 더욱 맛있습니다." }, en: { name: "Mapo Tofu", summary: "Chinese Sichuan dish made with soft tofu and minced meat stir-fried in spicy doubanjiang sauce. A 'rice thief'.", story: "Mapo Tofu is a representative Sichuan dish made with soft tofu and minced meat stir-fried in a spicy doubanjiang sauce. It's characterized by its numbing mala flavor and is especially delicious when eaten with rice." }, kcal: 236, nutri: { c: "10g", p: "12g", f: "17g" }, img: "img/kimchi.jpg" },
-    { category: 'ch', ko: { name: "양장피", summary: "전분으로 만든 피와 각종 채소, 해산물 등을 겨자 소스에 비벼 먹는 요리. 톡 쏘는 맛이 일품.", story: "양장피는 전분으로 만든 넓적한 피에 해산물, 채소, 고기 등을 곁들여 겨자 소스에 비벼 먹는 중국 요리입니다. 톡 쏘는 겨자 맛이 입맛을 돋우고 다채로운 식감이 즐거움을 줍니다." }, en: { name: "Liangpi", summary: "A dish made of starch noodles, various vegetables, and seafood, mixed with mustard sauce. Excellent pungent flavor.", story: "Liangpi is a Chinese dish made with wide starch noodles, seafood, vegetables, and meat, mixed with a pungent mustard sauce. Its sharp mustard flavor stimulates the appetite, and its varied textures are delightful." }, kcal: 420, nutri: { c: "60g", p: "20g", f: "10g" }, img: "img/kimchi.jpg" },
-    { category: 'ch', ko: { name: "깐풍기", summary: "튀긴 닭고기에 매콤달콤한 소스를 입혀 만든 요리. 바삭한 식감과 중독적인 맛.", story: "깐풍기는 닭고기를 바삭하게 튀겨 매콤달콤한 소스를 입힌 한국식 중화요리입니다. 바삭한 튀김옷과 윤기 나는 소스의 조화가 일품이며, 맥주 안주로도 인기가 많습니다." }, en: { name: "Kkanpunggi", summary: "A dish of fried chicken in a spicy and sweet sauce. Crispy texture and addictive taste.", story: "Kkanpunggi is a Korean-Chinese dish of crispy fried chicken coated in a spicy and sweet sauce. The combination of its crunchy texture and glossy sauce is excellent, and it's also popular as a beer snack." }, kcal: 869, nutri: { c: "75g", p: "50g", f: "41g" }, img: "img/kimchi.jpg" },
-    { category: 'ch', ko: { name: "고추잡채", summary: "돼지고기와 피망, 버섯 등 다양한 채소를 고추기름에 볶아 꽃빵과 함께 먹는 요리. 화려한 비주얼.", story: "고추잡채는 돼지고기와 피망, 버섯 등 다양한 채소를 고추기름에 볶아 만든 중국 요리입니다. 주로 꽃빵에 싸서 먹으며, 아삭한 채소와 부드러운 고기의 조화가 좋습니다." }, en: { name: "Gochujapchae", summary: "A dish of stir-fried pork, bell peppers, and various vegetables in chili oil, served with flower buns. Splendid visuals.", story: "Gochujapchae is a Chinese dish made by stir-frying pork, bell peppers, mushrooms, and other vegetables in chili oil. It's usually eaten wrapped in flower buns, offering a great combination of crisp vegetables and tender meat." }, kcal: 450, nutri: { c: "20g", p: "30g", f: "28g" }, img: "img/kimchi.jpg" },
-    { category: 'ch', ko: { name: "울면", summary: "해산물과 채소를 넣고 끓인 걸쭉한 국물에 면을 말아 먹는 시원한 한국식 중화 면 요리. 해장에도 좋아요.", story: "울면은 해산물과 채소를 걸쭉한 육수에 끓여 면과 함께 먹는 한국식 중화 면 요리입니다. 짬뽕과 비슷하지만 맵지 않고 시원하여 해장용으로도 좋습니다." }, en: { name: "Ulmyeon", summary: "A refreshing Korean-Chinese noodle dish with thick seafood and vegetable broth. Also good for hangovers.", story: "Ulmyeon is a Korean-Chinese noodle dish made with seafood and vegetables in a thick broth, served with noodles. Similar to Jjamppong but not spicy, its refreshing taste makes it good for hangovers." }, kcal: 700, nutri: { c: "90g", p: "25g", f: "25g" }, img: "img/kimchi.jpg" },
-    { category: 'ch', ko: { name: "기스면", summary: "닭 육수에 가늘게 찢은 닭고기와 채소를 넣어 끓인 맑고 개운한 국물의 중화 면 요리. 담백한 맛.", story: "기스면은 맑은 닭 육수에 가늘게 찢은 닭고기와 채소를 넣어 끓인 중국 면 요리입니다. 담백하고 개운한 맛이 특징이며, 속을 편안하게 해줍니다." }, en: { name: "Giseomyeon", summary: "A Chinese noodle dish with clear and refreshing chicken broth, shredded chicken, and vegetables. Mild taste.", story: "Giseomyeon is a Chinese noodle dish made with clear chicken broth, shredded chicken, and vegetables. It's characterized by its mild and refreshing taste, providing comfort to the stomach." }, kcal: 650, nutri: { c: "80g", p: "30g", f: "20g" }, img: "img/kimchi.jpg" },
+    { category: 'ch',         ko: { name: "짜장면", summary: "진한 춘장 소스에 쫄깃한 면발을 비벼 먹는 한국식 중화요리의 정석.", story: "짜장면은 한국식 중화요리의 대표 메뉴로, 춘장에 캐러멜을 넣어 달콤한 맛이 특징입니다. 푸짐한 면과 짜장 소스의 조화는 언제나 만족스러운 한 끼를 선사합니다." },  en: { name: "Jajangmyeon", summary: "A representative menu of Korean-style Chinese cuisine, served with a thick black bean sauce. A taste loved by all ages.", story: "Jajangmyeon is a quintessential Korean-Chinese dish, characterized by its sweet black bean sauce. The generous noodles combined with the savory sauce always provide a satisfying meal." }, kcal: 864, nutri: { c: "134g", p: "31g", f: "22g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "짬뽕", summary: "신선한 해산물과 채소를 듬뿍 넣어 얼큰하게 끓인, 시원한 국물 맛의 짬뽕.", story: "짬뽕은 해산물과 채소를 고추기름에 볶아 얼큰하게 끓여낸 한국식 중화요리입니다. 시원하고 칼칼한 국물은 해장용으로도 인기가 많습니다." }, en: { name: "Jjamppong", summary: "A Chinese dish with plenty of seafood and vegetables, boiled spicy. Best as a hangover cure.", story: "Jjamppong is a Korean-Chinese dish made by stir-frying seafood and vegetables in chili oil and boiling them in a spicy broth. Its refreshing and pungent soup is popular as a hangover remedy." }, kcal: 788, nutri: { c: "102g", p: "37g", f: "26g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "탕수육", summary: "바삭하게 튀긴 돼지고기에 새콤달콤한 소스를 곁들인, 모두의 최애 메뉴.", story: "탕수육은 돼지고기를 바삭하게 튀겨 새콤달콤한 소스를 곁들여 먹는 한국식 중화요리입니다. 바삭한 튀김옷과 소스의 조화가 일품이며, 부먹과 찍먹 논쟁으로도 유명합니다." }, en: { name: "Sweet and Sour Pork", summary: "A dish of crispy fried pork with a sweet and sour sauce. The protagonist of the 'dipping vs pouring' debate.", story: "Tangsuyuk is a Korean-Chinese dish of crispy fried pork served with a sweet and sour sauce. The harmony of the crunchy coating and the sauce is exquisite, also famous for the 'pour-over vs dip-in' debate." }, kcal: 1315, nutri: { c: "128g", p: "58g", f: "63g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "마파두부", summary: "부드러운 두부와 다진 고기를 매콤한 두반장 소스에 볶아낸 중국 사천 요리.", story: "마파두부는 매콤한 두반장 소스에 부드러운 두부와 다진 고기를 볶아 만든 중국 사천 지방의 대표 요리입니다. 혀가 얼얼한 마라 맛이 특징이며, 밥과 함께 먹으면 더욱 맛있습니다." }, en: { name: "Mapo Tofu", summary: "Chinese Sichuan dish made with soft tofu and minced meat stir-fried in spicy doubanjiang sauce. A 'rice thief'.", story: "Mapo Tofu is a representative Sichuan dish made with soft tofu and minced meat stir-fried in a spicy doubanjiang sauce. It's characterized by its numbing mala flavor and is especially delicious when eaten with rice." }, kcal: 236, nutri: { c: "10g", p: "12g", f: "17g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "양장피", summary: "채소, 해산물, 고기를 톡 쏘는 겨자 소스에 비벼 먹는 화려한 냉채 요리.", story: "양장피는 전분으로 만든 넓적한 피에 해산물, 채소, 고기 등을 곁들여 겨자 소스에 비벼 먹는 중국 요리입니다. 톡 쏘는 겨자 맛이 입맛을 돋우고 다채로운 식감이 즐거움을 줍니다." }, en: { name: "Liangpi", summary: "A dish made of starch noodles, various vegetables, and seafood, mixed with mustard sauce. Excellent pungent flavor.", story: "Liangpi is a Chinese dish made with wide starch noodles, seafood, vegetables, and meat, mixed with a pungent mustard sauce. Its sharp mustard flavor stimulates the appetite, and its varied textures are delightful." }, kcal: 420, nutri: { c: "60g", p: "20g", f: "10g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "깐풍기", summary: "바삭하게 튀긴 닭고기에 매콤달콤한 소스를 입혀 만든 중독적인 맛의 요리.", story: "깐풍기는 닭고기를 바삭하게 튀겨 매콤달콤한 소스를 입힌 한국식 중화요리입니다. 바삭한 튀김옷과 윤기 나는 소스의 조화가 일품이며, 맥주 안주로도 인기가 많습니다." }, en: { name: "Kkanpunggi", summary: "A dish of fried chicken in a spicy and sweet sauce. Crispy texture and addictive taste.", story: "Kkanpunggi is a Korean-Chinese dish of crispy fried chicken coated in a spicy and sweet sauce. The combination of its crunchy texture and glossy sauce is excellent, and it's also popular as a beer snack." }, kcal: 869, nutri: { c: "75g", p: "50g", f: "41g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "고추잡채", summary: "아삭한 피망과 돼지고기를 고추기름에 볶아 꽃빵과 함께 즐기는 요리.", story: "고추잡채는 돼지고기와 피망, 버섯 등 다양한 채소를 고추기름에 볶아 만든 중국 요리입니다. 주로 꽃빵에 싸서 먹으며, 아삭한 채소와 부드러운 고기의 조화가 좋습니다." }, en: { name: "Gochujapchae", summary: "A dish of stir-fried pork, bell peppers, and various vegetables in chili oil, served with flower buns. Splendid visuals.", story: "Gochujapchae is a Chinese dish made by stir-frying pork, bell peppers, mushrooms, and other vegetables in chili oil. It's usually eaten wrapped in flower buns, offering a great combination of crisp vegetables and tender meat." }, kcal: 450, nutri: { c: "20g", p: "30g", f: "28g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "울면", summary: "각종 해산물과 채소를 넣어 걸쭉하게 끓여낸, 속이 풀리는 부드러운 면 요리.", story: "울면은 해산물과 채소를 걸쭉한 육수에 끓여 면과 함께 먹는 한국식 중화 면 요리입니다. 짬뽕과 비슷하지만 맵지 않고 시원하여 해장용으로도 좋습니다." }, en: { name: "Ulmyeon", summary: "A refreshing Korean-Chinese noodle dish with thick seafood and vegetable broth. Also good for hangovers.", story: "Ulmyeon is a Korean-Chinese noodle dish made with seafood and vegetables in a thick broth, served with noodles. Similar to Jjamppong but not spicy, its refreshing taste makes it good for hangovers." }, kcal: 700, nutri: { c: "90g", p: "25g", f: "25g" }, img: "img/kimchi.jpg" },
+    { category: 'ch', ko: { name: "기스면", summary: "맑은 닭 육수에 가늘게 찢은 닭고기와 채소를 넣어 끓인 담백한 면 요리.", story: "기스면은 맑은 닭 육수에 가늘게 찢은 닭고기와 채소를 넣어 끓인 중국 면 요리입니다. 담백하고 개운한 맛이 특징이며, 속을 편안하게 해줍니다." }, en: { name: "Giseomyeon", summary: "A Chinese noodle dish with clear and refreshing chicken broth, shredded chicken, and vegetables. Mild taste.", story: "Giseomyeon is a Chinese noodle dish made with clear chicken broth, shredded chicken, and vegetables. It's characterized by its mild and refreshing taste, providing comfort to the stomach." }, kcal: 650, nutri: { c: "80g", p: "30g", f: "20g" }, img: "img/kimchi.jpg" },
     { category: 'ch', ko: { name: "난자완스", summary: "다진 고기를 완자로 빚어 튀긴 후 채소와 함께 굴 소스에 볶아낸 요리. 부드러운 식감.", story: "난자완스는 다진 고기를 완자로 만들어 튀긴 후 채소와 함께 굴 소스에 볶아낸 중국 요리입니다. 부드러운 완자와 진한 소스의 조화가 훌륭합니다." }, en: { name: "Nanjawanseu", summary: "A dish of fried meat patties stir-fried with vegetables in oyster sauce. Soft texture.", story: "Nanjawanseu is a Chinese dish made by frying minced meat patties and stir-frying them with vegetables in oyster sauce. The combination of soft patties and rich sauce is excellent." }, kcal: 780, nutri: { c: "30g", p: "45g", f: "50g" }, img: "img/kimchi.jpg" },
     { category: 'ch', ko: { name: "라조기", summary: "닭고기를 바삭하게 튀겨 매콤한 소스와 함께 볶아낸 사천식 닭고기 요리. 밥반찬, 술안주로 최고.", story: "라조기는 닭고기를 바삭하게 튀긴 후 매콤한 소스와 함께 볶아 만든 사천식 닭고기 요리입니다. 밥반찬이나 술안주로 인기가 많으며, 중독성 있는 매운맛이 특징입니다." }, en: { name: "Rajogi", summary: "A Sichuan-style chicken dish made by stir-frying crispy fried chicken with a spicy sauce. Best for side dishes or snacks with drinks.", story: "Rajogi is a Sichuan-style chicken dish made by stir-frying crispy fried chicken with a spicy sauce. It's popular as a side dish for rice or an accompaniment to drinks, characterized by its addictive spicy flavor." }, kcal: 820, nutri: { c: "40g", p: "55g", f: "48g" }, img: "img/kimchi.jpg" },
     { category: 'ch', ko: { name: "유산슬", summary: "해삼, 새우, 돼지고기 등 세 가지 재료를 채 썰어 볶아 걸쭉하게 만든 중국 요리. 고급스러운 맛.", story: "유산슬은 해삼, 새우, 돼지고기 등 세 가지 귀한 재료를 가늘게 채 썰어 볶은 후 걸쭉하게 만든 중국 요리입니다. 부드러운 식감과 재료의 조화로운 맛이 고급스러움을 더합니다." }, en: { name: "Yusanseul", summary: "A Chinese dish made by stir-frying three shredded ingredients such as sea cucumber, shrimp, and pork, and thickening it with starch. Luxurious taste.", story: "Yusanseul is a Chinese dish made by finely shredding three precious ingredients like sea cucumber, shrimp, and pork, stir-frying them, and then thickening with starch. Its soft texture and harmonious flavors add to its luxurious appeal." }, kcal: 550, nutri: { c: "35g", p: "30g", f: "30g" }, img: "img/kimchi.jpg" },
@@ -443,7 +446,6 @@
         function navigateTo(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            if(pageId === 'animal-page') loadAnimalModel();
         }
 
         function setFilter(f, btn) {
@@ -467,6 +469,7 @@
                 function getFoodPhrase(foodName, lang) {
                     if (lang === 'ko') {
                         switch (foodName) {
+                            // 한식
                             case "김치찌개": return `오늘은 칼칼하고 뜨끈한 김치찌개 어떠세요?`;
                             case "된장찌개": return `구수한 향 가득, 몸에 좋은 된장찌개 한 그릇 드세요!`;
                             case "비빔밥": return `오늘은 몸에 좋고 맛도 좋은 비빔밥을 먹어볼까?`;
@@ -487,6 +490,73 @@
                             case "보쌈": return `야들야들한 고기에 김치 한 점, 환상의 보쌈!`;
                             case "육개장": return `뜨끈하고 얼큰한 국물, 해장에 최고 육개장!`;
                             case "돌솥비빔밥": return `돌솥에 비벼먹는 재미, 맛과 영양을 한 번에!`;
+
+                            // 중식
+                            case "짜장면": return `오늘은 뭘 먹을지 고민이라면? 단연 짜장면이지!`;
+                            case "짬뽕": return `얼큰한 국물에 해산물이 가득! 짬뽕으로 스트레스 해소!`;
+                            case "탕수육": return `찍먹? 부먹? 고민은 나중에! 새콤달콤 탕수육!`;
+                            case "마파두부": return `매콤한 소스와 부드러운 두부의 만남, 밥도둑 마파두부!`;
+                            case "양장피": return `톡 쏘는 겨자 소스에 다양한 재료를 한번에, 양장피!`;
+                            case "깐풍기": return `바삭한 튀김에 매콤달콤 소스! 깐풍기 어때?`;
+                            case "고추잡채": return `꽃빵에 싸 먹는 재미, 아삭아삭 고추잡채!`;
+                            case "울면": return `걸쭉하고 뜨끈한 국물이 일품, 속풀이엔 울면!`;
+                            case "기스면": return `담백하고 깔끔한 국물, 닭고기 육수 기스면!`;
+                            case "난자완스": return `부드러운 고기완자와 풍부한 소스의 조화, 난자완스!`;
+                            case "라조기": return `매콤한 사천의 맛! 바삭하게 튀겨낸 라조기!`;
+                            case "유산슬": return `부드럽고 고급스러운 맛, 한번 맛보면 잊을 수 없는 유산슬!`;
+                            case "팔보채": return `여덟 가지 진귀한 재료가 듬뿍, 팔보채로 특별한 날을!`;
+                            case "해물누룽지탕": return `바삭한 누룽지와 뜨끈한 해물 국물의 만남, 해물누룽지탕!`;
+                            case "동파육": return `입에서 살살 녹는 부드러움, 동파육의 깊은 맛!`;
+                            case "멘보샤": return `바삭한 식빵 사이에 새우가 가득! 멘보샤!`;
+                            case "오향장육": return `다섯 가지 향이 어우러진 특별한 냉채, 오향장육!`;
+                            case "경장육슬": return `건두부에 싸 먹는 베이징의 맛, 경장육슬!`;
+                            case "마라탕": return `얼얼한 매운 맛이 당길 땐? 바로 마라탕이지!`;
+                            case "마라샹궈": return `마라 소스에 볶아낸 화끈한 맛! 마라샹궈!`;
+
+                            // 일식
+                            case "초밥": return `신선한 바다의 맛, 입에서 살살 녹는 초밥 한 점!`;
+                            case "라멘": return `깊고 진한 육수에 쫄깃한 면발! 오늘 점심은 라멘!`;
+                            case "돈까스": return `바삭함의 끝판왕! 두툼한 돈까스로 든든한 한 끼!`;
+                            case "우동": return `뜨끈한 국물에 쫄깃한 면발, 속이 풀리는 우동 한 그릇!`;
+                            case "소바": return `시원하고 깔끔한 맛, 여름엔 역시 소바지!`;
+                            case "텐동": return `바삭한 튀김과 특제 소스의 만남, 텐동 어때?`;
+                            case "규동": return `달콤 짭짤한 소고기가 듬뿍! 든든한 한 그릇 규동!`;
+                            case "카레라이스": return `진하고 부드러운 맛, 모두가 좋아하는 카레라이스!`;
+                            case "오코노미야끼": return `내 맘대로 토핑 추가! 지글지글 오코노미야끼!`;
+                            case "타코야끼": return `동글동글 귀여운 모양에 문어가 쏙! 타코야끼!`;
+                            case "야끼소바": return `철판 위에서 볶아내는 맛! 짭짤고소 야끼소바!`;
+                            case "가츠동": return `돈까스와 계란의 환상 조합! 든든한 가츠동!`;
+                            case "오야코동": return `닭고기와 계란의 부드러운 만남, 오야코동!`;
+                            case "스키야키": return `달콤한 간장 소스에 끓여먹는 일본식 전골, 스키야키!`;
+                            case "샤브샤브": return `신선한 재료 본연의 맛을 느끼고 싶다면? 샤브샤브!`;
+                            case "나가사키 짬뽕": return `하얀 국물의 반전 매력! 시원한 나가사키 짬뽕!`;
+                            case "메밀소바": return `더운 날씨에 입맛 없다면? 시원한 메밀소바!`;
+                            case "사시미": return `입 안에서 펼쳐지는 신선함의 향연, 사시미!`;
+                            case "장어덮밥": return `기운 없을 땐? 힘이 불끈 솟는 장어덮밥!`;
+                            case "야키토리": return `숯불 향 가득! 꼬치에 꿰어 더 맛있는 야키토리!`;
+
+                            // 양식
+                            case "파스타": return `오늘따라 끌리는 이탈리아의 맛, 파스타 어때?`;
+                            case "피자": return `쭉 늘어나는 치즈의 유혹! 모두 함께 즐기는 피자!`;
+                            case "스테이크": return `특별한 날엔 역시 스테이크! 입안 가득 육즙 파티!`;
+                            case "리조또": return `부드럽고 크리미한 맛, 쌀로 만든 이탈리아 요리 리조또!`;
+                            case "햄버거": return `푸짐한 패티에 신선한 야채까지! 완벽한 한 끼 햄버거!`;
+                            case "샌드위치": return `간편하지만 든든하게! 신선함 가득 샌드위치!`;
+                            case "샐러드": return `가볍지만 영양은 만점! 건강을 위한 선택, 샐러드!`;
+                            case "스프": return `따뜻하게 속을 채워주는 부드러운 스프 한 그릇!`;
+                            case "빠에야": return `화려한 비주얼에 맛도 최고! 스페인의 맛, 빠에야!`;
+                            case "라자냐": return `겹겹이 쌓인 맛의 향연, 진한 풍미의 라자냐!`;
+                            case "타코": return `멕시코의 열정이 느껴지는 맛! 매콤한 타코!`;
+                            case "브리또": return `하나만 먹어도 든든! 푸짐함의 대명사 브리또!`;
+                            case "퀘사디아": return `바삭한 또띠아에 치즈가 듬뿍! 퀘사디아!`;
+                            case "미트볼": return `동글동글 귀여운 미트볼, 토마토 소스와 함께!`;
+                            case "피쉬 앤 칩스": return `바삭한 튀김과 담백한 생선의 만남, 피쉬 앤 칩스!`;
+                            case "바베큐": return `훈연 향 가득! 야외에서 즐기는 듯한 바베큐 파티!`;
+                            case "핫도그": return `간단하게 즐기는 미국의 맛, 든든한 핫도그!`;
+                            case "오믈렛": return `부드러운 계란 속에 숨겨진 맛! 오믈렛!`;
+                            case "팬케이크": return `달콤한 시럽과 함께! 브런치 메뉴의 정석 팬케이크!`;
+                            case "와플": return `겉은 바삭, 속은 촉촉! 디저트의 여왕 와플!`;
+
                             default: return `오늘은 ${foodName} 어떠세요?`;
                         }
                     } else { // English
@@ -511,6 +581,73 @@
                             case "보쌈": return `Tender meat with a slice of kimchi, a fantastic Boiled Pork Wraps!`;
                             case "육개장": return `Hot and spicy broth, the best for a hangover, Spicy Beef Soup!`;
                             case "돌솥비빔밥": return `The fun of mixing in a hot stone pot, taste and nutrition in one!`;
+                            
+                            // 중식
+                            case "짜장면": return `If you're wondering what to eat today? Of course, it's Jajangmyeon!`;
+                            case "짬뽕": return `Spicy soup full of seafood! Relieve stress with Jjamppong!`;
+                            case "탕수육": return `Dip or pour? Worry later! Sweet and sour Tangsuyuk!`;
+                            case "마파두부": return `The meeting of spicy sauce and soft tofu, the rice thief Mapo Tofu!`;
+                            case "양장피": return `A variety of ingredients in a tangy mustard sauce, Liangpi!`;
+                            case "깐풍기": return `Crispy fritters in a sweet and spicy sauce! How about Kkanpunggi?`;
+                            case "고추잡채": return `Fun to wrap in flower bread, crunchy Gochujapchae!`;
+                            case "울면": return `The thick and hot soup is excellent, Ulmyeon for a hangover!`;
+                            case "기스면": return `A clean and simple soup, chicken broth Giseomyeon!`;
+                            case "난자완스": return `The harmony of soft meatballs and rich sauce, Nanjawanseu!`;
+                            case "라조기": return `The spicy taste of Sichuan! Crispy fried Rajogi!`;
+                            case "유산슬": return `A soft and luxurious taste, unforgettable once you taste Yusanseul!`;
+                            case "팔보채": return `Eight precious ingredients are plentiful, for a special day with Palbochae!`;
+                            case "해물누룽지탕": return `The meeting of crispy scorched rice and hot seafood soup, Seafood Nurungjitang!`;
+                            case "동파육": return `Melts in your mouth, the deep taste of Dongpo-yuk!`;
+                            case "멘보샤": return `Shrimp is full between crispy bread! Menbosha!`;
+                            case "오향장육": return `A special cold dish with five flavors, Ohyangjangyuk!`;
+                            case "경장육슬": return `The taste of Beijing wrapped in dried tofu, Gyeongjangyukseul!`;
+                            case "마라탕": return `When you crave a numbing spicy taste? It's Malatang!`;
+                            case "마라샹궈": return `A hot taste fried in mara sauce! Mala Xiangguo!`;
+
+                            // 일식
+                            case "초밥": return `The taste of the fresh sea, a piece of sushi that melts in your mouth!`;
+                            case "라멘": return `Rich and deep broth with chewy noodles! Today's lunch is ramen!`;
+                            case "돈까스": return `The king of crispiness! A hearty meal with thick donkatsu!`;
+                            case "우동": return `A bowl of udon that warms you up with hot soup and chewy noodles!`;
+                            case "소바": return `A cool and clean taste, soba is the best in summer!`;
+                            case "텐동": return `The meeting of crispy tempura and special sauce, how about Tendon?`;
+                            case "규동": return `Plenty of sweet and savory beef! A hearty bowl of Gyudon!`;
+                            case "카레라이스": return `A rich and soft taste, everyone's favorite curry rice!`;
+                            case "오코노미야끼": return `Add toppings as you like! Sizzling Okonomiyaki!`;
+                            case "타코야끼": return `Octopus in a cute round shape! Takoyaki!`;
+                            case "야끼소바": return `The taste of stir-frying on a hot plate! Salty and savory Yakisoba!`;
+                            case "가츠동": return `The fantastic combination of donkatsu and egg! Hearty Katsudon!`;
+                            case "오야코동": return `The soft meeting of chicken and egg, Oyakodon!`;
+                            case "스키야키": return `A Japanese-style hot pot boiled in a sweet soy sauce, Sukiyaki!`;
+                            case "샤브샤브": return `If you want to feel the original taste of fresh ingredients? Shabu-shabu!`;
+                            case "나가사키 짬뽕": return `The surprising charm of white soup! Cool Nagasaki Champon!`;
+                            case "메밀소바": return `If you have no appetite in the hot weather? Cool Memil Soba!`;
+                            case "사시미": return `A feast of freshness unfolding in your mouth, Sashimi!`;
+                            case "장어덮밥": return `When you're out of energy? Eel rice bowl that gives you strength!`;
+                            case "야키토리": return `Full of charcoal flavor! Yakitori that is more delicious on a skewer!`;
+
+                            // 양식
+                            case "파스타": return `Craving the taste of Italy today, how about pasta?`;
+                            case "피자": return `The temptation of stretching cheese! Pizza for everyone to enjoy!`;
+                            case "스테이크": return `Steak for a special day! A juicy party in your mouth!`;
+                            case "리조또": return `A soft and creamy taste, an Italian dish made with rice, risotto!`;
+                            case "햄버거": return `A perfect meal with a hearty patty and fresh vegetables, a hamburger!`;
+                            case "샌드위치": return `Simple but hearty! A sandwich full of freshness!`;
+                            case "샐러드": return `Light but full of nutrients! A choice for health, salad!`;
+                            case "스프": return `A bowl of soft soup that warms you up!`;
+                            case "빠에야": return `A gorgeous visual and the best taste! The taste of Spain, paella!`;
+                            case "라자냐": return `A feast of flavors stacked in layers, a rich lasagna!`;
+                            case "타코": return `A taste of Mexican passion! Spicy tacos!`;
+                            case "브리또": return `One is enough! The epitome of generosity, burrito!`;
+                            case "퀘사디아": return `Crispy tortillas with plenty of cheese! Quesadilla!`;
+                            case "미트볼": return `Cute round meatballs, with tomato sauce!`;
+                            case "피쉬 앤 칩스": return `The meeting of crispy fries and light fish, fish and chips!`;
+                            case "바베큐": return `Full of smoky flavor! A barbecue party that feels like you're outdoors!`;
+                            case "핫도그": return `A simple taste of America, a hearty hot dog!`;
+                            case "오믈렛": return `The taste hidden in the soft egg! Omelet!`;
+                            case "팬케이크": return `With sweet syrup! The standard of brunch menu, pancakes!`;
+                            case "와플": return `Crispy on the outside, moist on the inside! The queen of desserts, waffles!`;
+                            
                             default: return `How about ${foodName} today?`;
                         }
                     }
@@ -544,43 +681,7 @@
 
 
 
-        const ANIMAL_URL = "https://teachablemachine.withgoogle.com/models/ZGmPRyuJD/";
-        let animalModel;
 
-        async function loadAnimalModel() {
-            if (!animalModel) {
-                animalModel = await tmImage.load(ANIMAL_URL + "model.json", ANIMAL_URL + "metadata.json");
-            }
-        }
-
-        async function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            document.getElementById('upload-btn').innerText = i18n[currentLang].analyzing;
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const img = document.getElementById('image-preview');
-                img.src = e.target.result;
-                img.style.display = 'inline-block';
-                const prediction = await animalModel.predict(img);
-                prediction.sort((a, b) => b.probability - a.probability);
-                showAnimalResult(prediction[0]);
-                document.getElementById('upload-btn').innerText = i18n[currentLang].uploadBtn;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function showAnimalResult(topPrediction) {
-            const topAnimal = topPrediction.className; 
-            const t = i18n[currentLang];
-            const resultArea = document.getElementById('result-area');
-            const descArea = document.getElementById('result-desc');
-            const titleArea = document.getElementById('result-title');
-            resultArea.style.display = 'block';
-            let animalName = (topAnimal === "강아지상") ? t.dog : t.cat;
-            titleArea.innerText = t.confirmTitle.replace("{animal}", animalName);
-            descArea.innerText = (topAnimal === "강아지상") ? t.dogDesc : t.catDesc;
-        }
 
 
         function toggleTheme() {
