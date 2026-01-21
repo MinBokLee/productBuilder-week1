@@ -100,6 +100,24 @@
         }
         .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.2); }
 
+        .new-feature-btn {
+            margin-top: -10px;
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-color), #d05ce3);
+            color: white;
+            border: none;
+            box-shadow: var(--btn-shadow);
+            transform: scale(1.02);
+            transition: all 0.3s ease-in-out;
+            padding: 16px;
+        }
+        .new-feature-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+
         .link-btn { 
             background: none; 
             border: 1px solid var(--border-color); 
@@ -210,7 +228,7 @@
             
             <p id="main-sub" style="color:var(--text-sub); margin-bottom:28px; font-size:1rem; font-weight: 500; line-height: 1.5;">AI가 당신의 완벽한 한 끼를 큐레이팅합니다.</p>
 
-
+            <button class="link-btn new-feature-btn" onclick="location.href='gemini_pricing.html'">🚀 Gemini 요금 비교 페이지</button>
 
             <div class="filter-group">
                 <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)" id="filter-all">전체</button>
@@ -228,11 +246,7 @@
             <button class="primary-btn" id="recommend-btn" onclick="generateLunchMenu()">지금 추천 받기</button>
         </div>
 
-        <div class="bottom-section">
 
-
-
-        </div>
     </div>
 
     <script>
@@ -246,10 +260,7 @@
 
                 filterAll: "전체", filterKr: "한식", filterCh: "중식", filterJp: "일식", filterEn: "양식",
                 placeholder: "버튼을 누르면 메뉴가 추천됩니다.",
-                recommendBtn: "지금 추천 받기",
-                contactToggle: "문의 및 제휴",
-                formName: "성함", formMsg: "메시지", formSubmit: "전송",
-                back: "← HOME",
+
 
 
 
@@ -279,9 +290,8 @@
                 filterAll: "All", filterKr: "Korean", filterCh: "Chinese", filterJp: "Japanese", filterEn: "Western",
                 placeholder: "Press button to get menu.",
                 recommendBtn: "Get Recommendation",
-                contactToggle: "Contact & Partnership",
-                formName: "Name", formMsg: "Message", formSubmit: "Send",
-                back: "← HOME",
+
+  
 
 
 

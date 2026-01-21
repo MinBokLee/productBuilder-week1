@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Gemini 요금제 비교 & 알뜰 사용 가이드 (2026)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+  --bg:#f5f6f8;
+  --card:#ffffff;
+  --text:#111827;
+  --sub:#6b7280;
+  --accent:#1a73e8; /* 구글 브랜드 컬러로 변경 */
+}
+body.dark{
+  --bg:#0f172a;
+  --card:#020617;
+  --text:#e5e7eb;
+  --sub:#9ca3af;
+  --accent:#8ab4f8;
+}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  background:var(--accent);
+  color:#fff;
+  padding:36px 20px;
+  text-align:center;
+}
+.container{
+  max-width:960px;
+  margin:auto;
+  padding:20px;
+}
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:28px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+h2{
+  border-left:6px solid var(--accent);
+  padding-left:12px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+}
+th,td{
+  border:1px solid #d1d5db;
+  padding:12px;
+  font-size:.9rem;
+  text-align:left;
+}
+th{background:rgba(0,0,0,.05);}
+.toggle{
+  position:fixed;
+  top:14px;
+  right:14px;
+}
+button{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:999px;
+  cursor:pointer;
+}
+input{
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #cbd5f5;
+  width:160px;
+}
+.small{
+  font-size:.85rem;
+  color:var(--sub);
+  line-height:1.6;
+}
+.discount-item{
+  margin-bottom:18px;
+}
+.discount-item a{
+  font-size:.85rem;
+  color:var(--accent);
+  text-decoration:none;
+}
+footer{
+  text-align:center;
+  font-size:.8rem;
+  color:var(--sub);
+  padding:40px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="toggle">
+  <button onclick="toggleDark()">🌙 / ☀️</button>
+</div>
+
+<header>
+  <h1>📊 Gemini 요금제 비교 & 알뜰 사용 가이드</h1>
+  <p>2026 최신 · 구글 AI 생태계 분석</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>📌 Gemini 플랜 요금 · 특징 비교</h2>
+<p class="small">※ 월 요금은 <b>2026년 1월 19일 기준 환율(USD → KRW)</b>을 참고해 표시됩니다.</p>
+
+<table>
+<tr>
+<th>플랜</th>
+<th>월 요금</th>
+<th>주요 특징 & 기능 제한</th>
+</tr>
+
+<tr>
+<td>Free</td>
+<td>$0 (₩0)</td>
+<td>
+· <b>Gemini 2.5 Flash</b> 기본 제공<br>
+· 구글 앱(Gmail, Docs) 연동 제한적<br>
+· 표준 컨텍스트 윈도우 사용 가능<br>
+· 피크 시간대 응답 속도 저하 발생
+</td>
+</tr>
+
+<tr>
+<td>Advanced (AI Pro)</td>
+<td>$19.99 (₩29,430)</td>
+<td>
+· <b>최신 Gemini 3 Pro</b> 및 차세대 모델 제공<br>
+· <b>2TB Google One 스토리지</b> 포함<br>
+· 문서/이미지 분석 및 Deep Research 기능<br>
+· 구글 워크스페이스(Docs, Gmail 등) AI 직접 연동
+</td>
+</tr>
+
+<tr>
+<td>Ultra (Premium)</td>
+<td>$124.99 (3개월/₩184,000)</td>
+<td>
+· 최상위 <b>Gemini 3 Ultra</b> 및 Deep Think 모델<br>
+· 월 25,000 AI 크레딧 (Veo 3.1 비디오 생성 등)<br>
+· 개발자용 우선 순위 액세스<br>
+· 대규모 멀티모달 작업 최적화
+</td>
+</tr>
+
+<tr>
+<td>Business</td>
+<td>$20 (₩29,450)</td>
+<td>
+· 기업용 보안 기능 포함 (데이터 학습 미사용)<br>
+· 팀 단위 공동 작업 도구 지원<br>
+· 1년 약정 기준 시 추가 할인 가능<br>
+· 워크스페이스 관리자 콘솔 제어
+</td>
+</tr>
+
+<tr>
+<td>Enterprise</td>
+<td>$30 (₩44,170)</td>
+<td>
+· 100만~200만 토큰 이상의 <b>초대형 컨텍스트</b><br>
+· 무제한에 가까운 사용량 및 고급 보안/SLA<br>
+· 전담 지원 및 맞춤형 엔터프라이즈 기능<br>
+· 대규모 데이터 분석 및 자동화 특화
+</td>
+</tr>
+</table>
+</div>
+
+<div class="card">
+<h2>💳 Gemini 할인 받는 방법 정리</h2>
+
+<div class="discount-item">
+<b>① Google One 신규 가입 혜택 (1~3개월 무료)</b><br>
+<a href="https://one.google.com/about/plans" target="_blank">Gemini Advanced 무료 체험 안내</a>
+</div>
+
+<div class="discount-item">
+<b>② 학생·교육 계정 프로모션 (최대 1년 무료)</b><br>
+<a href="https://gemini.google/students/" target="_blank">학교 계정 인증 시 혜택 확인 (Google for Education)</a>
+</div>
+
+<div class="discount-item">
+<b>③ 2026년 한정 프로 요금제 프로모션</b><br>
+· 연간 결제 시 최대 59% 할인 이벤트 활용 가능 (특정 지역 대상)<br>
+· 가족 그룹 공유를 통해 인당 비용 절감 가능 (최대 5명)
+</div>
+
+<div class="discount-item">
+<b>④ API 캐싱 및 배치 모드 활용</b><br>
+· 동일 질문 반복 시 컨텍스트 캐싱(Caching)을 사용해 비용 50% 절감<br>
+· 실시간 응답이 필요 없는 경우 배치(Batch) 작업으로 50% 할인 적용
+</div>
+</div>
+
+<div class="card">
+<h2>📈 Gemini API 월 비용 계산기 + 경쟁 모델 비교</h2>
+
+<p>
+입력 토큰(월):
+<input id="inTok" value="3000000">
+출력 토큰(월):
+<input id="outTok" value="1000000">
+<button onclick="calc()">비용 계산</button>
+</p>
+
+<p class="small">
+※ 2026년 Gemini 3 Pro (≤200K context) 단가 기준<br>
+입력: $2.00 / 1M 토큰 | 출력: $12.00 / 1M 토큰
+</p>
+
+<canvas id="apiChart"></canvas>
+</div>
+
+<div class="card">
+<h2>🔥 Gemini vs Gpt vs Claude vs Cursor vs Ryuten — 2026 AI 선택 가이드</h2>
+
+<table>
+<tr>
+<th>비교 항목</th>
+<th>Gemini</th>
+<th>Gpt</th>
+<th>Claude</th>
+<th>Cursor</th>
+<th>Ryuten</th>
+</tr>
+<tr>
+<td>강점</td>
+<td>구글 연동·방대한 컨텍스트</td>
+<td>범용성·안정적 성능</td>
+<td>논리 추론·장문 분석</td>
+<td>코드 개발 생산성</td>
+<td>한국어 최적화·요약</td>
+</tr>
+<tr>
+<td>비용 체감</td>
+<td>가장 저렴한 API 단가</td>
+<td>중간 수준</td>
+<td>성능 대비 고비용</td>
+<td>구독형(개발용)</td>
+<td>합리적</td>
+</tr>
+<tr>
+<td>추천 대상</td>
+<td>구글 유저·데이터 분석가</td>
+<td>일반 사용자·멀티모달</td>
+<td>작가·연구원·개발자</td>
+<td>소프트웨어 엔지니어</td>
+<td>국내 콘텐츠 제작자</td>
+</tr>
+<tr>
+<td><b>한 줄 요약</b></td>
+<td><b>가장 효율적인 생태계</b></td>
+<td><b>실패 없는 표준 선택</b></td>
+<td><b>정교한 업무의 동반자</b></td>
+<td><b>코딩 최강 도구</b></td>
+<td><b>한국어 최적 솔루션</b></td>
+</tr>
+</table>
+</div>
+
+</div>
+
+<footer>
+© 2026 Gemini 요금 비교 · 티스토리/블로그 자유 사용
+</footer>
+
+<script>
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+
+// 1월 19일 기준 환율 적용
+const rate = 1472.52; 
+
+let chart;
+function calc(){
+  const inT = +inTok.value / 1e6;
+  const outT = +outTok.value / 1e6;
+
+  // 2026년 업데이트된 모델별 추정 API 단가 (USD/1M tokens)
+  const gemini = inT*2.0 + outT*12.0; // Gemini 3 Pro
+  const gpt = inT*2.5 + outT*10.0;    // GPT-4.5/5 Series
+  const claude = inT*3.0 + outT*15.0; // Claude 3.5/4
+  const cursor = inT*2.2 + outT*11.0; 
+  const ryuten = inT*1.8 + outT*9.0;
+
+  if(chart) chart.destroy();
+  chart = new Chart(apiChart,{
+    type:'bar',
+    indexAxis:'y',
+    data:{
+      labels:['Gemini','Gpt','Claude','Cursor','Ryuten'],
+      datasets:[{
+        data:[gemini,gpt,claude,cursor,ryuten],
+        backgroundColor:['#1a73e8','#10a37f','#d97757','#3d3d3d','#d22d2d'],
+        barThickness:28,
+        borderRadius:6
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            label:(ctx)=>{
+              const usd = ctx.raw;
+              const krw = Math.round(usd*rate).toLocaleString();
+              return `$${usd.toFixed(2)} (₩${krw})`;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+calc();
+</script>
+
+</body>
+</html>
