@@ -62,6 +62,10 @@ th,td{
   text-align:left;
 }
 th{background:rgba(0,0,0,.05);}
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+}
 .toggle{
   position:fixed;
   top:14px;
@@ -100,6 +104,30 @@ footer{
   color:var(--sub);
   padding:40px 0;
 }
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  header {
+    padding: 24px 15px;
+  }
+  h1 { font-size: 1.8rem; } /* Reduce h1 font size */
+  p { font-size: 0.9rem; } /* Reduce paragraph font size */
+  th, td { font-size: 0.8rem; padding: 8px; } /* Reduce table font size and padding */
+  .small { font-size: 0.75rem; } /* Reduce small text font size */
+  input {
+    width: calc(100% - 22px); /* Adjust width for full width minus padding and border */
+    margin-bottom: 10px; /* Add some margin below inputs */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+  }
+  button { /* General button style, adjusting for width */
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in width */
+  }
+  .card {
+    padding: 15px; /* Reduced padding for smaller screens */
+  }
+}
 </style>
 </head>
 
@@ -120,6 +148,7 @@ footer{
 <h2>📌 Gemini 플랜 요금 · 특징 비교</h2>
 <p class="small">※ 월 요금은 <b>2026년 1월 19일 기준 환율(USD → KRW)</b>을 참고해 표시됩니다.</p>
 
+<div class="table-responsive">
 <table>
 <tr>
 <th>플랜</th>
@@ -183,6 +212,7 @@ footer{
 </tr>
 </table>
 </div>
+</div>
 
 <div class="card">
 <h2>💳 Gemini 할인 받는 방법 정리</h2>
@@ -232,6 +262,7 @@ footer{
 <div class="card">
 <h2>🔥 Gemini vs Gpt vs Claude vs Cursor vs Ryuten — 2026 AI 선택 가이드</h2>
 
+<div class="table-responsive">
 <table>
 <tr>
 <th>비교 항목</th>
@@ -275,11 +306,12 @@ footer{
 </tr>
 </table>
 </div>
+</div>
 
 </div>
 
 <footer>
-© 2026 Gemini 요금 비교 · 티스토리/블로그 자유 사용
+© 2026 Gemini 요금 비교
 </footer>
 
 <script>
