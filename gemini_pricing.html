@@ -208,6 +208,46 @@
             .calculator-form { display: grid; gap: 12px; margin-bottom: 16px; }
             .input-group label { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 4px; }
             input { width: 100%; box-sizing: border-box; padding: 12px; font-size: 1rem; }
+
+            /* Model Guide Table Transformation */
+            .model-guide-table { margin-top: 20px; } /* Add some space above the transformed table */
+            .model-guide-table thead { display: none; }
+            .model-guide-table tbody tr { 
+                display: block; 
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 16px;
+                margin-bottom: 16px;
+                background-color: var(--card-bg); /* Use card background for consistency */
+            }
+            .model-guide-table tbody tr:nth-child(odd) {
+                background-color: var(--row-highlight); /* Retain zebra striping for rows */
+            }
+            .model-guide-table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 8px 0;
+                border-bottom: none;
+                font-size: 0.95rem;
+            }
+            .model-guide-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--text-sub);
+                margin-right: 16px;
+                flex-shrink: 0;
+            }
+            /* Specific styles for the "Model" column if needed */
+            .model-guide-table td:first-child {
+                font-weight: 700;
+                color: var(--text-main);
+                padding-top: 0;
+            }
+            /* Ensure the content of the summary row still stands out */
+            .model-guide-table td strong {
+                font-weight: 700;
+            }
         }
     </style>
 </head>
@@ -292,15 +332,43 @@
             <div class="card">
                 <h2><span class="icon">⚖️</span>AI 모델 선택 가이드</h2>
                 <div class="table-responsive">
-                    <table>
+                    <table class="model-guide-table">
                         <thead>
                             <tr><th>비교 항목</th><th>Gemini</th><th>Gpt</th><th>Claude</th><th>Cursor</th><th>Ryuten</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><b>강점</b></td><td>구글 연동·방대한 컨텍스트</td><td>범용성·안정적 성능</td><td>논리 추론·장문 분석</td><td>코드 개발 생산성</td><td>한국어 최적화·요약</td></tr>
-                            <tr><td><b>비용 체감</b></td><td>가장 저렴한 API 단가</td><td>중간 수준</td><td>성능 대비 고비용</td><td>구독형(개발용)</td><td>합리적</td></tr>
-                            <tr><td><b>추천 대상</b></td><td>구글 유저·데이터 분석가</td><td>일반 사용자·멀티모달</td><td>작가·연구원·개발자</td><td>SW 엔지니어</td><td>국내 콘텐츠 제작자</td></tr>
-                            <tr><td><b>한 줄 요약</b></td><td><b>가장 효율적인 생태계</b></td><td><b>실패 없는 표준 선택</b></td><td><b>정교한 업무의 동반자</b></td><td><b>코딩 최강 도구</b></td><td><b>한국어 최적 솔루션</b></td></tr>
+                            <tr>
+                                <td data-label="비교 항목"><b>강점</b></td>
+                                <td data-label="Gemini">구글 연동·방대한 컨텍스트</td>
+                                <td data-label="Gpt">범용성·안정적 성능</td>
+                                <td data-label="Claude">논리 추론·장문 분석</td>
+                                <td data-label="Cursor">코드 개발 생산성</td>
+                                <td data-label="Ryuten">한국어 최적화·요약</td>
+                            </tr>
+                            <tr>
+                                <td data-label="비용 체감"><b>비용 체감</b></td>
+                                <td data-label="Gemini">가장 저렴한 API 단가</td>
+                                <td data-label="Gpt">중간 수준</td>
+                                <td data-label="Claude">성능 대비 고비용</td>
+                                <td data-label="Cursor">구독형(개발용)</td>
+                                <td data-label="Ryuten">합리적</td>
+                            </tr>
+                            <tr>
+                                <td data-label="추천 대상"><b>추천 대상</b></td>
+                                <td data-label="Gemini">구글 유저·데이터 분석가</td>
+                                <td data-label="Gpt">일반 사용자·멀티모달</td>
+                                <td data-label="Claude">작가·연구원·개발자</td>
+                                <td data-label="Cursor">SW 엔지니어</td>
+                                <td data-label="Ryuten">국내 콘텐츠 제작자</td>
+                            </tr>
+                            <tr>
+                                <td data-label="한 줄 요약"><b>한 줄 요약</b></td>
+                                <td data-label="Gemini"><b>가장 효율적인 생태계</b></td>
+                                <td data-label="Gpt"><b>실패 없는 표준 선택</b></td>
+                                <td data-label="Claude"><b>정교한 업무의 동반자</b></td>
+                                <td data-label="Cursor"><b>코딩 최강 도구</b></td>
+                                <td data-label="Ryuten"><b>한국어 최적 솔루션</b></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
