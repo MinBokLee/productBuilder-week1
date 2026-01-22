@@ -10,24 +10,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #3b82f6; /* A slightly softer, more modern blue */
+            --primary-color: #3b82f6;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
-            --text-main: #1f2937; /* A softer black */
+            --text-main: #1f2937;
             --text-sub: #6b7280;
             --border-color: #e5e7eb;
-            --header-bg: #ffffff;
             --row-highlight: #f9fafb;
         }
 
         [data-theme='dark'] {
             --primary-color: #60a5fa;
-            --bg-color: #0f172a; /* A deep, dark blue */
+            --bg-color: #0f172a;
             --card-bg: #1e293b;
             --text-main: #e2e8f0;
             --text-sub: #94a3b8;
             --border-color: #334155;
-            --header-bg: #1e293b;
             --row-highlight: #293548;
         }
 
@@ -37,18 +35,17 @@
             margin: 0; 
             color: var(--text-main);
             transition: background-color 0.3s ease, color 0.3s ease; 
-            min-height: 100vh;
             font-size: 16px;
             line-height: 1.7;
             display: flex;
             justify-content: center;
-            padding: 24px;
+            padding: 12px;
             box-sizing: border-box;
         }
 
         .container { 
             background: var(--card-bg); 
-            padding: 24px; 
+            padding: 20px; 
             border-radius: 16px; 
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
@@ -61,20 +58,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 20px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
         .brand-title {
-            font-size: 1.75rem; /* 28px */
+            font-size: 1.5rem; /* 24px */
             font-weight: 700;
             margin: 0;
-            color: var(--text-main);
         }
 
         .control-btn { 
-            background-color: var(--bg-color); 
+            background: none; 
             border: 1px solid var(--border-color); 
             border-radius: 8px; 
             padding: 8px 12px; 
@@ -85,13 +81,14 @@
             transition: all 0.2s ease-in-out;
             text-decoration: none;
         }
-        .control-btn:hover { background-color: var(--border-color); }
+        .control-btn:hover { background-color: var(--row-highlight); }
         
         .card {
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 28px;
-            margin-bottom: 32px;
+            padding: 24px;
+            margin-bottom: 24px;
+            background-color: var(--card-bg);
         }
         
         h2 {
@@ -99,105 +96,83 @@
             font-weight: 600;
             margin-top: 0;
             margin-bottom: 16px;
-            color: var(--text-main);
             display: flex;
             align-items: center;
+            gap: 10px;
         }
-        h2 .icon {
-            margin-right: 10px;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-        }
+        h2 .icon { color: var(--primary-color); }
 
-        .table-responsive { overflow-x: auto; border: 1px solid var(--border-color); border-radius: 8px; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 16px;
-            font-size: 0.9rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-            vertical-align: top;
-        }
-        th {
-            background-color: var(--header-bg);
-            font-weight: 600;
-            color: var(--text-sub);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-        }
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-        tbody tr:nth-child(odd) {
-             background-color: var(--row-highlight);
-        }
-        td:first-child {
-            font-weight: 500;
-            color: var(--text-main);
-        }
-        td ul { padding-left: 20px; margin: 0; }
-        td li { margin-bottom: 8px; }
-        td li:last-child { margin-bottom: 0; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border-color); }
+        th { font-weight: 600; font-size: 0.8rem; color: var(--text-sub); text-transform: uppercase; }
+        tbody tr:last-child td { border-bottom: 0; }
 
         .small { font-size: .875rem; color: var(--text-sub); margin-bottom: 16px; display: block; }
         
-        .discount-list { list-style: none; padding: 0; }
-        .discount-item { 
-            padding: 16px; 
-            border-radius: 8px; 
-            margin-bottom: 12px;
-            border: 1px solid var(--border-color);
-            background-color: var(--row-highlight);
-        }
+        .discount-list { list-style: none; padding: 0; margin: 0; }
+        .discount-item { padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--border-color); background-color: var(--row-highlight); }
         .discount-item b { display: block; font-weight: 600; margin-bottom: 4px; }
         .discount-item a { color: var(--primary-color); text-decoration: none; font-weight: 500; font-size: 0.875rem; }
-        .discount-item a:hover { text-decoration: underline; }
-
-        .calculator-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .input-group { display: flex; flex-direction: column; }
-        .input-group label { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 4px; }
-        input {
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            width: 100%;
-            box-sizing: border-box;
-            color: var(--text-main);
-            background: var(--card-bg);
-            font-size: 1rem;
-        }
 
         .primary-btn { 
-            padding: 10px 20px; font-size: 0.9rem;
+            width: 100%; padding: 12px 20px; font-size: 1rem;
             background-color: var(--primary-color);
             color: white; border: none; border-radius: 8px;
-            cursor: pointer; font-weight: 500;
-            transition: background-color 0.2s;
-            align-self: end;
+            cursor: pointer; font-weight: 500; transition: background-color 0.2s;
         }
-        .primary-btn:hover { background-color: #2563eb; }
-        [data-theme='dark'] .primary-btn:hover { background-color: #3b82f6; }
 
+        footer { text-align: center; font-size: .875rem; color: var(--text-sub); padding-top: 24px; }
 
-        footer { text-align: center; font-size: .875rem; color: var(--text-sub); padding-top: 32px; }
+        /* Mobile-first Readability Improvements */
+        @media (max-width: 768px) {
+            body { font-size: 15px; padding: 0; }
+            .container { border-radius: 0; border: none; box-shadow: none; padding: 16px; }
+            .brand-title { font-size: 1.3rem; }
+            h2 { font-size: 1.15rem; }
+            .card { padding: 20px; border-radius: 12px; }
 
-        @media (max-width: 640px) {
-            body { padding: 12px; }
-            .container { padding: 16px; }
-            header { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .card { padding: 20px; }
-            .calculator-form { grid-template-columns: 1fr; }
-            .primary-btn { width: 100%; }
+            /* Table to List Transformation */
+            .pricing-table thead { display: none; }
+            .pricing-table tr { 
+                display: block; 
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+            .pricing-table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 8px 0;
+                border-bottom: none;
+            }
+            .pricing-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--text-sub);
+                margin-right: 16px;
+                flex-shrink: 0;
+            }
+             .pricing-table td:first-child {
+                justify-content: flex-start;
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: var(--primary-color);
+                margin-bottom: 8px;
+                padding-top: 0;
+            }
+            .pricing-table td:first-child::before { display: none; }
+            .pricing-table td .feature-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                text-align: right;
+            }
+
+            .calculator-form { display: grid; gap: 12px; margin-bottom: 16px; }
+            .input-group label { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 4px; }
+            input { width: 100%; box-sizing: border-box; padding: 12px; font-size: 1rem; }
         }
     </style>
 </head>
@@ -216,29 +191,45 @@
             <div class="card">
                 <h2><span class="icon">📄</span>플랜 요금 · 특징 비교</h2>
                 <p class="small">※ 월 요금은 <b>2026년 1월 19일 기준 환율(USD → KRW)</b>을 참고하여 표시됩니다.</p>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr><th>플랜</th><th>월 요금</th><th>주요 특징 및 기능 제한</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><b>Free</b></td><td>$0 (₩0)</td><td><ul><li><b>Gemini 2.5 Flash</b> 기본 제공</li><li>구글 앱(Gmail, Docs) 연동 제한적</li><li>표준 컨텍스트 윈도우 사용 가능</li><li>피크 시간대 응답 속도 저하 발생</li></ul></td></tr>
-                            <tr><td><b>Advanced</b> (AI Pro)</td><td>$19.99 (₩29,430)</td><td><ul><li><b>최신 Gemini 3 Pro</b> 및 차세대 모델 제공</li><li><b>2TB Google One 스토리지</b> 포함</li><li>문서/이미지 분석 및 Deep Research 기능</li><li>구글 워크스페이스 AI 직접 연동</li></ul></td></tr>
-                            <tr><td><b>Ultra</b> (Premium)</td><td>$124.99 (3개월/₩184,000)</td><td><ul><li>최상위 <b>Gemini 3 Ultra</b> 및 Deep Think 모델</li><li>월 25,000 AI 크레딧 (Veo 3.1 비디오 생성 등)</li><li>개발자용 우선 순위 액세스</li><li>대규모 멀티모달 작업 최적화</li></ul></td></tr>
-                            <tr><td><b>Business</b></td><td>$20 (₩29,450)</td><td><ul><li>기업용 보안 기능 포함 (데이터 학습 미사용)</li><li>팀 단위 공동 작업 도구 지원</li><li>1년 약정 기준 시 추가 할인 가능</li><li>워크스페이스 관리자 콘솔 제어</li></ul></td></tr>
-                            <tr><td><b>Enterprise</b></td><td>$30 (₩44,170)</td><td><ul><li>100만~200만 토큰 이상의 <b>초대형 컨텍스트</b></li><li>무제한에 가까운 사용량 및 고급 보안/SLA</li><li>전담 지원 및 맞춤형 엔터프라이즈 기능</li><li>대규모 데이터 분석 및 자동화 특화</li></ul></td></tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table class="pricing-table">
+                    <thead>
+                        <tr><th>플랜</th><th>월 요금</th><th>주요 특징 및 기능 제한</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="플랜">Free</td>
+                            <td data-label="월 요금">$0 (₩0)</td>
+                            <td data-label="주요 특징"><ul class="feature-list"><li><b>Gemini 2.5 Flash</b> 기본 제공</li><li>구글 앱 연동 제한적</li><li>표준 컨텍스트 윈도우</li><li>피크 시간대 속도 저하</li></ul></td>
+                        </tr>
+                        <tr>
+                            <td data-label="플랜">Advanced (AI Pro)</td>
+                            <td data-label="월 요금">$19.99 (₩29,430)</td>
+                            <td data-label="주요 특징"><ul class="feature-list"><li><b>최신 Gemini 3 Pro</b> 제공</li><li><b>2TB Google One</b> 포함</li><li>문서/이미지 분석 기능</li><li>워크스페이스 AI 연동</li></ul></td>
+                        </tr>
+                        <tr>
+                            <td data-label="플랜">Ultra (Premium)</td>
+                            <td data-label="월 요금">$124.99 (3개월)</td>
+                            <td data-label="주요 특징"><ul class="feature-list"><li>최상위 <b>Gemini 3 Ultra</b></li><li>월 25,000 AI 크레딧</li><li>개발자 우선 액세스</li><li>대규모 멀티모달 최적화</li></ul></td>
+                        </tr>
+                        <tr>
+                            <td data-label="플랜">Business</td>
+                            <td data-label="월 요금">$20 (₩29,450)</td>
+                            <td data-label="주요 특징"><ul class="feature-list"><li>기업용 보안 기능</li><li>팀 공동 작업 도구</li><li>1년 약정 시 추가 할인</li><li>관리자 콘솔 제어</li></ul></td>
+                        </tr>
+                        <tr>
+                            <td data-label="플랜">Enterprise</td>
+                            <td data-label="월 요금">$30 (₩44,170)</td>
+                            <td data-label="주요 특징"><ul class="feature-list"><li><b>초대형 컨텍스트</b> (1M-2M)</li><li>무제한급 사용량 / SLA</li><li>전담 지원 및 맞춤 기능</li><li>대규모 데이터 분석 특화</li></ul></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="card">
                 <h2><span class="icon">💰</span>할인 받는 방법</h2>
                 <ul class="discount-list">
-                    <li class="discount-item"><b>Google One 신규 가입 혜택 (1~3개월 무료)</b><a href="https://one.google.com/about/plans" target="_blank">Advanced 무료 체험 안내 →</a></li>
-                    <li class="discount-item"><b>학생·교육 계정 프로모션 (최대 1년 무료)</b><a href="https://gemini.google/students/" target="_blank">학교 계정 인증 혜택 확인 →</a></li>
-                    <li class="discount-item"><b>2026년 한정 프로 요금제 프로모션</b><span>연간 결제 시 최대 59% 할인, 가족 그룹 공유로 비용 절감</span></li>
-                    <li class="discount-item"><b>API 캐싱 및 배치 모드 활용</b><span>동일 질문 반복 및 비실시간 작업 시 최대 50% 비용 절감</span></li>
+                    <li class="discount-item"><b>Google One 신규 가입 (1~3개월 무료)</b><a href="https://one.google.com/about/plans" target="_blank">무료 체험 안내 →</a></li>
+                    <li class="discount-item"><b>학생/교육 계정 (최대 1년 무료)</b><a href="https://gemini.google/students/" target="_blank">혜택 확인 →</a></li>
                 </ul>
             </div>
 
@@ -247,109 +238,52 @@
                 <div class="calculator-form">
                     <div class="input-group"><label for="inTok">입력 토큰 (월)</label><input id="inTok" value="3000000"></div>
                     <div class="input-group"><label for="outTok">출력 토큰 (월)</label><input id="outTok" value="1000000"></div>
-                    <button class="primary-btn" onclick="calc()">계산</button>
                 </div>
-                <p class="small" style="text-align:center;">※ 2026년 Gemini 3 Pro (≤200K context) 단가 기준: 입력 $2.00/1M, 출력 $12.00/1M</p>
-                <canvas id="apiChart"></canvas>
-            </div>
-
-            <div class="card">
-                <h2><span class="icon">⚖️</span>AI 모델 선택 가이드</h2>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr><th>비교 항목</th><th>Gemini</th><th>Gpt</th><th>Claude</th><th>Cursor</th><th>Ryuten</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><b>강점</b></td><td>구글 연동·방대한 컨텍스트</td><td>범용성·안정적 성능</td><td>논리 추론·장문 분석</td><td>코드 개발 생산성</td><td>한국어 최적화·요약</td></tr>
-                            <tr><td><b>비용 체감</b></td><td>가장 저렴한 API 단가</td><td>중간 수준</td><td>성능 대비 고비용</td><td>구독형(개발용)</td><td>합리적</td></tr>
-                            <tr><td><b>추천 대상</b></td><td>구글 유저·데이터 분석가</td><td>일반 사용자·멀티모달</td><td>작가·연구원·개발자</td><td>SW 엔지니어</td><td>국내 콘텐츠 제작자</td></tr>
-                            <tr><td><b>한 줄 요약</b></td><td>가장 효율적인 생태계</td><td>실패 없는 표준 선택</td><td>정교한 업무의 동반자</td><td>코딩 최강 도구</td><td>한국어 최적 솔루션</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+                <button class="primary-btn" onclick="calc()">비용 계산</button>
+                <canvas id="apiChart" style="margin-top: 20px;"></canvas>
             </div>
         </main>
         
-        <footer>© 2026 Gemini Pricing Analysis. All rights reserved.</footer>
+        <footer>© 2026 Gemini Pricing Analysis.</footer>
     </div>
 
     <script>
         function getThemeColors() {
             const theme = document.body.getAttribute('data-theme') || 'light';
-            return {
-                ticks: theme === 'light' ? '#6b7280' : '#94a3b8',
-                grid: theme === 'light' ? '#e5e7eb' : '#334155'
-            };
+            return { ticks: theme === 'light' ? '#6b7280' : '#94a3b8', grid: theme === 'light' ? '#e5e7eb' : '#334155' };
         }
 
         function toggleTheme() {
             const isLight = document.body.getAttribute('data-theme') === 'light';
             document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
             document.getElementById('theme-btn').innerText = isLight ? '☀️' : '🌙';
-            // Re-render chart with new colors
-            calc();
+            calc(); // Re-render chart with new colors
         }
 
         const rate = 1472.52; 
         let chart;
         function calc(){
-          const inT = +inTok.value / 1e6;
-          const outT = +outTok.value / 1e6;
-          const gemini = inT*2.0 + outT*12.0;
-          const gpt = inT*2.5 + outT*10.0;
-          const claude = inT*3.0 + outT*15.0;
-          const cursor = inT*2.2 + outT*11.0; 
-          const ryuten = inT*1.8 + outT*9.0;
-          
+          const inT = +inTok.value / 1e6, outT = +outTok.value / 1e6;
+          const data = [inT*2.0 + outT*12.0, inT*2.5 + outT*10.0, inT*3.0 + outT*15.0, inT*2.2 + outT*11.0, inT*1.8 + outT*9.0];
           const colors = getThemeColors();
 
           if(chart) chart.destroy();
-          chart = new Chart(apiChart,{
+          chart = new Chart(apiChart, {
             type:'bar',
             data:{
               labels:['Gemini','Gpt','Claude','Cursor','Ryuten'],
-              datasets:[{
-                data:[gemini,gpt,claude,cursor,ryuten],
-                backgroundColor:['#3b82f6','#10b981','#f97316','#6b7280','#ef4444'],
-                borderRadius:4
-              }]
+              datasets:[{ data: data, backgroundColor: ['#3b82f6','#10b981','#f97316','#6b7280','#ef4444'], borderRadius: 4 }]
             },
             options:{
-              indexAxis: 'y',
-              responsive:true,
-              maintainAspectRatio: false,
-              plugins:{
-                legend:{display:false},
-                tooltip:{
-                  backgroundColor: '#1e293b',
-                  titleColor: '#e2e8f0',
-                  bodyColor: '#e2e8f0',
-                  boxPadding: 8,
-                  callbacks:{
-                    label:(ctx)=>{
-                      const usd = ctx.raw;
-                      const krw = Math.round(usd*rate).toLocaleString();
-                      return `$${usd.toFixed(2)} (약 ₩${krw})`;
-                    }
-                  }
-                }
-              },
+              indexAxis: 'y', responsive:true, maintainAspectRatio: false,
+              plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:(ctx) => `$${ctx.raw.toFixed(2)} (약 ₩${Math.round(ctx.raw*rate).toLocaleString()})` }}},
               scales: {
-                x: { 
-                    ticks: { color: colors.ticks },
-                    grid: { color: colors.grid }
-                },
-                y: { 
-                    ticks: { color: colors.ticks },
-                    grid: { display: false }
-                }
+                x: { ticks: { color: colors.ticks }, grid: { color: colors.grid } },
+                y: { ticks: { color: colors.ticks }, grid: { display: false } }
               }
             }
           });
         }
-        
-        // Initial call
         calc();
     </script>
 </body>
