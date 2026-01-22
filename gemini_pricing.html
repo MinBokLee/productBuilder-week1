@@ -230,13 +230,19 @@
         .calculator-form {
             display: grid;
             grid-template-columns: repeat(2, 1fr) auto; /* Two inputs, one button */
-            gap: 12px;
+            gap: 16px;
             align-items: end; /* Align button with bottom of inputs */
             margin-bottom: 12px;
         }
-        .input-group { display: flex; flex-direction: column; }
-        .input-group label { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 4px; }
-        /* Make button within calculator-form not full width on desktop, but full width on mobile */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .input-group label {
+            font-size: 0.875rem;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+        }
         .calculator-form .primary-btn {
             width: auto; /* Override default 100% width */
             padding: 10px 15px; /* Adjust padding for better fit */
@@ -245,10 +251,11 @@
 
             /* Calculator form mobile adjustments */
             .calculator-form {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Stack on mobile */
+                gap: 12px;
             }
             .calculator-form .primary-btn {
-                width: 100%;
+                width: 100%; /* Full width on mobile */
             }
 
             /* Model Guide Table Transformation */
