@@ -252,7 +252,6 @@
             /* Calculator form mobile adjustments */
             .calculator-form {
                 grid-template-columns: 1fr; /* Stack on mobile */
-                gap: 12px;
             }
             .calculator-form .primary-btn {
                 width: 100%; /* Full width on mobile */
@@ -383,12 +382,12 @@
                 <h2><span class="icon">📈</span>API 월 비용 계산기</h2>
                 <div class="calculator-form">
                     <div class="input-group">
-                        <label for="inTok">입력 토큰 (월)</label>
-                        <input id="inTok" value="3000000" oninput="updateTokenExamples()">
+                        <label for="inTok">입력 토큰 (월) (평균 사용량)</label>
+                        <input id="inTok" value="5000000" oninput="updateTokenExamples()">
                     </div>
                     <div class="input-group">
-                        <label for="outTok">출력 토큰 (월)</label>
-                        <input id="outTok" value="1000000" oninput="updateTokenExamples()">
+                        <label for="outTok">출력 토큰 (월) (평균 사용량)</label>
+                        <input id="outTok" value="2000000" oninput="updateTokenExamples()">
                     </div>
                     <button class="primary-btn" onclick="calc()">계산</button>
                 </div>
@@ -461,15 +460,20 @@
 
             const totalTokens = inVal + outVal;
 
-            // 1 토큰 = 한글 2자, 영문 4자 (근사치)
-            const koreanChars = (totalTokens * 2).toLocaleString();
-            const englishChars = (totalTokens * 4).toLocaleString();
+            // 1 토큰 = 한글 약 2자 (구체적으로는 1.5~2.5자), 영문 약 4자 (단어 또는 구두점)
+            // 토큰은 AI 모델이 텍스트를 처리하는 최소 단위이며, 모델마다 다를 수 있습니다.
+            const koreanCharsApprox = (totalTokens * 2).toLocaleString();
+            const englishCharsApprox = (totalTokens * 4).toLocaleString();
             
             const exampleEl = document.getElementById('token-example');
             if (totalTokens > 0) {
-                exampleEl.innerHTML = `입력과 출력 토큰을 합한 총 <strong>${totalTokens.toLocaleString()}</strong>개는<br>약 <strong>한글 ${koreanChars}자</strong> 또는 <strong>영문 ${englishChars}자</strong> 분량입니다.`;
+                exampleEl.innerHTML = `
+                    <p style="margin: 0;">※ <strong>토큰(Token)</strong>은 AI 모델이 텍스트를 이해하고 생성하는 기본 단위입니다.</p>
+                    <p style="margin: 5px 0 0;">입력과 출력 토큰을 합한 총 <strong>${totalTokens.toLocaleString()}</strong>개는</p>
+                    <p style="margin: 0;">약 <strong>한글 ${koreanCharsApprox}자</strong> 또는 <strong>영문 ${englishCharsApprox}자</strong> 분량입니다.</p>
+                `;
             } else {
-                exampleEl.innerHTML = '토큰 양을 입력하면 예상되는 글자 수를 보여줍니다.';
+                exampleEl.innerHTML = '토큰 양을 입력하면 예상되는 글자 수와 토큰의 의미를 자세히 보여줍니다.';
             }
         }
 
