@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Gemini 요금제 비교 & 알뜰 사용 가이드 (2026)</title>
+<title data-ko="Gemini 요금제 비교 & 알뜰 사용 가이드 (2026)" data-en="Gemini Pricing & Savings Guide (2026)">Gemini 요금제 비교 & 알뜰 사용 가이드 (2026)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -13,32 +13,36 @@
 <body>
 
 <div class="toggle">
+  <button onclick="location.href='lunch.html'">🍚</button>
+  <button onclick="toggleLang()" class="lang-toggle">EN/KR</button>
   <button onclick="toggleDark()">🌙 / ☀️</button>
 </div>
 
 <header>
-  <h1>📊 Gemini 요금제 비교 & 알뜰 사용 가이드</h1>
-  <p>2026 최신 · 구글 AI 생태계 분석</p>
+  <h1 data-ko="📊 Gemini 요금제 비교 & 알뜰 사용 가이드" data-en="📊 Gemini Pricing & Savings Guide">📊 Gemini 요금제 비교 & 알뜰 사용 가이드</h1>
+  <p data-ko="2026 최신 · 구글 AI 생태계 분석" data-en="2026 Latest · Google AI Ecosystem Analysis">2026 최신 · 구글 AI 생태계 분석</p>
 </header>
 
 <div class="container">
 
 <div class="card">
-<h2>📌 Gemini 플랜 요금 · 특징 비교</h2>
-<p class="small">※ 월 요금은 <b>2026년 1월 19일 기준 환율(USD → KRW)</b>을 참고해 표시됩니다.</p>
+<h2 data-ko="📌 Gemini 플랜 요금 · 특징 비교" data-en="📌 Gemini Plan Pricing & Features">📌 Gemini 플랜 요금 · 특징 비교</h2>
+<p class="small" data-ko="※ 월 요금은 <b>2026년 1월 19일 기준 환율(USD → KRW)</b>을 참고해 표시됩니다." data-en="※ Monthly fees are displayed based on the exchange rate (USD → KRW) as of <b>Jan 19, 2026</b>.">※ 월 요금은 <b>2026년 1월 19일 기준 환율(USD → KRW)</b>을 참고해 표시됩니다.</p>
 
 <div class="table-responsive">
 <table>
+<thead>
 <tr>
-<th>플랜</th>
-<th>월 요금</th>
-<th>주요 특징 & 기능 제한</th>
+<th data-ko="플랜" data-en="Plan">플랜</th>
+<th data-ko="월 요금" data-en="Monthly Fee">월 요금</th>
+<th data-ko="주요 특징 & 기능 제한" data-en="Key Features & Limitations">주요 특징 & 기능 제한</th>
 </tr>
-
+</thead>
+<tbody>
 <tr>
 <td>Free</td>
 <td>$0 (₩0)</td>
-<td>
+<td data-ko="· <b>Gemini 2.5 Flash</b> 기본 제공<br>· 구글 앱(Gmail, Docs) 연동 제한적<br>· 표준 컨텍스트 윈도우 사용 가능<br>· 피크 시간대 응답 속도 저하 발생" data-en="· <b>Gemini 2.5 Flash</b> included<br>· Limited integration with Google Apps (Gmail, Docs)<br>· Standard context window available<br>· Slower response times during peak hours">
 · <b>Gemini 2.5 Flash</b> 기본 제공<br>
 · 구글 앱(Gmail, Docs) 연동 제한적<br>
 · 표준 컨텍스트 윈도우 사용 가능<br>
@@ -49,7 +53,7 @@
 <tr>
 <td>Advanced (AI Pro)</td>
 <td>$19.99 (₩29,430)</td>
-<td>
+<td data-ko="· <b>최신 Gemini 3 Pro</b> 및 차세대 모델 제공<br>· <b>2TB Google One 스토리지</b> 포함<br>· 문서/이미지 분석 및 Deep Research 기능<br>· 구글 워크스페이스(Docs, Gmail 등) AI 직접 연동" data-en="· <b>Latest Gemini 3 Pro</b> and next-gen models<br>· Includes <b>2TB Google One storage</b><br>· Document/image analysis & Deep Research features<br>· Direct AI integration with Google Workspace (Docs, Gmail, etc.)">
 · <b>최신 Gemini 3 Pro</b> 및 차세대 모델 제공<br>
 · <b>2TB Google One 스토리지</b> 포함<br>
 · 문서/이미지 분석 및 Deep Research 기능<br>
@@ -60,7 +64,7 @@
 <tr>
 <td>Ultra (Premium)</td>
 <td>$124.99 (3개월/₩184,000)</td>
-<td>
+<td data-ko="· 최상위 <b>Gemini 3 Ultra</b> 및 Deep Think 모델<br>· 월 25,000 AI 크레딧 (Veo 3.1 비디오 생성 등)<br>· 개발자용 우선 순위 액세스<br>· 대규모 멀티모달 작업 최적화" data-en="· Top-tier <b>Gemini 3 Ultra</b> & Deep Think models<br>· 25,000 AI credits/month (e.g., Veo 3.1 video generation)<br>· Priority access for developers<br>· Optimized for large-scale multimodal tasks">
 · 최상위 <b>Gemini 3 Ultra</b> 및 Deep Think 모델<br>
 · 월 25,000 AI 크레딧 (Veo 3.1 비디오 생성 등)<br>
 · 개발자용 우선 순위 액세스<br>
@@ -71,7 +75,7 @@
 <tr>
 <td>Business</td>
 <td>$20 (₩29,450)</td>
-<td>
+<td data-ko="· 기업용 보안 기능 포함 (데이터 학습 미사용)<br>· 팀 단위 공동 작업 도구 지원<br>· 1년 약정 기준 시 추가 할인 가능<br>· 워크스페이스 관리자 콘솔 제어" data-en="· Includes enterprise security (no data training)<br>· Team collaboration tools<br>· Additional discounts for annual commitment<br>· Workspace admin console control">
 · 기업용 보안 기능 포함 (데이터 학습 미사용)<br>
 · 팀 단위 공동 작업 도구 지원<br>
 · 1년 약정 기준 시 추가 할인 가능<br>
@@ -82,55 +86,56 @@
 <tr>
 <td>Enterprise</td>
 <td>$30 (₩44,170)</td>
-<td>
+<td data-ko="· 100만~200만 토큰 이상의 <b>초대형 컨텍스트</b><br>· 무제한에 가까운 사용량 및 고급 보안/SLA<br>· 전담 지원 및 맞춤형 엔터프라이즈 기능<br>· 대규모 데이터 분석 및 자동화 특화" data-en="· <b>Extra-large context</b> of 1M-2M+ tokens<br>· Near-unlimited usage & advanced security/SLA<br>· Dedicated support & custom enterprise features<br>· Specialized for large-scale data analysis & automation">
 · 100만~200만 토큰 이상의 <b>초대형 컨텍스트</b><br>
 · 무제한에 가까운 사용량 및 고급 보안/SLA<br>
 · 전담 지원 및 맞춤형 엔터프라이즈 기능<br>
 · 대규모 데이터 분석 및 자동화 특화
 </td>
 </tr>
+</tbody>
 </table>
 </div>
 </div>
 
 <div class="card">
-<h2>💳 Gemini 할인 받는 방법 정리</h2>
+<h2 data-ko="💳 Gemini 할인 받는 방법 정리" data-en="💳 How to Get a Discount on Gemini">💳 Gemini 할인 받는 방법 정리</h2>
 
 <div class="discount-item">
-<b>① Google One 신규 가입 혜택 (1~3개월 무료)</b><br>
-<a href="https://one.google.com/about/plans" target="_blank">Gemini Advanced 무료 체험 안내</a>
+<b data-ko="① Google One 신규 가입 혜택 (1~3개월 무료)" data-en="① Google One New Subscriber Benefit (1-3 months free)">① Google One 신규 가입 혜택 (1~3개월 무료)</b><br>
+<a href="https://one.google.com/about/plans" target="_blank" data-ko="Gemini Advanced 무료 체험 안내" data-en="Gemini Advanced Free Trial Guide">Gemini Advanced 무료 체험 안내</a>
 </div>
 
 <div class="discount-item">
-<b>② 학생·교육 계정 프로모션 (최대 1년 무료)</b><br>
-<a href="https://gemini.google/students/" target="_blank">학교 계정 인증 시 혜택 확인 (Google for Education)</a>
+<b data-ko="② 학생·교육 계정 프로모션 (최대 1년 무료)" data-en="② Student/Education Account Promotion (up to 1 year free)">② 학생·교육 계정 프로모션 (최대 1년 무료)</b><br>
+<a href="https://gemini.google/students/" target="_blank" data-ko="학교 계정 인증 시 혜택 확인 (Google for Education)" data-en="Check benefits upon school account verification (Google for Education)">학교 계정 인증 시 혜택 확인 (Google for Education)</a>
 </div>
 
 <div class="discount-item">
-<b>③ 2026년 한정 프로 요금제 프로모션</b><br>
-· 연간 결제 시 최대 59% 할인 이벤트 활용 가능 (특정 지역 대상)<br>
-· 가족 그룹 공유를 통해 인당 비용 절감 가능 (최대 5명)
+<b data-ko="③ 2026년 한정 프로 요금제 프로모션" data-en="③ 2026 Limited-Time Pro Plan Promotion">③ 2026년 한정 프로 요금제 프로모션</b><br>
+<span data-ko="· 연간 결제 시 최대 59% 할인 이벤트 활용 가능 (특정 지역 대상)<br>· 가족 그룹 공유를 통해 인당 비용 절감 가능 (최대 5명)" data-en="· Up to 59% discount available for annual payments (in select regions)<br>· Reduce per-person cost through family group sharing (up to 5 members)">· 연간 결제 시 최대 59% 할인 이벤트 활용 가능 (특정 지역 대상)<br>
+· 가족 그룹 공유를 통해 인당 비용 절감 가능 (최대 5명)</span>
 </div>
 
 <div class="discount-item">
-<b>④ API 캐싱 및 배치 모드 활용</b><br>
-· 동일 질문 반복 시 컨텍스트 캐싱(Caching)을 사용해 비용 50% 절감<br>
-· 실시간 응답이 필요 없는 경우 배치(Batch) 작업으로 50% 할인 적용
+<b data-ko="④ API 캐싱 및 배치 모드 활용" data-en="④ Utilize API Caching & Batch Mode">④ API 캐싱 및 배치 모드 활용</b><br>
+<span data-ko="· 동일 질문 반복 시 컨텍스트 캐싱(Caching)을 사용해 비용 50% 절감<br>· 실시간 응답이 필요 없는 경우 배치(Batch) 작업으로 50% 할인 적용" data-en="· Save 50% on costs by using context caching for repeated identical questions<br>· Apply a 50% discount for batch jobs when real-time responses aren't needed">· 동일 질문 반복 시 컨텍스트 캐싱(Caching)을 사용해 비용 50% 절감<br>
+· 실시간 응답이 필요 없는 경우 배치(Batch) 작업으로 50% 할인 적용</span>
 </div>
 </div>
 
 <div class="card">
-<h2>📈 Gemini API 월 비용 계산기 + 경쟁 모델 비교</h2>
+<h2 data-ko="📈 Gemini API 월 비용 계산기 + 경쟁 모델 비교" data-en="📈 Gemini API Monthly Cost Calculator + Competitor Comparison">📈 Gemini API 월 비용 계산기 + 경쟁 모델 비교</h2>
 
 <p>
-입력 토큰(월):
+<span data-ko="입력 토큰(월):" data-en="Input Tokens (monthly):">입력 토큰(월):</span>
 <input id="inTok" value="3000000">
-출력 토큰(월):
+<span data-ko="출력 토큰(월):" data-en="Output Tokens (monthly):">출력 토큰(월):</span>
 <input id="outTok" value="1000000">
-<button onclick="calc()">비용 계산</button>
+<button onclick="calc()" data-ko="비용 계산" data-en="Calculate Cost">비용 계산</button>
 </p>
 
-<p class="small">
+<p class="small" data-ko="※ 2026년 Gemini 3 Pro (≤200K context) 단가 기준<br>입력: $2.00 / 1M 토큰 | 출력: $12.00 / 1M 토큰" data-en="※ Based on 2026 Gemini 3 Pro (≤200K context) pricing<br>Input: $2.00 / 1M tokens | Output: $12.00 / 1M tokens">
 ※ 2026년 Gemini 3 Pro (≤200K context) 단가 기준<br>
 입력: $2.00 / 1M 토큰 | 출력: $12.00 / 1M 토큰
 </p>
@@ -139,63 +144,78 @@
 </div>
 
 <div class="card">
-<h2>🔥 Gemini vs Gpt vs Claude vs Cursor vs Ryuten — 2026 AI 선택 가이드</h2>
+<h2 data-ko="🔥 Gemini vs Gpt vs Claude vs Cursor vs Ryuten — 2026 AI 선택 가이드" data-en="🔥 Gemini vs Gpt vs Claude vs Cursor vs Ryuten — 2026 AI Selection Guide">🔥 Gemini vs Gpt vs Claude vs Cursor vs Ryuten — 2026 AI 선택 가이드</h2>
 
 <div class="table-responsive">
 <table>
+<thead>
 <tr>
-<th>비교 항목</th>
+<th data-ko="비교 항목" data-en="Comparison">비교 항목</th>
 <th>Gemini</th>
 <th>Gpt</th>
 <th>Claude</th>
 <th>Cursor</th>
 <th>Ryuten</th>
 </tr>
+</thead>
+<tbody>
 <tr>
-<td>강점</td>
-<td>구글 연동·방대한 컨텍스트</td>
-<td>범용성·안정적 성능</td>
-<td>논리 추론·장문 분석</td>
-<td>코드 개발 생산성</td>
-<td>한국어 최적화·요약</td>
+<td data-ko="강점" data-en="Strengths">강점</td>
+<td data-ko="구글 연동·방대한 컨텍스트" data-en="Google integration, vast context">구글 연동·방대한 컨텍스트</td>
+<td data-ko="범용성·안정적 성능" data-en="Versatility, stable performance">범용성·안정적 성능</td>
+<td data-ko="논리 추론·장문 분석" data-en="Logical reasoning, long-text analysis">논리 추론·장문 분석</td>
+<td data-ko="코드 개발 생산성" data-en="Code development productivity">코드 개발 생산성</td>
+<td data-ko="한국어 최적화·요약" data-en="Korean optimization, summarization">한국어 최적화·요약</td>
 </tr>
 <tr>
-<td>비용 체감</td>
-<td>가장 저렴한 API 단가</td>
-<td>중간 수준</td>
-<td>성능 대비 고비용</td>
-<td>구독형(개발용)</td>
-<td>합리적</td>
+<td data-ko="비용 체감" data-en="Perceived Cost">비용 체감</td>
+<td data-ko="가장 저렴한 API 단가" data-en="Most affordable API pricing">가장 저렴한 API 단가</td>
+<td data-ko="중간 수준" data-en="Mid-range">중간 수준</td>
+<td data-ko="성능 대비 고비용" data-en="High cost for performance">성능 대비 고비용</td>
+<td data-ko="구독형(개발용)" data-en="Subscription (for dev)">구독형(개발용)</td>
+<td data-ko="합리적" data-en="Reasonable">합리적</td>
 </tr>
 <tr>
-<td>추천 대상</td>
-<td>구글 유저·데이터 분석가</td>
-<td>일반 사용자·멀티모달</td>
-<td>작가·연구원·개발자</td>
-<td>소프트웨어 엔지니어</td>
-<td>국내 콘텐츠 제작자</td>
+<td data-ko="추천 대상" data-en="Recommended For">추천 대상</td>
+<td data-ko="구글 유저·데이터 분석가" data-en="Google users, data analysts">구글 유저·데이터 분석가</td>
+<td data-ko="일반 사용자·멀티모달" data-en="General users, multimodal">일반 사용자·멀티모달</td>
+<td data-ko="작가·연구원·개발자" data-en="Writers, researchers, developers">작가·연구원·개발자</td>
+<td data-ko="소프트웨어 엔지니어" data-en="Software engineers">소프트웨어 엔지니어</td>
+<td data-ko="국내 콘텐츠 제작자" data-en="Domestic content creators">국내 콘텐츠 제작자</td>
 </tr>
 <tr>
-<td><b>한 줄 요약</b></td>
-<td><b>가장 효율적인 생태계</b></td>
-<td><b>실패 없는 표준 선택</b></td>
-<td><b>정교한 업무의 동반자</b></td>
-<td><b>코딩 최강 도구</b></td>
-<td><b>한국어 최적 솔루션</b></td>
+<td><b data-ko="한 줄 요약" data-en="Summary">한 줄 요약</b></td>
+<td><b data-ko="가장 효율적인 생태계" data-en="The most efficient ecosystem">가장 효율적인 생태계</b></td>
+<td><b data-ko="실패 없는 표준 선택" data-en="The reliable standard choice">실패 없는 표준 선택</b></td>
+<td><b data-ko="정교한 업무의 동반자" data-en="A partner for precise tasks">정교한 업무의 동반자</b></td>
+<td><b data-ko="코딩 최강 도구" data-en="The ultimate coding tool">코딩 최강 도구</b></td>
+<td><b data-ko="한국어 최적 솔루션" data-en="The best solution for Korean">한국어 최적 솔루션</b></td>
 </tr>
+</tbody>
 </table>
 </div>
 </div>
 
 </div>
 
-<footer>
+<footer data-ko="© 2026 Gemini 요금 비교" data-en="© 2026 Gemini Pricing Comparison">
 © 2026 Gemini 요금 비교
 </footer>
 
 <script>
+let currentLang = 'ko';
+
 function toggleDark(){
   document.body.classList.toggle("dark");
+}
+
+function toggleLang() {
+    currentLang = currentLang === 'ko' ? 'en' : 'ko';
+    document.documentElement.lang = currentLang;
+    
+    document.querySelectorAll('[data-ko]').forEach(el => {
+        el.innerHTML = el.dataset[currentLang];
+    });
 }
 
 // 1월 19일 기준 환율 적용

@@ -77,6 +77,8 @@ body.dark th {
   top:14px;
   right:14px;
   z-index: 100;
+  display: flex;
+  gap: 10px;
 }
 button{
   background:var(--accent);
