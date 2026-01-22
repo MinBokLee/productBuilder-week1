@@ -83,6 +83,35 @@
         }
         .control-btn:hover { background-color: var(--row-highlight); }
         
+        .promo-card {
+            background-color: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        [data-theme='dark'] .promo-card {
+            background-color: #0c2f24;
+            border-color: #047857;
+        }
+        .promo-card h2 {
+            color: #047857;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        [data-theme='dark'] .promo-card h2 {
+            color: #6ee7b7;
+        }
+        .promo-card p {
+            color: #065f46;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        [data-theme='dark'] .promo-card p {
+            color: #a7f3d0;
+        }
+
         .card {
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -188,6 +217,12 @@
         </header>
         
         <main>
+            <div class="promo-card">
+                <h2>🎉 삼성 갤럭시 S25/Z7 시리즈 특별 혜택</h2>
+                <p>최신 갤럭시 사용자를 위해 <strong>Google AI Pro 플랜을 6개월간 무료</strong>로 제공합니다.<br>Gemini Advanced, 2TB 클라우드 스토리지 등 모든 기능을 지금 경험해보세요!</p>
+                <a href="https://www.samsung.com/" target="_blank" class="control-btn" style="background-color: var(--card-bg);">자세히 알아보기 →</a>
+            </div>
+
             <div class="card">
                 <h2><span class="icon">📄</span>플랜 요금 · 특징 비교</h2>
                 <p class="small">※ 월 요금은 <b>2026년 1월 19일 기준 환율(USD → KRW)</b>을 참고하여 표시됩니다.</p>
