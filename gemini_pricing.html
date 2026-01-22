@@ -207,9 +207,40 @@
                 text-align: right;
             }
 
-            .calculator-form { display: grid; gap: 12px; margin-bottom: 16px; }
-            .input-group label { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 4px; }
+        .calculator-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr) auto; /* Two inputs, one button */
+            gap: 12px;
+            align-items: end; /* Align button with bottom of inputs */
+            margin-bottom: 12px;
+        }
+        .input-group { display: flex; flex-direction: column; }
+        .input-group label { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 4px; }
+        /* Make button within calculator-form not full width on desktop, but full width on mobile */
+        .calculator-form .primary-btn {
+            width: auto; /* Override default 100% width */
+            padding: 10px 15px; /* Adjust padding for better fit */
+        }
             input { width: 100%; box-sizing: border-box; padding: 12px; font-size: 1rem; }
+
+            /* Calculator form mobile adjustments */
+            .calculator-form {
+                grid-template-columns: 1fr; /* Stack on mobile */
+                gap: 12px;
+            }
+            .calculator-form .primary-btn {
+                width: 100%; /* Full width on mobile */
+            }
+
+
+            /* Calculator form mobile adjustments */
+            .calculator-form {
+                grid-template-columns: 1fr; /* Stack on mobile */
+                gap: 12px;
+            }
+            .calculator-form .primary-btn {
+                width: 100%; /* Full width on mobile */
+            }
 
             /* Model Guide Table Transformation */
             .model-guide-table { margin-top: 20px; } /* Add some space above the transformed table */
@@ -330,11 +361,8 @@
                 <div class="calculator-form">
                     <div class="input-group"><label for="inTok">입력 토큰 (월)</label><input id="inTok" value="3000000" oninput="updateTokenExamples()"></div>
                     <div class="input-group"><label for="outTok">출력 토큰 (월)</label><input id="outTok" value="1000000" oninput="updateTokenExamples()"></div>
+                    <button class="primary-btn" onclick="calc()">비용 계산</button>
                 </div>
-                <div id="token-example" class="small" style="text-align: center; margin-bottom: 15px; background-color: var(--row-highlight); padding: 10px; border-radius: 8px;">
-                    <!-- Dynamic content will be injected here -->
-                </div>
-                <button class="primary-btn" onclick="calc()">비용 계산</button>
                 <div class="chart-container" style="position: relative; height:300px; margin-top: 20px;">
                     <canvas id="apiChart"></canvas>
                 </div>
