@@ -277,12 +277,12 @@
             <div class="card">
                 <h2><span class="icon">📈</span>API 월 비용 계산기</h2>
                 <div class="calculator-form">
-                    <div class="input-group"><label for="inTok">입력 토큰 (월)</label><input id="inTok" value="3000000"></div>
-                    <div class="input-group"><label for="outTok">출력 토큰 (월)</label><input id="outTok" value="1000000"></div>
+                    <div class="input-group"><label for="inTok">입력 토큰 (월)</label><input id="inTok" value="3000000" oninput="updateTokenExamples()"></div>
+                    <div class="input-group"><label for="outTok">출력 토큰 (월)</label><input id="outTok" value="1000000" oninput="updateTokenExamples()"></div>
                 </div>
-                <p class="small" style="text-align: center; margin-bottom: 15px;">
-                    ※ 토큰은 AI 모델이 텍스트를 처리하는 단위입니다. 한글 약 0.5자, 영어 약 4자에 해당합니다.
-                </p>
+                <div id="token-example" class="small" style="text-align: center; margin-bottom: 15px; background-color: var(--row-highlight); padding: 10px; border-radius: 8px;">
+                    <!-- Dynamic content will be injected here -->
+                </div>
                 <button class="primary-btn" onclick="calc()">비용 계산</button>
                 <div class="chart-container" style="position: relative; height:300px; margin-top: 20px;">
                     <canvas id="apiChart"></canvas>
@@ -299,6 +299,24 @@
             return { ticks: theme === 'light' ? '#6b7280' : '#94a3b8', grid: theme === 'light' ? '#e5e7eb' : '#334155' };
         }
 
+        function updateTokenExamples() {
+            const inVal = parseInt(document.getElementById('inTok').value) || 0;
+            const outVal = parseInt(document.getElementById('outTok').value) || 0;
+
+            const totalTokens = inVal + outVal;
+
+            // 1 토큰 = 한글 2자, 영문 4자 (근사치)
+            const koreanChars = (totalTokens * 2).toLocaleString();
+            const englishChars = (totalTokens * 4).toLocaleString();
+            
+            const exampleEl = document.getElementById('token-example');
+            if (totalTokens > 0) {
+                exampleEl.innerHTML = `입력과 출력 토큰을 합한 총 <strong>${totalTokens.toLocaleString()}</strong>개는<br>약 <strong>한글 ${koreanChars}자</strong> 또는 <strong>영문 ${englishChars}자</strong> 분량입니다.`;
+            } else {
+                exampleEl.innerHTML = '토큰 양을 입력하면 예상되는 글자 수를 보여줍니다.';
+            }
+        }
+
         function toggleTheme() {
             const isLight = document.body.getAttribute('data-theme') === 'light';
             document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
@@ -309,6 +327,7 @@
         const rate = 1472.52; 
         let chart;
         function calc(){
+          updateTokenExamples(); // Update examples on calculation
           const inT = +inTok.value / 1e6, outT = +outTok.value / 1e6;
           const data = [inT*2.0 + outT*12.0, inT*2.5 + outT*10.0, inT*3.0 + outT*15.0, inT*2.2 + outT*11.0, inT*1.8 + outT*9.0];
           const colors = getThemeColors();
@@ -330,6 +349,7 @@
             }
           });
         }
+        updateTokenExamples(); // Initial call
         calc();
     </script>
 </body>
