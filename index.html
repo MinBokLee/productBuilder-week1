@@ -262,6 +262,11 @@
             <button class="primary-btn" id="recommend-btn" onclick="generateLunchMenu()">지금 추천 받기</button>
             
             <div id="disqus_thread"></div>
+            
+            <div id="disqus_thread"></div>
+            
+
+
         </div>
 
 
@@ -533,18 +538,12 @@
             const t = i18n[currentLang];
             document.getElementById('main-title').innerText = t.mainTitle;
             document.getElementById('main-sub').innerText = t.mainSub;
-            document.getElementById('go-animal-btn').innerText = t.goAnimal;
             document.getElementById('filter-all').innerText = t.filterAll;
             document.getElementById('filter-kr').innerText = t.filterKr;
             document.getElementById('filter-ch').innerText = t.filterCh;
             document.getElementById('filter-jp').innerText = t.filterJp;
             document.getElementById('filter-en').innerText = t.filterEn;
             document.getElementById('recommend-btn').innerText = t.recommendBtn;
-            document.getElementById('back-btn').innerText = t.back;
-            document.getElementById('animal-title').innerText = t.animalTitle;
-            document.getElementById('animal-sub').innerText = t.animalSub;
-            document.getElementById('upload-btn').innerText = t.uploadBtn;
-            document.getElementById('result-go-back').innerText = t.resultGoBack;
             if(document.getElementById('main-placeholder')) document.getElementById('main-placeholder').innerText = t.placeholder;
         }
 
@@ -801,6 +800,7 @@
 
 
     </script>
+
     <script type="text/javascript">
     (function() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
