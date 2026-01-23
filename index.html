@@ -539,10 +539,17 @@
 
             function getFoodPhrase(foodName, lang) {
                 if (lang === 'ko') {
-                    switch (foodName) {
-                        // (The getFoodPhrase cases are omitted for brevity but are included in the actual implementation)
-                        default: return `입맛 돋우는 ${foodName}, 지금 바로 경험하세요!`;
-                    }
+                    const koreanPhrases = [
+                        `침샘 자극하는 ${foodName}, 오늘 점심은 너로 정했다!`,
+                        `한 번 맛보면 잊을 수 없는 ${foodName}, 지금 바로 만나보세요!`,
+                        `오늘의 기분을 돋울 ${foodName}, 망설이지 말고 선택하세요!`,
+                        `환상의 맛, ${foodName}으로 완벽한 점심을 즐겨보세요!`,
+                        `이 맛은 예술! ${foodName}으로 미식의 세계를 경험하세요!`,
+                        `오감이 즐거운 ${foodName}, 오늘 당신의 선택은?`,
+                        `놓칠 수 없는 ${foodName}, 최고의 한 끼가 기다립니다!`
+                    ];
+                    const randomIndex = Math.floor(Math.random() * koreanPhrases.length);
+                    return koreanPhrases[randomIndex];
                 } else {
                     switch (foodName) {
                         // (The getFoodPhrase cases are omitted for brevity but are included in the actual implementation)
