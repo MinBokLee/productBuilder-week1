@@ -536,7 +536,6 @@
             const container = document.getElementById('menu-container');
             const t = i18n[currentLang];
             const data = food[currentLang];
-            const imageUrl = `https://source.unsplash.com/480x240/?${food.en.name.replace(/ /g, "-")},food`;
 
             function getFoodPhrase(foodName, lang) {
                 if (lang === 'ko') {
@@ -554,7 +553,6 @@
 
             container.innerHTML = `
                 <div class="menu-card">
-                    <img src="${imageUrl}" alt="${data.name}" class="food-image">
                     <div class="food-header">
                         ${food.kcal ? `<span class="food-badge">${food.kcal} KCAL</span>` : ''}
                         <h2 class="food-name">${getFoodPhrase(data.name, currentLang)}</h2>
