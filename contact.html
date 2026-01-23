@@ -85,10 +85,20 @@
         
         <main>
             <h2>문의하기</h2>
-            <p>저희 웹사이트에 대한 질문, 제안, 또는 피드백이 있으신가요? 언제든지 아래 이메일 주소로 연락주시면 신속하게 답변해 드리겠습니다.</p>
-            <p>여러분의 소중한 의견은 저희 서비스를 개선하는 데 큰 도움이 됩니다.</p>
-            <p><strong>이메일:</strong> <a href="mailto:contact@example.com" class="contact-link">contact@example.com</a></p>
-            <p><em>(참고: 위 이메일 주소는 예시이며, 실제 연락 가능한 주소로 변경하셔야 합니다.)</em></p>
+            <p>저희 웹사이트에 대한 질문, 제안, 또는 피드백이 있으신가요? 아래 양식을 통해 문의해 주시면 신속하게 답변해 드리겠습니다.</p>
+            <form action="https://formspree.io/f/xojjjadw" method="POST" style="display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 20px auto;">
+                <label style="font-weight: 500; color: var(--text-main);">
+                    이메일 주소:
+                    <input type="email" name="email" required="" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; margin-top: 5px; box-sizing: border-box;">
+                </label>
+                <label style="font-weight: 500; color: var(--text-main);">
+                    메시지:
+                    <textarea name="message" required="" rows="5" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; margin-top: 5px; box-sizing: border-box;"></textarea>
+                </label>
+                <button type="submit" style="background-color: var(--primary-color); color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 500; transition: background-color 0.2s;">
+                    보내기
+                </button>
+            </form>
         </main>
         
         <footer>
